@@ -7,6 +7,7 @@ import OrgUnits from "./components/forms/orgUnits";
 import GeneralForm from "./components/forms/general.form";
 import { AlertBar, Box, Button, CircularLoader, Divider, I } from "@dhis2/ui";
 import EmailValidator from "./services/emailValidator";
+import Request from "./request/[id]";
 
 const query = {
   organisationUnits: {
@@ -18,6 +19,13 @@ const query = {
       ],
       order: "level",
     },
+  },
+  visualizations:{
+    resource : 'visualizations',
+    params:{
+      paging: false,
+      field: ["id","displayName"],
+    }
   },
   indicators: {
     resource: "indicators",
@@ -194,70 +202,8 @@ const MyApp = () => {
       <div>
         <HeaderComponent />
         <br />
-        <div className={classes.display}>
-          <GeneralForm
-            styles={classes}
-            formInputs={formInputs}
-            formData={formData}
-            periodTypes={data?.periodTypes?.periodTypes}
-          />
-          <br />
-          <DataDimensionsCodes
-            indicators={data?.indicators?.indicators}
-            dataElements={data?.dataElements?.dataElements}
-            setSelectedDataDimensionsCodes={setSelectedDataDimensionsCodes}
-          />
-          <br />
-          <div>
-            <OrgUnits
-              orgUnits={data.organisationUnits.organisationUnits}
-              setSelecteOrgUnit={setSelecteOrgUnit}
-              styles={classes}
-            />
-          </div>
-          <br />
-        </div>
         <Divider />
-        <div
-          style={{ padding: "20px", justifyContent: "start", display: "flex" }}
-        >
-          <Button
-            name="submit"
-            primary
-            onClick={initializeButton}
-            value="default"
-          >
-            Initialise Integration
-          </Button>
-          <div style={{ marginLeft: "50px" }}>
-            <Box>
-              {isSuccessMessage == true ? (
-                <AlertBar
-                  hidden={hide}
-                  success
-                  duration={4000}
-                  onHidden={(e) => {
-                    setHidden(true);
-                    window.location.reload(true);
-                  }}
-                >
-                  {message}
-                </AlertBar>
-              ) : (
-                <AlertBar
-                  hidden={hide}
-                  warning
-                  duration={4000}
-                  onHidden={(e) => {
-                    setHidden(true);
-                  }}
-                >
-                  {message}
-                </AlertBar>
-              )}
-            </Box>
-          </div>
-        </div>
+        <Request data={data} style={classes} />
       </div>
     </div>
   );
