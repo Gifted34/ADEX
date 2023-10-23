@@ -224,3 +224,4 @@ you can access more documentation on the initialisation by navigating to the fol
   ### DHIS2 Data exchange submit
 
 After initializing the in the Dex initialization application, users can go to the Data exchange application in DHIS2. In this application, users can select an initialization option and view a table with data values and their corresponding data element or indicator names. Users then need to click the submit button to transfer these values to the desired DHIS2 instance.
+# ADEX-Version-2
