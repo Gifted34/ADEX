@@ -15,11 +15,16 @@
 .marginBottom {
     margin-bottom: 10px;
 }
+.marginLeft{
+    margin-left: "50px"
+}
 
 .padding {
     padding: 20px;
 }
-
+.width {
+    width: 45%;
+}
 .orgHeight {
     padding: 10px;
     width: 400px;

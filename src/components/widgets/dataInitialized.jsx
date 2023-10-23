@@ -70,7 +70,7 @@ export default function DataInitialized(props) {
                           <Button>View</Button>
                         </Link>
                         <Link
-                          to={`/new-request/${aggregateDataExchange?.key}&${aggregateDataExchange?.value?.dataValues?.name}`}
+                          to={`/new-request/${aggregateDataExchange?.key}`}
                           style={{ textDecoration: "none", color: "black" }}
                         >
                           <Button>Add new</Button>

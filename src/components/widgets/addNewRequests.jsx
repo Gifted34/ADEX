@@ -1,25 +1,54 @@
-import { Button, ButtonStrip, Divider } from "@dhis2/ui";
-import React from "react";
-import { Link } from "react-router-dom";
-export default function AddNewRequests() {
+import { Button, ButtonStrip, Box,Field, Input} from "@dhis2/ui";
+import React,{useEffect} from "react";
+import { Link, useLocation } from "react-router-dom";
+import PeriodsWidget from "../forms/periodLayout";
+import DataDimensionsCodes from "../forms/dataDimensionsCodes";
+import OrgUnits from "../forms/orgUnits";
+export default function AddNewRequests(props) {
+  const location = useLocation()
+  const data = props?.data
+  const orgUnits = props?.data?.organisationUnits?.organisationUnits
+  const Visualizations = props?.data?.visualizations?.visualizations
+  const dataElements = props?.data?.dataElements?.dataElements
+  const indicators = props?.data?.indicators?.indicators
+  const id = location.pathname.split('/')[2]
+  
   return (
-    <div
-      style={{
-        width: "100%",
-      }}
-    >
-      <ButtonStrip end>
-        <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
-          <Button primary>Home</Button>
-        </Link>
-      </ButtonStrip>
-      <Divider />
-      <div className="">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse dolore
-        pariatur deserunt voluptatem ipsam dignissimos reiciendis saepe?
-        Excepturi aperiam consectetur, perferendis accusantium, autem porro
-        rerum officia nobis suscipit nemo vel.
-      </div>
-    </div>
+    <div className={props?.style?.padding}>
+            <Box className={props?.style?.display}>
+                <Box className={props?.style?.padding}>
+                       <OrgUnits orgUnits={orgUnits} /> 
+                </Box>
+                <div>
+                    <Box className={`${props?.style?.width} ${props?.style?.padding}`}>
+                        <Field label="Name">
+                            <Input
+                            onChange={(e)=>{
+                                console.log(e)
+                            }}
+                            placeholder="Enter request name" />
+                        </Field>
+                    </Box>
+                <div className={props?.style?.display}>
+                <Box className={props?.style?.padding}>
+                <PeriodsWidget />
+                </Box>
+                <Box className={props?.style?.padding}>
+                    <DataDimensionsCodes dataElements={dataElements} indicators={indicators} visualizations={Visualizations}/>
+                </Box>
+                </div>
+                <div className={props?.style?.padding}>
+                <ButtonStrip end>
+                    <Button primary large>Save</Button>
+                    <Link to={"/"}  style={{ textDecoration: "none", color: "white" }}>
+                    <Button large>Cancel</Button>
+                    </Link>
+
+                </ButtonStrip>
+                </div>
+                </div>
+            </Box>
+            
+        </div>
   );
 }

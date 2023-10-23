@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DataQuery, useDataEngine, useDataQuery } from "@dhis2/app-runtime";
 import classes from "./App.module.css";
 import HeaderComponent from "./components/widgets/headerComponent";
-import DataDimensionsCodes from "./components/forms/dataDimensionsCodes";
-import OrgUnits from "./components/forms/orgUnits";
-import GeneralForm from "./components/forms/general.form";
-import { AlertBar, Box, Button, CircularLoader, Divider, I } from "@dhis2/ui";
+import { AlertBar, Box, Button, Center, CircularLoader, Divider, I } from "@dhis2/ui";
 import EmailValidator from "./services/emailValidator";
 import HomePage from "./components/widgets/homePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -21,6 +18,13 @@ const query = {
       paging: false,
       fields: ["id,name,level,path,displayName,code,children,ancestors,created,href,user,users,userAccesses"],
       order: "level"
+    }
+  },
+  visualizations: {
+    resource: 'visualizations',
+    params: {
+      paging: false,
+      field: ["id", "displayName"]
     }
   },
   indicators: {
@@ -218,16 +222,9 @@ const MyApp = () => {
     return /*#__PURE__*/React.createElement("span", null, " Error : ", error.message);
   }
   if (loading) {
-    return /*#__PURE__*/React.createElement("span", {
-      style: {
-        display: "flex",
-        width: "100%",
-        height: "100%",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center"
-      }
-    }, /*#__PURE__*/React.createElement(CircularLoader, null));
+    return /*#__PURE__*/React.createElement(Center, null, /*#__PURE__*/React.createElement(CircularLoader, {
+      large: true
+    }));
   }
   // delete the initialized entry in datastore
   const deleteEntry = data => {
@@ -277,7 +274,7 @@ const MyApp = () => {
     path: "/new-request/:key",
     element: /*#__PURE__*/React.createElement(AddNewRequests, {
       data: data,
-      styles: classes
+      style: classes
     })
   }), /*#__PURE__*/React.createElement(Route, {
     path: "*",

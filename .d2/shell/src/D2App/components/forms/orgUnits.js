@@ -17,13 +17,11 @@ export default function OrgUnits(props) {
   }, /*#__PURE__*/React.createElement(OrganisationUnitTree, {
     name: "Organisation Units",
     onChange: e => {
-      var _props$orgUnits;
       // props?.setSelecteOrgUnit(e.selected)
       setSelectedOrgUnit(e.selected);
-      props === null || props === void 0 ? void 0 : props.setSelecteOrgUnit(props === null || props === void 0 ? void 0 : (_props$orgUnits = props.orgUnits) === null || _props$orgUnits === void 0 ? void 0 : _props$orgUnits.filter(orgUn => (orgUn === null || orgUn === void 0 ? void 0 : orgUn.id) == (e === null || e === void 0 ? void 0 : e.id))[0]);
+      console.log(e.selected);
     },
     roots: orgUnitLevels(props === null || props === void 0 ? void 0 : props.orgUnits),
-    singleSelection: true,
     hideMemberCount: false,
     onSelectClick: orgUnit => {},
     selected: selectedOrgUnit
