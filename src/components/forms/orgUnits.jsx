@@ -20,12 +20,10 @@ export default function OrgUnits(props) {
                     onChange={(e) => {
                         // props?.setSelecteOrgUnit(e.selected)
                         setSelectedOrgUnit(e.selected)
-                        props?.setSelecteOrgUnit(props?.orgUnits?.filter((orgUn) => orgUn?.id == e?.id)[0])
-                        
-                    }
+                        console.log(e.selected)
+                        }
                     }
                     roots={orgUnitLevels(props?.orgUnits)}
-                    singleSelection
                     hideMemberCount={false}
                     onSelectClick={(orgUnit) => { }}
                     selected={selectedOrgUnit}
