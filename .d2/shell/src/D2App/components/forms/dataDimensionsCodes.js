@@ -7,13 +7,13 @@ export default function DataDimensionsCodes(props) {
   const [dxType, setDx] = useState();
   const [filterText, setFilterText] = useState();
   const [filterTerm, setFilter] = useState();
-  useEffect(() => {
-    console.log(dxType);
-  }, [dxType]);
+  useEffect(() => {}, []);
+  //get selected items
   const getDataDimensions = e => {
     setselectedDimensions(e.selected);
-    props === null || props === void 0 ? void 0 : props.setSelectedDataDimensionsCodes(e.selected);
   };
+
+  //pushing data elements,indicators,and visualisation into transfer options
   const defaultRenderOption = () => {
     var _props$indicators, _props$indicators$fil, _props$dataElements, _props$dataElements$f, _props$visualizations;
     let codes = [];
@@ -41,9 +41,13 @@ export default function DataDimensionsCodes(props) {
     return codes;
   };
   const defaultFilterCallback = e => {};
+  //filtering options in the dx transfer
   const filterCallback = options => {
+    if (dxType === undefined || dxType === 'default') {
+      return options;
+    }
     const opt = options.filter(object => (object === null || object === void 0 ? void 0 : object.type) === dxType);
-    console.log(opt);
+    return opt.filter(object => object.label.includes(filterText));
   };
   return /*#__PURE__*/React.createElement("div", {
     style: {
@@ -64,9 +68,8 @@ export default function DataDimensionsCodes(props) {
     },
     height: "400px",
     onChange: getDataDimensions,
-    options: defaultRenderOption()
-    //filterCallback = {filterCallback}
-    ,
+    options: defaultRenderOption(),
+    filterCallback: filterCallback,
     selected: selectedDimensions,
     filterable: true,
     hideFilterInput: true,
