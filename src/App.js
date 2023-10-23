@@ -13,6 +13,7 @@ import NewDataInitialization from "./components/widgets/newDataInitialization";
 import NoPageFound from "./components/widgets/noPageFound";
 import AddNewRequests from "./components/widgets/addNewRequests";
 import ViewDataStoreById from "./components/widgets/view";
+import DeleteEntry from "./components/forms/deleteEntry";
 
 const query = {
   organisationUnits: {
@@ -62,6 +63,15 @@ const query = {
 
 const validater = new EmailValidator();
 const MyApp = () => {
+  const [formInputValues, setFormInputValues] = useState({
+    dexname: "",
+    url: "",
+  });
+  const [type, setType] = useState("EXTERNAL");
+  const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [dateToDelete, setdateToDelete] = useState();
+
   const engine = useDataEngine();
   const [formData, setFormData] = useState();
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
@@ -71,10 +81,10 @@ const MyApp = () => {
   const [message, setMessage] = useState("");
 
   const [isSuccessMessage, setSuccessMessage] = useState(false);
-  const [type, setType] = useState({
-    INTERNAL: "INTERNAL",
-    EXTERNAL: "EXTERNAL",
-  });
+  // const [type, setType] = useState({
+  //   INTERNAL: "INTERNAL",
+  //   EXTERNAL: "EXTERNAL",
+  // });
   const [authType, setAuthType] = useState({
     TOKEN: "TOKEN",
     BASICAUTH: "BASICAUTH",
@@ -114,38 +124,53 @@ const MyApp = () => {
       return false;
     }
   };
-  // save to datastore
-  const generalInputValues = ({ type, formInputs }) => {
-    let payload = {
-      resource: `dataStore/DEX_initializer_values/${new Date().getTime()}`,
-      type: "create",
-      data: {
-        createdAt: new Date().toLocaleString(),
-        dataValues: {
-          name: formInputs?.dexname,
-          url: formInputs?.url,
-          type: type,
-        },
-      },
-    };
 
-    engine
-      .mutate(payload)
-      .then((res) => {
-        if (res.httpStatusCode == 201) {
-          console.log(res);
-          setSuccessMessage(true);
+  // save to datastore
+  const saveGeneralInputValues = () => {
+    if (
+      type == null ||
+      type == undefined ||
+      type == "" ||
+      formInputValues?.dexname == null ||
+      formInputValues?.dexname == undefined ||
+      formInputValues?.dexname == "" ||
+      formInputValues?.url == null ||
+      formInputValues?.url == undefined ||
+      formInputValues?.url == ""
+    ) {
+      setSuccessMessage(true);
+      setHidden(false);
+      setMessage("Error occured.");
+    } else {
+      let payload = {
+        resource: `dataStore/DEX_initializer_values/${new Date().getTime()}`,
+        type: "create",
+        data: {
+          createdAt: new Date().toLocaleString(),
+          dataValues: {
+            name: formInputValues?.dexname,
+            url: formInputValues?.url,
+            type: type,
+          },
+        },
+      };
+      engine
+        .mutate(payload)
+        .then((res) => {
+          if (res.httpStatusCode == 201) {
+            setOpen(!open);
+            setSuccessMessage(true);
+            setHidden(false);
+            setMessage("Data saved in the datastore successfully.");
+          }
+        })
+        .catch((e) => {
           setHidden(false);
-          setMessage("Data saved in the datastore successfully.");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        setHidden(false);
-        setMessage(
-          "Error occured. Either server or the inputs causes this error."
-        );
-      });
+          setMessage(
+            "Error occured. Either server or the inputs causes this error."
+          );
+        });
+    }
   };
   // constructing a data exchange api layout as defined in the url
   // https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/data-exchange.html
@@ -239,7 +264,34 @@ const MyApp = () => {
       </span>
     );
   }
-
+  // delete the initialized entry in datastore
+  const deleteEntry = (data) => {
+    setdateToDelete(data);
+  };
+  const deleteDataEntry = (data) => {
+    let payload = {
+      resource: "dataStore/DEX_initializer_values",
+      id: data?.key,
+      type: "delete",
+    };
+    engine
+      .mutate(payload)
+      .then((res) => {
+        console.log(res);
+        if (res.httpStatusCode == 200) {
+          setOpenDelete(!openDelete);
+          setSuccessMessage(true);
+          setHidden(false);
+          setMessage("Data saved in the datastore successfully.");
+        }
+      })
+      .catch((e) => {
+        setHidden(false);
+        setMessage(
+          "Error occured. Either server or the inputs causes this error."
+        );
+      });
+  };
   return (
     <div>
       <div>
@@ -250,7 +302,17 @@ const MyApp = () => {
             <Routes>
               <Route
                 index
-                element={<HomePage data={data} styles={classes} />}
+                element={
+                  <HomePage
+                    data={data}
+                    styles={classes}
+                    open={open}
+                    setOpen={setOpen}
+                    setOpenDelete={setOpenDelete}
+                    openDelete={openDelete}
+                    deleteEntry={deleteEntry}
+                  />
+                }
               />
               <Route
                 path="/view/:key"
@@ -260,44 +322,11 @@ const MyApp = () => {
                 path="/new-request/:key"
                 element={<AddNewRequests data={data} styles={classes} />}
               />
-
-              <Route
-                path="/new"
-                element={
-                  <NewDataInitialization
-                    styles={classes}
-                    generalInputValues={generalInputValues}
-                  />
-                }
-              />
               <Route path="*" element={<NoPageFound />} />
             </Routes>
           </BrowserRouter>
         </div>
 
-        {/* <div className={classes.display} style={{ display: "none" }}>
-          <GeneralForm
-            styles={classes}
-            formInputs={formInputs}
-            formData={formData}
-            periodTypes={data?.periodTypes?.periodTypes}
-          />
-          <br />
-          <DataDimensionsCodes
-            indicators={data?.indicators?.indicators}
-            dataElements={data?.dataElements?.dataElements}
-            setSelectedDataDimensionsCodes={setSelectedDataDimensionsCodes}
-          />
-          <br />
-          <div>
-            <OrgUnits
-              orgUnits={data.organisationUnits.organisationUnits}
-              setSelecteOrgUnit={setSelecteOrgUnit}
-              styles={classes}
-            />
-          </div>
-          <br />
-        </div> */}
         <div
           style={{
             padding: "20px",
@@ -323,7 +352,7 @@ const MyApp = () => {
                   duration={4000}
                   onHidden={(e) => {
                     setHidden(true);
-                    window.location.reload(true);
+                    // window.location.reload(true);
                   }}
                 >
                   {message}
@@ -344,6 +373,22 @@ const MyApp = () => {
           </div>
         </div>
       </div>
+      <NewDataInitialization
+        open={open}
+        setOpen={setOpen}
+        styles={classes}
+        setType={setType}
+        formInputValues={formInputValues}
+        type={type}
+        setFormInputValues={setFormInputValues}
+        saveGeneralInputValues={saveGeneralInputValues}
+      />
+      <DeleteEntry
+        setOpenDelete={setOpenDelete}
+        openDelete={openDelete}
+        deleteDataEntry={deleteDataEntry}
+        data={dateToDelete}
+      />
     </div>
   );
 };

@@ -7,47 +7,21 @@ import {
   SingleSelectOption,
 } from "@dhis2/ui";
 import React, { useState, useEffect } from "react";
-import PeriodsComponent from "./periodsComponent";
 
 export default function GeneralInputs(props) {
-  const [type, setType] = useState("EXTERNAL");
-  const [formInputs, setFormInputs] = useState({
-    dexname: "",
-    url: "",
-  });
-
   const inputsHandler = (e) => {
-    setFormInputs({
-      ...formInputs,
+    props?.setFormInputValues({
+      ...props?.formInputValues,
       [e?.name]: e?.value,
     });
   };
-  const saveToDataStore = () => {
-    if (
-      type == null ||
-      type == undefined ||
-      type == "" ||
-      formInputs?.dexname == null ||
-      formInputs?.dexname == undefined ||
-      formInputs?.dexname == "" ||
-      formInputs?.url == null ||
-      formInputs?.url == undefined ||
-      formInputs?.url == ""
-    ) {
-    } else {
-      props?.generalInputValues({ type, formInputs });
-    }
-  };
-  useEffect(() => {
-    console.clear();
-  }, [formInputs]);
 
   return (
     <div
       style={{ width: "100%", justifyContent: "center", alignItems: "center" }}
     >
-      <Field label="General Details" className={`${props?.styles?.padding}`}>
-        <div style={{ width: "700px" }}>
+      <Field label="General Details">
+        <div style={{ width: "100%" }}>
           <Input
             name="dexname"
             type="text"
@@ -59,15 +33,15 @@ export default function GeneralInputs(props) {
             <SingleSelect
               className="select"
               onChange={(e) => {
-                setType(e.selected);
+                props?.setType(e.selected);
               }}
-              selected={type}
+              selected={props?.type}
             >
               <SingleSelectOption label="Internal" value="INTERNAL" />
               <SingleSelectOption label="External" value="EXTERNAL" />
             </SingleSelect>
           </Box>
-          {type == "EXTERNAL" && (
+          {props?.type == "EXTERNAL" && (
             <Input
               name="url"
               type="text"
@@ -76,15 +50,6 @@ export default function GeneralInputs(props) {
               placeholder="Base URL of target DHIS 2 instance, do not include the /api part."
             />
           )}
-
-          <Button
-            name="Primary button"
-            onClick={saveToDataStore}
-            primary
-            value="save"
-          >
-            Save to DataStore
-          </Button>
         </div>
       </Field>
     </div>

@@ -21,8 +21,11 @@ export default function DataInitialized(props) {
     props &&
       props?.dataStoreDexValues().then((res) => {
         setDexDataStoreValues(res);
-        console.log(res);
       });
+  };
+
+  const deleteEntry = (data) => {
+    props?.deleteEntry(data);
   };
   useEffect(() => {
     getData();
@@ -36,7 +39,6 @@ export default function DataInitialized(props) {
             <TableCellHead>Date created</TableCellHead>
             <TableCellHead>Name</TableCellHead>
             <TableCellHead>Target</TableCellHead>
-            <TableCellHead>Last updated</TableCellHead>
             <TableCellHead></TableCellHead>
           </TableRowHead>
         </TableHead>
@@ -58,7 +60,7 @@ export default function DataInitialized(props) {
                         ? aggregateDataExchange?.value?.dataValues?.type
                         : aggregateDataExchange?.value?.dataValues?.url}
                     </TableCell>
-                    <TableCell>01/03/2006</TableCell>
+
                     <TableCell dense>
                       <ButtonStrip start>
                         <Link
@@ -73,7 +75,15 @@ export default function DataInitialized(props) {
                         >
                           <Button>Add new</Button>
                         </Link>
-                        <Button destructive>Remove</Button>
+                        <Button
+                          destructive
+                          onClick={() => {
+                            props?.setOpenDelete(!props?.openDelete);
+                            deleteEntry(aggregateDataExchange);
+                          }}
+                        >
+                          Remove
+                        </Button>
                         <Button primary>Initialize integration</Button>
                       </ButtonStrip>
                     </TableCell>
