@@ -52,9 +52,15 @@ export default function DataDimensionsCodes(props) {
     //filtering options in the dx transfer
     const filterCallback = (options) =>{
         if(dxType === undefined || dxType === 'default'){
+            if(filterText !== undefined){
+                return options.filter((object)=> object.label.includes(filterText))
+            }
             return options
         }
          const opt = options.filter((object)=> object?.type === dxType)
+         if(filterText === undefined){
+            return opt
+         }
          return opt.filter((object)=> object.label.includes(filterText))        
     }
     return (
