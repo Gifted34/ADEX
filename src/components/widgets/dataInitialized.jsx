@@ -33,8 +33,8 @@ export default function DataInitialized(props) {
       <Table>
         <TableHead>
           <TableRowHead>
-            <TableCellHead>Name</TableCellHead>
             <TableCellHead>Date created</TableCellHead>
+            <TableCellHead>Name</TableCellHead>
             <TableCellHead>Target</TableCellHead>
             <TableCellHead>Last updated</TableCellHead>
             <TableCellHead></TableCellHead>
@@ -47,10 +47,10 @@ export default function DataInitialized(props) {
                 return (
                   <TableRow key={key}>
                     <TableCell>
-                      {aggregateDataExchange?.value?.dataValues?.name}
+                      {aggregateDataExchange?.value?.createdAt?.split(",")[0]}
                     </TableCell>
                     <TableCell>
-                      {aggregateDataExchange?.value?.createdAt?.split(",")[0]}
+                      {aggregateDataExchange?.value?.dataValues?.name}
                     </TableCell>
                     <TableCell>
                       {aggregateDataExchange?.value?.dataValues?.url ==

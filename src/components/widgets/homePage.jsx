@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export default function HomePage(props) {
   const engine = useDataEngine();
   let dataStorePath = "dataStore/DEX_initializer_values";
-  const [values, setValues] = useState([]);
+
   const getDataStoreDexValues = async (props) => {
     const query = {
       dataStore: {
@@ -21,9 +21,6 @@ export default function HomePage(props) {
     try {
       const res = await engine?.query(query);
       return res;
-      // res.then((data) => {
-      //   setValues(data);
-      // });
     } catch (e) {}
   };
 
