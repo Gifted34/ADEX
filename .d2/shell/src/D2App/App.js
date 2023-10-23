@@ -7,6 +7,7 @@ import OrgUnits from "./components/forms/orgUnits";
 import GeneralForm from "./components/forms/general.form";
 import { AlertBar, Box, Button, CircularLoader, Divider, I } from "@dhis2/ui";
 import EmailValidator from "./services/emailValidator";
+import Request from "./request/[id]";
 const query = {
   organisationUnits: {
     resource: "organisationUnits",
@@ -14,6 +15,13 @@ const query = {
       paging: false,
       fields: ["id,name,level,path,displayName,code,children,ancestors,created,href,user,users,userAccesses"],
       order: "level"
+    }
+  },
+  visualizations: {
+    resource: 'visualizations',
+    params: {
+      paging: false,
+      field: ["id", "displayName"]
     }
   },
   indicators: {
@@ -39,7 +47,6 @@ const query = {
 };
 const validater = new EmailValidator();
 const MyApp = () => {
-  var _data$periodTypes, _data$indicators, _data$dataElements;
   const engine = useDataEngine();
   const [formData, setFormData] = useState();
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
@@ -170,51 +177,9 @@ const MyApp = () => {
       }
     }, /*#__PURE__*/React.createElement(CircularLoader, null));
   }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(HeaderComponent, null), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
-    className: classes.display
-  }, /*#__PURE__*/React.createElement(GeneralForm, {
-    styles: classes,
-    formInputs: formInputs,
-    formData: formData,
-    periodTypes: data === null || data === void 0 ? void 0 : (_data$periodTypes = data.periodTypes) === null || _data$periodTypes === void 0 ? void 0 : _data$periodTypes.periodTypes
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(DataDimensionsCodes, {
-    indicators: data === null || data === void 0 ? void 0 : (_data$indicators = data.indicators) === null || _data$indicators === void 0 ? void 0 : _data$indicators.indicators,
-    dataElements: data === null || data === void 0 ? void 0 : (_data$dataElements = data.dataElements) === null || _data$dataElements === void 0 ? void 0 : _data$dataElements.dataElements,
-    setSelectedDataDimensionsCodes: setSelectedDataDimensionsCodes
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(OrgUnits, {
-    orgUnits: data.organisationUnits.organisationUnits,
-    setSelecteOrgUnit: setSelecteOrgUnit,
-    styles: classes
-  })), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
-    style: {
-      padding: "20px",
-      justifyContent: "start",
-      display: "flex"
-    }
-  }, /*#__PURE__*/React.createElement(Button, {
-    name: "submit",
-    primary: true,
-    onClick: initializeButton,
-    value: "default"
-  }, "Initialise Integration"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginLeft: "50px"
-    }
-  }, /*#__PURE__*/React.createElement(Box, null, isSuccessMessage == true ? /*#__PURE__*/React.createElement(AlertBar, {
-    hidden: hide,
-    success: true,
-    duration: 4000,
-    onHidden: e => {
-      setHidden(true);
-      window.location.reload(true);
-    }
-  }, message) : /*#__PURE__*/React.createElement(AlertBar, {
-    hidden: hide,
-    warning: true,
-    duration: 4000,
-    onHidden: e => {
-      setHidden(true);
-    }
-  }, message))))));
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(HeaderComponent, null), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement(Request, {
+    data: data,
+    style: classes
+  })));
 };
 export default MyApp;
