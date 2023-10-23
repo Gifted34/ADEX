@@ -9,16 +9,16 @@ export default function DataDimensionsCodes(props) {
     const [filterTerm, setFilter] = useState()
 
     useEffect(()=>{
-        console.log(dxType)
-    },[dxType])
-
+        
+    },[])
+    //get selected items
     const getDataDimensions = (e) => {
         setselectedDimensions(
             e.selected
         )
-        props?.setSelectedDataDimensionsCodes(e.selected)
     }
 
+    //pushing data elements,indicators,and visualisation into transfer options
     const defaultRenderOption = () => {
         let codes = []
         props?.indicators?.filter((indicator) => indicator.code !== undefined)?.map(indicatorWithCode => {
@@ -49,9 +49,13 @@ export default function DataDimensionsCodes(props) {
     const defaultFilterCallback = (e) => {
     
     }
+    //filtering options in the dx transfer
     const filterCallback = (options) =>{
-        const opt = options.filter((object)=> object?.type === dxType)
-        console.log(opt)
+        if(dxType === undefined || dxType === 'default'){
+            return options
+        }
+         const opt = options.filter((object)=> object?.type === dxType)
+         return opt.filter((object)=> object.label.includes(filterText))        
     }
     return (
         <div style={{ padding: "10px", width: "700px" }}>
@@ -65,7 +69,7 @@ export default function DataDimensionsCodes(props) {
                 height="400px"
                 onChange={getDataDimensions}
                 options={defaultRenderOption()}
-                //filterCallback = {filterCallback}
+                filterCallback = {filterCallback}
                 selected={selectedDimensions}
                 filterable
                 hideFilterInput

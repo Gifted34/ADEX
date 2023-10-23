@@ -13,9 +13,6 @@ export default function AddNewRequests(props) {
   const dataElements = props === null || props === void 0 ? void 0 : (_props$data3 = props.data) === null || _props$data3 === void 0 ? void 0 : (_props$data3$dataElem = _props$data3.dataElements) === null || _props$data3$dataElem === void 0 ? void 0 : _props$data3$dataElem.dataElements;
   const indicators = props === null || props === void 0 ? void 0 : (_props$data4 = props.data) === null || _props$data4 === void 0 ? void 0 : (_props$data4$indicato = _props$data4.indicators) === null || _props$data4$indicato === void 0 ? void 0 : _props$data4$indicato.indicators;
   const id = location.pathname.split('/')[2];
-  useEffect(() => {
-    console.log(id);
-  }, []);
   return /*#__PURE__*/React.createElement("div", {
     className: props === null || props === void 0 ? void 0 : (_props$style = props.style) === null || _props$style === void 0 ? void 0 : _props$style.padding
   }, /*#__PURE__*/React.createElement(Box, {

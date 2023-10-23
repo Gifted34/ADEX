@@ -12,10 +12,6 @@ export default function AddNewRequests(props) {
   const dataElements = props?.data?.dataElements?.dataElements
   const indicators = props?.data?.indicators?.indicators
   const id = location.pathname.split('/')[2]
-
-  useEffect(()=>{
-    console.log(id)
-  },[])
   
   return (
     <div className={props?.style?.padding}>
