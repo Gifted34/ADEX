@@ -7,7 +7,12 @@ import OrgUnits from "./components/forms/orgUnits";
 import GeneralForm from "./components/forms/general.form";
 import { AlertBar, Box, Button, CircularLoader, Divider, I } from "@dhis2/ui";
 import EmailValidator from "./services/emailValidator";
-import Request from "./request/[id]";
+import HomePage from "./components/widgets/homePage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NewDataInitialization from "./components/widgets/newDataInitialization";
+import NoPageFound from "./components/widgets/noPageFound";
+import AddNewRequests from "./components/widgets/addNewRequests";
+import ViewDataStoreById from "./components/widgets/view";
 const query = {
   organisationUnits: {
     resource: "organisationUnits",
@@ -41,6 +46,19 @@ const query = {
   periodTypes: {
     resource: "periodTypes",
     params: {
+      fields: ["*"]
+    }
+  },
+  aggregateDataExchanges: {
+    resource: "aggregateDataExchanges",
+    params: {
+      fields: ["*"]
+    }
+  },
+  dataStore: {
+    resource: "dataStore",
+    params: {
+      paging: false,
       fields: ["*"]
     }
   }
@@ -94,7 +112,37 @@ const MyApp = () => {
       return false;
     }
   };
-
+  // save to datastore
+  const generalInputValues = _ref => {
+    let {
+      type,
+      formInputs
+    } = _ref;
+    let payload = {
+      resource: `dataStore/DEX_initializer_values/${new Date().getTime()}`,
+      type: "create",
+      data: {
+        createdAt: new Date().toLocaleString(),
+        dataValues: {
+          name: formInputs === null || formInputs === void 0 ? void 0 : formInputs.dexname,
+          url: formInputs === null || formInputs === void 0 ? void 0 : formInputs.url,
+          type: type
+        }
+      }
+    };
+    engine.mutate(payload).then(res => {
+      if (res.httpStatusCode == 201) {
+        console.log(res);
+        setSuccessMessage(true);
+        setHidden(false);
+        setMessage("Data saved in the datastore successfully.");
+      }
+    }).catch(e => {
+      console.log(e);
+      setHidden(false);
+      setMessage("Error occured. Either server or the inputs causes this error.");
+    });
+  };
   // constructing a data exchange api layout as defined in the url
   // https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/data-exchange.html
   const initializeButton = () => {
@@ -177,9 +225,68 @@ const MyApp = () => {
       }
     }, /*#__PURE__*/React.createElement(CircularLoader, null));
   }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(HeaderComponent, null), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement(Request, {
-    data: data,
-    style: classes
-  })));
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(HeaderComponent, null), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "20px"
+    }
+  }, /*#__PURE__*/React.createElement(BrowserRouter, null, /*#__PURE__*/React.createElement(Routes, null, /*#__PURE__*/React.createElement(Route, {
+    index: true,
+    element: /*#__PURE__*/React.createElement(HomePage, {
+      data: data,
+      styles: classes
+    })
+  }), /*#__PURE__*/React.createElement(Route, {
+    path: "/view/:key",
+    element: /*#__PURE__*/React.createElement(ViewDataStoreById, {
+      data: data,
+      styles: classes
+    })
+  }), /*#__PURE__*/React.createElement(Route, {
+    path: "/new-request/:key",
+    element: /*#__PURE__*/React.createElement(AddNewRequests, {
+      data: data,
+      styles: classes
+    })
+  }), /*#__PURE__*/React.createElement(Route, {
+    path: "/new",
+    element: /*#__PURE__*/React.createElement(NewDataInitialization, {
+      styles: classes,
+      generalInputValues: generalInputValues
+    })
+  }), /*#__PURE__*/React.createElement(Route, {
+    path: "*",
+    element: /*#__PURE__*/React.createElement(NoPageFound, null)
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "20px",
+      justifyContent: "start",
+      display: "flex",
+      display: "none"
+    }
+  }, /*#__PURE__*/React.createElement(Button, {
+    name: "submit",
+    primary: true,
+    onClick: initializeButton,
+    value: "default"
+  }, "Initialise Integration"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginLeft: "50px"
+    }
+  }, /*#__PURE__*/React.createElement(Box, null, isSuccessMessage == true ? /*#__PURE__*/React.createElement(AlertBar, {
+    hidden: hide,
+    success: true,
+    duration: 4000,
+    onHidden: e => {
+      setHidden(true);
+      window.location.reload(true);
+    }
+  }, message) : /*#__PURE__*/React.createElement(AlertBar, {
+    hidden: hide,
+    warning: true,
+    duration: 4000,
+    onHidden: e => {
+      setHidden(true);
+    }
+  }, message))))));
 };
 export default MyApp;
