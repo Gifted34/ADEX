@@ -7,6 +7,12 @@ import OrgUnits from "./components/forms/orgUnits";
 import GeneralForm from "./components/forms/general.form";
 import { AlertBar, Box, Button, CircularLoader, Divider, I } from "@dhis2/ui";
 import EmailValidator from "./services/emailValidator";
+import HomePage from "./components/widgets/homePage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NewDataInitialization from "./components/widgets/newDataInitialization";
+import NoPageFound from "./components/widgets/noPageFound";
+import AddNewRequests from "./components/widgets/addNewRequests";
+import ViewDataStoreById from "./components/widgets/view";
 
 const query = {
   organisationUnits: {
@@ -36,6 +42,19 @@ const query = {
   periodTypes: {
     resource: "periodTypes",
     params: {
+      fields: ["*"],
+    },
+  },
+  aggregateDataExchanges: {
+    resource: "aggregateDataExchanges",
+    params: {
+      fields: ["*"],
+    },
+  },
+  dataStore: {
+    resource: "dataStore",
+    params: {
+      paging: false,
       fields: ["*"],
     },
   },
@@ -95,7 +114,39 @@ const MyApp = () => {
       return false;
     }
   };
+  // save to datastore
+  const generalInputValues = ({ type, formInputs }) => {
+    let payload = {
+      resource: `dataStore/DEX_initializer_values/${new Date().getTime()}`,
+      type: "create",
+      data: {
+        createdAt: new Date().toLocaleString(),
+        dataValues: {
+          name: formInputs?.dexname,
+          url: formInputs?.url,
+          type: type,
+        },
+      },
+    };
 
+    engine
+      .mutate(payload)
+      .then((res) => {
+        if (res.httpStatusCode == 201) {
+          console.log(res);
+          setSuccessMessage(true);
+          setHidden(false);
+          setMessage("Data saved in the datastore successfully.");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        setHidden(false);
+        setMessage(
+          "Error occured. Either server or the inputs causes this error."
+        );
+      });
+  };
   // constructing a data exchange api layout as defined in the url
   // https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/data-exchange.html
   const initializeButton = () => {
@@ -194,7 +245,37 @@ const MyApp = () => {
       <div>
         <HeaderComponent />
         <br />
-        <div className={classes.display}>
+        <div style={{ padding: "20px" }}>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                index
+                element={<HomePage data={data} styles={classes} />}
+              />
+              <Route
+                path="/view/:key"
+                element={<ViewDataStoreById data={data} styles={classes} />}
+              />
+              <Route
+                path="/new-request/:key"
+                element={<AddNewRequests data={data} styles={classes} />}
+              />
+
+              <Route
+                path="/new"
+                element={
+                  <NewDataInitialization
+                    styles={classes}
+                    generalInputValues={generalInputValues}
+                  />
+                }
+              />
+              <Route path="*" element={<NoPageFound />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
+
+        {/* <div className={classes.display} style={{ display: "none" }}>
           <GeneralForm
             styles={classes}
             formInputs={formInputs}
@@ -216,10 +297,14 @@ const MyApp = () => {
             />
           </div>
           <br />
-        </div>
-        <Divider />
+        </div> */}
         <div
-          style={{ padding: "20px", justifyContent: "start", display: "flex" }}
+          style={{
+            padding: "20px",
+            justifyContent: "start",
+            display: "flex",
+            display: "none",
+          }}
         >
           <Button
             name="submit"
