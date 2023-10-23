@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DataQuery, useDataEngine, useDataQuery } from "@dhis2/app-runtime";
 import classes from "./App.module.css";
 import HeaderComponent from "./components/widgets/headerComponent";
-import DataDimensionsCodes from "./components/forms/dataDimensionsCodes";
-import OrgUnits from "./components/forms/orgUnits";
-import GeneralForm from "./components/forms/general.form";
-import { AlertBar, Box, Button, CircularLoader, Divider, I } from "@dhis2/ui";
+import { AlertBar, Box, Button, Center, CircularLoader, Divider, I } from "@dhis2/ui";
 import EmailValidator from "./services/emailValidator";
 import HomePage from "./components/widgets/homePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -82,6 +79,7 @@ const MyApp = () => {
     INTERNAL: "INTERNAL",
     EXTERNAL: "EXTERNAL",
   });
+  
   const [authType, setAuthType] = useState({
     TOKEN: "TOKEN",
     BASICAUTH: "BASICAUTH",
@@ -232,18 +230,9 @@ const MyApp = () => {
   }
   if (loading) {
     return (
-      <span
-        style={{
-          display: "flex",
-          width: "100%",
-          height: "100%",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <CircularLoader />
-      </span>
+      <Center>
+        <CircularLoader large/>
+        </Center>
     );
   }
 
@@ -265,7 +254,7 @@ const MyApp = () => {
               />
               <Route
                 path="/new-request/:key"
-                element={<AddNewRequests data={data} styles={classes} />}
+                element={<AddNewRequests data={data} style={classes} />}
               />
 
               <Route
