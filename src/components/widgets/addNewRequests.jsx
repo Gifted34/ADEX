@@ -170,49 +170,59 @@ const saveData = () =>{
   
   return (
     <div className={props?.style?.padding}>
-        {loading && <Layer translucent>
-                <Center>
-                    <CircularLoader large />
-                </Center>
-                </Layer>}
-            <Box className={props?.style?.display}>
-                <Box className={props?.style?.padding}>
-                       <OrgUnits orgUnits={orgUnits} setOrg={setorgUnits}/> 
-                </Box>
-                <div>
-                    <Box className={`${props?.style?.width} ${props?.style?.padding}`}>
-                        <Field label="Name">
-                            <Input
-                            onChange={(e)=>{
-                                setName(e.value)
-                            }}
-                            placeholder="Enter request name" />
-                        </Field>
-                    </Box>
-                <div className={props?.style?.display}>
-                <Box className={props?.style?.padding}>
-                <PeriodsWidget setPeriods={setPeriods}/>
-                </Box>
-                <Box className={props?.style?.padding}>
-                    <DataDimensionsCodes setData={setData} dataElements={dataElements} indicators={indicators} visualizations={Visualizations}/>
-                </Box>
-                </div>
-                <div className={props?.style?.padding}>
-                <ButtonStrip end>
-                    <Button primary large onClick={()=> saveData()}>Save</Button>
-                    <Link to={"/"}  style={{ textDecoration: "none", color: "white" }}>
-                    <Button large>Cancel</Button>
-                    </Link>
+          {loading && <Layer translucent>
+              <Center>
+                  <CircularLoader large />
+              </Center>
+          </Layer>}
+          <Box className={props?.style?.display}>
+              <Box className={props?.style?.padding}>
+                  <OrgUnits orgUnits={orgUnits} setOrg={setorgUnits} />
+              </Box>
+              <div>
+                  <Box className={`${props?.style?.width} ${props?.style?.padding}`}>
+                      <Field label="Name">
+                          <Input
+                              onChange={(e) => {
+                                  setName(e.value);
+                              } }
+                              placeholder="Enter request name" />
+                      </Field>
+                  </Box>
+                  <div className={props?.style?.display}>
+                      <Box className={props?.style?.padding}>
+                          <PeriodsWidget setPeriods={setPeriods} />
+                      </Box>
+                      <Box className={props?.style?.padding}>
+                          <DataDimensionsCodes setData={setData} dataElements={dataElements} indicators={indicators} visualizations={Visualizations} />
+                      </Box>
+                  </div>
+                  <div className={props?.style?.padding}>
+                      <ButtonStrip end>
+                          <Button primary large onClick={() => saveData()}>Save</Button>
+                          <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
+                              <Button large>Cancel</Button>
+                          </Link>
 
-                </ButtonStrip>
-                <AlertBar warning hidden={errorHidden} onHidden={()=> setErrorHidden(true)}  duration={2000}>{errorMessage}</AlertBar>
-                <AlertBar success hidden={hide}  duration={2000} onHidden={()=> {
-                    setHidden(true)
-                    navigate('/')}}>Innitialisation saved succesifuly</AlertBar>
-                </div>
-                </div>
-            </Box>
-            
+                      </ButtonStrip>
+                      <AlertBar warning hidden={errorHidden} onHidden={() => setErrorHidden(true)} duration={2000}>{errorMessage}</AlertBar>
+                      <AlertBar success hidden={hide} duration={2000} onHidden={() => {
+                          setHidden(true);
+                          navigate('/');
+                      } }>Innitialisation saved succesifuly</AlertBar>
+                  </div>
+              </div>
+          </Box>
+      <div className={props?.style?.padding}>
+              <ButtonStrip end>
+                  <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
+                      <Button large>Cancel</Button>
+                  </Link>
+                  <Button primary large>
+                      Save
+                  </Button>
+              </ButtonStrip>
+          </div>
         </div>
   );
 }

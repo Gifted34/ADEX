@@ -6,7 +6,7 @@ import DataDimensionsCodes from "../forms/dataDimensionsCodes";
 import OrgUnits from "../forms/orgUnits";
 import { useDataEngine, useDataMutation } from "@dhis2/app-runtime";
 export default function AddNewRequests(props) {
-  var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$style, _props$style2, _props$style3, _props$style4, _props$style5, _props$style6, _props$style7, _props$style8, _props$style9;
+  var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$style, _props$style2, _props$style3, _props$style4, _props$style5, _props$style6, _props$style7, _props$style8, _props$style9, _props$style10;
   const engine = useDataEngine();
   const location = useLocation();
   const orgUnits = props === null || props === void 0 ? void 0 : (_props$data = props.data) === null || _props$data === void 0 ? void 0 : (_props$data$organisat = _props$data.organisationUnits) === null || _props$data$organisat === void 0 ? void 0 : _props$data$organisat.organisationUnits;
@@ -235,5 +235,20 @@ export default function AddNewRequests(props) {
       setHidden(true);
       navigate('/');
     }
-  }, "Innitialisation saved succesifuly")))));
+  }, "Innitialisation saved succesifuly")))), /*#__PURE__*/React.createElement("div", {
+    className: props === null || props === void 0 ? void 0 : (_props$style10 = props.style) === null || _props$style10 === void 0 ? void 0 : _props$style10.padding
+  }, /*#__PURE__*/React.createElement(ButtonStrip, {
+    end: true
+  }, /*#__PURE__*/React.createElement(Link, {
+    to: "/",
+    style: {
+      textDecoration: "none",
+      color: "white"
+    }
+  }, /*#__PURE__*/React.createElement(Button, {
+    large: true
+  }, "Cancel")), /*#__PURE__*/React.createElement(Button, {
+    primary: true,
+    large: true
+  }, "Save"))));
 }

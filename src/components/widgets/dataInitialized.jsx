@@ -54,7 +54,7 @@ export default function DataInitialized(props) {
                     <TableCell>
                       {aggregateDataExchange?.value?.createdAt?.split(",")[0]}
                     </TableCell>
-                    <TableCell>{aggregateDataExchange?.value?.name}</TableCell>
+                    <TableCell>{aggregateDataExchange?.value?.dexname}</TableCell>
                     <TableCell>
                       {aggregateDataExchange?.value?.url == undefined
                         ? aggregateDataExchange?.value?.type

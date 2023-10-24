@@ -11,7 +11,7 @@ import NoPageFound from "./components/widgets/noPageFound";
 import AddNewRequests from "./components/widgets/addNewRequests";
 import ViewDataStoreById from "./components/widgets/view";
 import DeleteEntry from "./components/forms/deleteEntry";
-import UpdateDataInitialization from "./components/forms/update.dataStore.dexEntry";
+import UpdateDataInitialization from "./components/widgets/update.dataStore.dexEntry";
 const query = {
   organisationUnits: {
     resource: "organisationUnits",
@@ -65,6 +65,10 @@ const query = {
 const validater = new EmailValidator();
 const MyApp = () => {
   const [formInputValues, setFormInputValues] = useState({
+    dexname: "",
+    url: ""
+  });
+  const [updateFormInputValues, setUpdateFormInputValues] = useState({
     dexname: "",
     url: ""
   });
@@ -137,7 +141,7 @@ const MyApp = () => {
         type: "create",
         data: {
           createdAt: new Date().toLocaleString(),
-          name: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname,
+          dexname: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname,
           url: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url,
           type: type
         }
@@ -236,42 +240,35 @@ const MyApp = () => {
 
   // update the initialized entry in the datastore
   const updateGeneralInputValues = data => {
-    const payload = {
-      resource: "dataStore/DEX_initializer_values",
-      id: data === null || data === void 0 ? void 0 : data.key,
-      type: "update",
-      partial: true,
-      data: _ref => {
-        let {
-          name,
-          type,
-          url
-        } = _ref;
-        return {
-          name: data === null || data === void 0 ? void 0 : data.name,
-          type: data === null || data === void 0 ? void 0 : data.type,
-          url: data === null || data === void 0 ? void 0 : data.url
-        };
-      }
-    };
-
-    // engine
-    // .mutate(payload)
-    // .then((res) => {
-    //   console.log(res);
-    //   if (res.httpStatusCode == 200) {
-    //     setOpenDelete(!openDelete);
-    //     setSuccessMessage(true);
-    //     setHidden(false);
-    //     setMessage("Data saved in the datastore successfully.");
-    //   }
-    // })
-    // .catch((e) => {
-    //   setHidden(false);
-    //   setMessage(
-    //     "Error occured. Either server or the inputs causes this error."
-    //   );
-    // });
+    console.log(updateFormInputValues);
+    if ((updateFormInputValues === null || updateFormInputValues === void 0 ? void 0 : updateFormInputValues.dexname) == "" || (updateFormInputValues === null || updateFormInputValues === void 0 ? void 0 : updateFormInputValues.dexname) == null || (updateFormInputValues === null || updateFormInputValues === void 0 ? void 0 : updateFormInputValues.dexname) == undefined || (updateFormInputValues === null || updateFormInputValues === void 0 ? void 0 : updateFormInputValues.url) == "" || (updateFormInputValues === null || updateFormInputValues === void 0 ? void 0 : updateFormInputValues.url) == null || (updateFormInputValues === null || updateFormInputValues === void 0 ? void 0 : updateFormInputValues.url) == undefined) {} else {
+      engine.mutate({
+        resource: `dataStore/DEX_initializer_values/${data === null || data === void 0 ? void 0 : data.key}`,
+        type: "update",
+        data: _ref => {
+          var _dataToUpdate$value;
+          let {} = _ref;
+          return {
+            createdAt: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value = dataToUpdate.value) === null || _dataToUpdate$value === void 0 ? void 0 : _dataToUpdate$value.createdAt,
+            updatedAt: new Date().toLocaleDateString(),
+            dexname: updateFormInputValues === null || updateFormInputValues === void 0 ? void 0 : updateFormInputValues.dexname,
+            type: type,
+            url: updateFormInputValues === null || updateFormInputValues === void 0 ? void 0 : updateFormInputValues.url
+          };
+        }
+      }).then(res => {
+        console.log(res);
+        if (res.httpStatusCode == 200) {
+          setOpenUpdate(!openUpdate);
+          setSuccessMessage(true);
+          setHidden(false);
+          setMessage("Data saved in the datastore successfully.");
+        }
+      }).catch(e => {
+        setHidden(false);
+        setMessage("Error occured. Either server or the inputs causes this error.");
+      });
+    }
   };
   // delete the initialized entry in datastore
   const deleteEntry = data => {
@@ -284,7 +281,6 @@ const MyApp = () => {
       type: "delete"
     };
     engine.mutate(payload).then(res => {
-      console.log(res);
       if (res.httpStatusCode == 200) {
         setOpenDelete(!openDelete);
         setSuccessMessage(true);
@@ -375,8 +371,8 @@ const MyApp = () => {
     type: type,
     setOpenUpdate: setOpenUpdate,
     openUpdate: openUpdate,
-    setFormInputValues: setFormInputValues,
-    formInputValues: formInputValues,
+    setUpdateFormInputValues: setUpdateFormInputValues,
+    updateFormInputValues: updateFormInputValues,
     updateGeneralInputValues: updateGeneralInputValues,
     data: dataToUpdate
   }), /*#__PURE__*/React.createElement(DeleteEntry, {
