@@ -31,16 +31,19 @@ export default function HomePage(props) {
       }}
     >
       <ButtonStrip end>
-        <Link to={"/new"}>
-          <Button primary>Create new</Button>
-        </Link>
+        <Button primary onClick={() => props?.setOpen(!props?.open)}>
+          Create new
+        </Button>
       </ButtonStrip>
       <Divider />
       <div className="" style={{ marginTop: "10px" }}>
         <DataInitialized
+          setOpenDelete={props?.setOpenDelete}
+          openDelete={props?.openDelete}
           dataStoreDexValues={getDataStoreDexValues}
           data={[]}
           styles={props?.classes}
+          deleteEntry={props?.deleteEntry}
         />
       </div>
     </div>

@@ -10,6 +10,7 @@ import NewDataInitialization from "./components/widgets/newDataInitialization";
 import NoPageFound from "./components/widgets/noPageFound";
 import AddNewRequests from "./components/widgets/addNewRequests";
 import ViewDataStoreById from "./components/widgets/view";
+import DeleteEntry from "./components/forms/deleteEntry";
 const query = {
   organisationUnits: {
     resource: "organisationUnits",
@@ -20,7 +21,7 @@ const query = {
     }
   },
   visualizations: {
-    resource: 'visualizations',
+    resource: "visualizations",
     params: {
       paging: false,
       field: ["id", "displayName"]
@@ -62,6 +63,14 @@ const query = {
 };
 const validater = new EmailValidator();
 const MyApp = () => {
+  const [formInputValues, setFormInputValues] = useState({
+    dexname: "",
+    url: ""
+  });
+  const [type, setType] = useState("EXTERNAL");
+  const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [dateToDelete, setdateToDelete] = useState();
   const engine = useDataEngine();
   const [formData, setFormData] = useState();
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
@@ -69,14 +78,15 @@ const MyApp = () => {
   const [hide, setHidden] = useState(true);
   const [message, setMessage] = useState("");
   const [isSuccessMessage, setSuccessMessage] = useState(false);
-  const [type, setType] = useState({
-    INTERNAL: "INTERNAL",
-    EXTERNAL: "EXTERNAL"
-  });
-  const [authType, setAuthType] = useState({
-    TOKEN: "TOKEN",
-    BASICAUTH: "BASICAUTH"
-  });
+  // const [type, setType] = useState({
+  //   INTERNAL: "INTERNAL",
+  //   EXTERNAL: "EXTERNAL",
+  // });
+  // const [authType, setAuthType] = useState({
+  //   TOKEN: "TOKEN",
+  //   BASICAUTH: "BASICAUTH",
+  // });
+
   const {
     loading,
     error,
@@ -109,36 +119,38 @@ const MyApp = () => {
       return false;
     }
   };
+
   // save to datastore
-  const generalInputValues = _ref => {
-    let {
-      type,
-      formInputs
-    } = _ref;
-    let payload = {
-      resource: `dataStore/DEX_initializer_values/${new Date().getTime()}`,
-      type: "create",
-      data: {
-        createdAt: new Date().toLocaleString(),
-        dataValues: {
-          name: formInputs === null || formInputs === void 0 ? void 0 : formInputs.dexname,
-          url: formInputs === null || formInputs === void 0 ? void 0 : formInputs.url,
-          type: type
-        }
-      }
-    };
-    engine.mutate(payload).then(res => {
-      if (res.httpStatusCode == 201) {
-        console.log(res);
-        setSuccessMessage(true);
-        setHidden(false);
-        setMessage("Data saved in the datastore successfully.");
-      }
-    }).catch(e => {
-      console.log(e);
+  const saveGeneralInputValues = () => {
+    if (type == null || type == undefined || type == "" || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname) == null || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname) == undefined || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname) == "" || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url) == null || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url) == undefined || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url) == "") {
+      setSuccessMessage(true);
       setHidden(false);
-      setMessage("Error occured. Either server or the inputs causes this error.");
-    });
+      setMessage("Error occured.");
+    } else {
+      let payload = {
+        resource: `dataStore/DEX_initializer_values/${new Date().getTime()}`,
+        type: "create",
+        data: {
+          createdAt: new Date().toLocaleString(),
+          dataValues: {
+            name: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname,
+            url: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url,
+            type: type
+          }
+        }
+      };
+      engine.mutate(payload).then(res => {
+        if (res.httpStatusCode == 201) {
+          setOpen(!open);
+          setSuccessMessage(true);
+          setHidden(false);
+          setMessage("Data saved in the datastore successfully.");
+        }
+      }).catch(e => {
+        setHidden(false);
+        setMessage("Error occured. Either server or the inputs causes this error.");
+      });
+    }
   };
   // constructing a data exchange api layout as defined in the url
   // https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/data-exchange.html
@@ -215,6 +227,29 @@ const MyApp = () => {
       large: true
     }));
   }
+  // delete the initialized entry in datastore
+  const deleteEntry = data => {
+    setdateToDelete(data);
+  };
+  const deleteDataEntry = data => {
+    let payload = {
+      resource: "dataStore/DEX_initializer_values",
+      id: data === null || data === void 0 ? void 0 : data.key,
+      type: "delete"
+    };
+    engine.mutate(payload).then(res => {
+      console.log(res);
+      if (res.httpStatusCode == 200) {
+        setOpenDelete(!openDelete);
+        setSuccessMessage(true);
+        setHidden(false);
+        setMessage("Data saved in the datastore successfully.");
+      }
+    }).catch(e => {
+      setHidden(false);
+      setMessage("Error occured. Either server or the inputs causes this error.");
+    });
+  };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(HeaderComponent, null), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "20px"
@@ -223,7 +258,12 @@ const MyApp = () => {
     index: true,
     element: /*#__PURE__*/React.createElement(HomePage, {
       data: data,
-      styles: classes
+      styles: classes,
+      open: open,
+      setOpen: setOpen,
+      setOpenDelete: setOpenDelete,
+      openDelete: openDelete,
+      deleteEntry: deleteEntry
     })
   }), /*#__PURE__*/React.createElement(Route, {
     path: "/view/:key",
@@ -236,12 +276,6 @@ const MyApp = () => {
     element: /*#__PURE__*/React.createElement(AddNewRequests, {
       data: data,
       style: classes
-    })
-  }), /*#__PURE__*/React.createElement(Route, {
-    path: "/new",
-    element: /*#__PURE__*/React.createElement(NewDataInitialization, {
-      styles: classes,
-      generalInputValues: generalInputValues
     })
   }), /*#__PURE__*/React.createElement(Route, {
     path: "*",
@@ -268,7 +302,7 @@ const MyApp = () => {
     duration: 4000,
     onHidden: e => {
       setHidden(true);
-      window.location.reload(true);
+      // window.location.reload(true);
     }
   }, message) : /*#__PURE__*/React.createElement(AlertBar, {
     hidden: hide,
@@ -277,6 +311,20 @@ const MyApp = () => {
     onHidden: e => {
       setHidden(true);
     }
-  }, message))))));
+  }, message))))), /*#__PURE__*/React.createElement(NewDataInitialization, {
+    open: open,
+    setOpen: setOpen,
+    styles: classes,
+    setType: setType,
+    formInputValues: formInputValues,
+    type: type,
+    setFormInputValues: setFormInputValues,
+    saveGeneralInputValues: saveGeneralInputValues
+  }), /*#__PURE__*/React.createElement(DeleteEntry, {
+    setOpenDelete: setOpenDelete,
+    openDelete: openDelete,
+    deleteDataEntry: deleteDataEntry,
+    data: dateToDelete
+  }));
 };
 export default MyApp;

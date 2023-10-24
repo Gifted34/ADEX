@@ -1,30 +1,59 @@
-import { Button, ButtonStrip } from "@dhis2/ui";
+import {
+  Button,
+  ButtonStrip,
+  Modal,
+  ModalActions,
+  ModalContent,
+  ModalTitle,
+} from "@dhis2/ui";
 import React from "react";
-import { Link } from "react-router-dom";
-import GeneralForm from "../forms/general.form";
 import GeneralInputs from "../forms/general.inputs";
 
 export default function NewDataInitialization(props) {
- 
+  // var val = Math.floor(1000 + Math.random() * 9000);
   return (
     <div
       style={{
         width: "100%",
       }}
     >
-      <ButtonStrip end>
-        <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
-          <Button primary>Home</Button>
-        </Link>
-      </ButtonStrip>
-      <div className="" style={{ marginTop: "10px" }}>
-        <GeneralInputs
-          styles={props?.styles}
-          formInputs={props?.formInputs}
-          formData={props?.formData}
-          generalInputValues={props?.generalInputValues}
-        />
-      </div>
+      {props?.open && (
+        <div className="" style={{ marginTop: "10px" }}>
+          <Modal large position="middle">
+            <ModalTitle>New Initialization</ModalTitle>
+            <ModalContent>
+              <GeneralInputs
+                styles={props?.styles}
+                formInputValues={props?.formInputValues}
+                formData={props?.formData}
+                setType={props?.setType}
+                type={props?.type}
+                setFormInputValues={props?.setFormInputValues}
+              />
+            </ModalContent>
+            <ModalActions>
+              <ButtonStrip end>
+                <Button
+                  onClick={() => {
+                    props?.setOpen(false);
+                  }}
+                  destructive
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    props?.saveGeneralInputValues();
+                  }}
+                  primary
+                >
+                  Save to DataStore
+                </Button>
+              </ButtonStrip>
+            </ModalActions>
+          </Modal>
+        </div>
+      )}
     </div>
   );
 }

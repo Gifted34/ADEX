@@ -26,18 +26,20 @@ export default function HomePage(props) {
     }
   }, /*#__PURE__*/React.createElement(ButtonStrip, {
     end: true
-  }, /*#__PURE__*/React.createElement(Link, {
-    to: "/new"
   }, /*#__PURE__*/React.createElement(Button, {
-    primary: true
-  }, "Create new"))), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
+    primary: true,
+    onClick: () => props === null || props === void 0 ? void 0 : props.setOpen(!(props !== null && props !== void 0 && props.open))
+  }, "Create new")), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
     className: "",
     style: {
       marginTop: "10px"
     }
   }, /*#__PURE__*/React.createElement(DataInitialized, {
+    setOpenDelete: props === null || props === void 0 ? void 0 : props.setOpenDelete,
+    openDelete: props === null || props === void 0 ? void 0 : props.openDelete,
     dataStoreDexValues: getDataStoreDexValues,
     data: [],
-    styles: props === null || props === void 0 ? void 0 : props.classes
+    styles: props === null || props === void 0 ? void 0 : props.classes,
+    deleteEntry: props === null || props === void 0 ? void 0 : props.deleteEntry
   })));
 }
