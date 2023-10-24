@@ -41,12 +41,15 @@ export default function HomePage(props) {
           setOpenDelete={props?.setOpenDelete}
           openDelete={props?.openDelete}
           setOpenUpdate={props?.setOpenUpdate}
+          openIntegration={props?.openIntegration}
+          setOpenIntegration={props?.setOpenIntegration}
           openUpdate={props?.openUpdate}
           dataStoreDexValues={getDataStoreDexValues}
           data={[]}
           styles={props?.classes}
           deleteEntry={props?.deleteEntry}
           updateEntry={props?.updateEntry}
+          integrateEntry={props?.integrateEntry}
         />
       </div>
     </div>

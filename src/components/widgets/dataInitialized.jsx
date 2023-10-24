@@ -16,9 +16,7 @@ import { Outlet, Link } from "react-router-dom";
 
 export default function DataInitialized(props) {
   const [dexDataStoreValues, setDexDataStoreValues] = useState([]);
-  // props?.getDataStoreDexValues()?.filter((store) => store === "DEX_values")
   const getData = () => {
-    // return console.log(props?.dataStoreDexValues());
     props &&
       props?.dataStoreDexValues().then((res) => {
         setDexDataStoreValues(res);
@@ -30,6 +28,9 @@ export default function DataInitialized(props) {
   };
   const updateEntry = (data) => {
     props?.updateEntry(data);
+  };
+  const integrateEntry = (data) => {
+    props?.integrateEntry(data);
   };
   useEffect(() => {
     getData();
@@ -99,7 +100,17 @@ export default function DataInitialized(props) {
                           >
                             Remove
                           </Button>
-                          <Button primary>Initialize integration</Button>
+                          <Button
+                            primary
+                            onClick={() => {
+                              props?.setOpenIntegration(
+                                !props?.openIntegration
+                              );
+                              integrateEntry(aggregateDataExchange);
+                            }}
+                          >
+                            Initialize integration
+                          </Button>
                         </ButtonStrip>
                       </TableCell>
                     </TableRow>

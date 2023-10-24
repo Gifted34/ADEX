@@ -20,6 +20,7 @@ import AddNewRequests from "./components/widgets/addNewRequests";
 import ViewDataStoreById from "./components/widgets/view";
 import DeleteEntry from "./components/forms/deleteEntry";
 import UpdateDataInitialization from "./components/widgets/update.dataStore.dexEntry";
+import IntegrateDataStoreInitializationToDEX from "./components/widgets/integrate.dataStore.dexEntry";
 
 const query = {
   organisationUnits: {
@@ -84,14 +85,21 @@ const MyApp = () => {
     dexname: "",
     url: "",
   });
+  const [authValues, setAuthValues] = useState({
+    username: "",
+    password: "",
+    token: "",
+  });
 
   // updateFormInputValues
   const [type, setType] = useState("EXTERNAL");
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [openIntegration, setOpenIntegration] = useState(false);
   const [dataToDelete, setDataToDelete] = useState();
   const [dataToUpdate, setDataToUpdate] = useState();
+  const [dataToIntegrate, setDataToIntegrate] = useState();
 
   const engine = useDataEngine();
   const [formData, setFormData] = useState();
@@ -106,10 +114,10 @@ const MyApp = () => {
   //   INTERNAL: "INTERNAL",
   //   EXTERNAL: "EXTERNAL",
   // });
-  // const [authType, setAuthType] = useState({
-  //   TOKEN: "TOKEN",
-  //   BASICAUTH: "BASICAUTH",
-  // });
+  const [authType, setAuthType] = useState({
+    TOKEN: "TOKEN",
+    BASICAUTH: "BASICAUTH",
+  });
 
   const { loading, error, data, refetch } = useDataQuery(query);
   // inputs data from general section passed in state
@@ -198,23 +206,12 @@ const MyApp = () => {
       resource: "aggregateDataExchanges",
       type: "create",
       data: {
-        name: formData?.formInputs?.dexname,
-        source: {
-          requests: [
-            {
-              name: formData?.formInputs?.sourcename,
-              dx: selectedDataDimensionsCodes,
-              pe: [formData?.formInputs?.period],
-              ou: [selecteOrgUnit?.code],
-              inputIdScheme: "code",
-              outputIdScheme: "code",
-            },
-          ],
-        },
+        name: dataToIntegrate?.value?.dexname,
+        source: dataToIntegrate?.value?.source,
         target: {
-          type: formData?.type,
+          type: dataToIntegrate?.value?.type,
           api: {
-            url: formData?.formInputs?.url,
+            url: dataToIntegrate?.value?.url,
             username: formData?.formInputs?.username,
             password: formData?.formInputs?.password,
           },
@@ -225,43 +222,43 @@ const MyApp = () => {
       },
     };
 
-    if (formData?.formInputs?.dexname == undefined) {
-      setMessage("Name is missing");
-      setHidden(false);
-    } else if (formData?.formInputs?.period == undefined) {
-      setMessage("Period is missing");
-      setHidden(false);
-    } else {
-      if (formData?.type == type?.EXTERNAL) {
-        // payload?.data?.target?.type == type?.EXTERNAL;
-        if (formData?.formInputs?.url == "") {
-          setMessage("Please enter target DHIS2 instance url");
-          setHidden(false);
-        } else {
-          if (validater.isValidUrl(formData?.formInputs?.url) == false) {
-            setMessage("The email format is invalid.");
-            setHidden(false);
-          } else {
-            if (checkIfTokenOrBasiAuth(formData?.authType) == true) {
-              if (
-                formData?.formInputs?.username == undefined ||
-                formData?.formInputs?.username == "" ||
-                formData?.formInputs?.password == undefined ||
-                formData?.formInputs?.password == ""
-              ) {
-                setMessage("Username or password is missing");
-                setHidden(false);
-              } else {
-                mutation(payload);
-              }
-            } else {
-            }
-          }
-        }
-      } else {
-        mutation(payload);
-      }
-    }
+    // if (formData?.formInputs?.dexname == undefined) {
+    //   setMessage("Name is missing");
+    //   setHidden(false);
+    // } else if (formData?.formInputs?.period == undefined) {
+    //   setMessage("Period is missing");
+    //   setHidden(false);
+    // } else {
+    //   if (formData?.type == type?.EXTERNAL) {
+    //     // payload?.data?.target?.type == type?.EXTERNAL;
+    //     if (formData?.formInputs?.url == "") {
+    //       setMessage("Please enter target DHIS2 instance url");
+    //       setHidden(false);
+    //     } else {
+    //       if (validater.isValidUrl(formData?.formInputs?.url) == false) {
+    //         setMessage("The email format is invalid.");
+    //         setHidden(false);
+    //       } else {
+    //         if (checkIfTokenOrBasiAuth(formData?.authType) == true) {
+    //           if (
+    //             formData?.formInputs?.username == undefined ||
+    //             formData?.formInputs?.username == "" ||
+    //             formData?.formInputs?.password == undefined ||
+    //             formData?.formInputs?.password == ""
+    //           ) {
+    //             setMessage("Username or password is missing");
+    //             setHidden(false);
+    //           } else {
+    //             mutation(payload);
+    //           }
+    //         } else {
+    //         }
+    //       }
+    //     }
+    //   } else {
+    //     mutation(payload);
+    //   }
+    // }
   };
 
   if (error) {
@@ -323,6 +320,13 @@ const MyApp = () => {
   const deleteEntry = (data) => {
     setDataToDelete(data);
   };
+
+  const integrateEntry = (data) => {
+    setDataToIntegrate(data);
+  };
+  const initializeIntegration = (data) => {
+    console.log(data);
+  };
   const deleteDataEntry = (data) => {
     if (data?.key == null || data?.key == undefined || data?.key == "") {
     } else {
@@ -366,11 +370,15 @@ const MyApp = () => {
                     open={open}
                     setOpenUpdate={setOpenUpdate}
                     openUpdate={openUpdate}
+                    openIntegration={openIntegration}
+                    setOpenIntegration={setOpenIntegration}
                     setOpen={setOpen}
                     setOpenDelete={setOpenDelete}
                     openDelete={openDelete}
                     deleteEntry={deleteEntry}
                     updateEntry={updateEntry}
+                    integrateEntry={integrateEntry}
+                    // initializeIntegration={initializeIntegration}
                   />
                 }
               />
@@ -453,6 +461,18 @@ const MyApp = () => {
         updateFormInputValues={updateFormInputValues}
         updateGeneralInputValues={updateGeneralInputValues}
         data={dataToUpdate}
+      />
+      <IntegrateDataStoreInitializationToDEX
+        setAuthType={setAuthType}
+        styles={classes}
+        type={type}
+        authType={authType}
+        setOpenIntegration={setOpenIntegration}
+        openIntegration={openIntegration}
+        setAuthValues={setAuthValues}
+        authValues={authValues}
+        initializeIntegration={initializeIntegration}
+        data={dataToIntegrate}
       />
       <DeleteEntry
         setOpenDelete={setOpenDelete}
