@@ -29,13 +29,8 @@ export default function AddNewRequests(props) {
   const [dataStore, setDataStore] = useState()
   const [loading,setLoading] = useState(false)
   const [Dx, setdx] = useState()
-  const myMutation = {
-    resource: dataStorePath,
-    type: "update",
-    data: ({data}) => data
-    }
-  const [mutate,{error}] = useDataMutation(myMutation)
-
+  
+  
   const setData = (selected) =>{
     setdx(selected)
     const visualisationId = []
@@ -77,22 +72,23 @@ const fetchData = async () =>{
   }
   //pushing data to dataStore
   const send = async(data) =>{
-    console.log(data)
-    await engine.mutate(myMutation,{
-        variables : {
-            data : data
+    const myMutation = {
+        resource: dataStorePath,
+        type: "update",
+        data: data
         }
-    }).then((res) => {
-        if(res.httpStatusCode == 200){
+        setLoading(false) 
+        await engine.mutate(myMutation).then((res)=>{
+            if(res.httpStatusCode == 200){
+                setLoading(false)
+                setHidden(false)
+            }
+        }).catch((e)=>{
+            setMessage(e)
             setLoading(false)
-            setErrorHidden(true)
-            setHidden(false)   
-        }
-    }).catch((e)=>{
-        setLoading(false)
-        setMessage('Failled to save request')
-        setErrorHidden(false)
-    })
+            setErrorHidden(false)
+        })
+    
   }
 
  //updating the dataStore object in dataStore
@@ -115,50 +111,39 @@ const saveData = () =>{
         setMessage('No periods selected')
         setErrorHidden(false)
     }else{
-        if(dataStore?.dataValues?.source?.request === undefined){
-             
-           const dSTore =  {
-            'createdAt' :dataStore.createdAt,
-            'dataValues' : {
-                'url' : DexUrl,
-                'name' : DexName,
-                'type' : Dextype,
-                'source' : {
-                    'request' : [{'name' : name,
-                             "visualization": selectVisualisations,
-                             'dx' : dx,
-                             'pe' : periods,
-                             'ou' : orgS,
-                             'inputIdScheme': "code",
-                             'outputIdScheme': "code",}]
-                }
-           }
-        }
-        console.log(dSTore) 
-        //send(dSTore)              
-        }else{
-            console.log({"with req ": dataStore})
-            let arr = dataStore?.dataValues?.source?.request
-            arr.push({'name' : name,
-            "visualization": selectVisualisations,
-            'dx' : dx,
-            'pe' : periods,
-            'ou' : orgS,
-            'inputIdScheme': "code",
-            'outputIdScheme': "code",})
-            const dSTore =  {
-                'createdAt' :dataStore.createdAt,
-                'dataValues' : {
-                    'url' : DexUrl,
-                    'name' : DexName,
-                    'type' : Dextype,
-                    'source' : {
-                        'request' : arr
-                    }
-               }
+        if(dataStore?.source?.request === undefined){
+            var dStore =  {
+                'createdAt' : dataStore.createdAt,
+                'dexname' :  dataStore.dexname,
+                'type' : dataStore.type,
+                'url' : dataStore.url,
+                'source' : {'request': [                    {'name' : name,
+                                     "visualization": selectVisualisations,
+                                     'dx' : dx,
+                                     'pe' : periods,
+                                     'ou' : orgS,
+                                     'inputIdScheme': "code",
+                                     'outputIdScheme': "code",}  
+                ]}
             }
-            console.log(dataStore) 
-            //send(dSTore)              
+             
+            send(dStore)       
+        }else{
+                let arr = dataStore?.source?.request
+                 arr.push({'name' : name,
+                 "visualization": selectVisualisations,
+                 'dx' : dx,
+                 'pe' : periods,
+                 'ou' : orgS,
+                 'inputIdScheme': "code",
+                 'outputIdScheme': "code",})
+                
+                 send({
+                'createdAt' : dataStore.createdAt,
+                'dexname' :  dataStore.dexname,
+                'type' : dataStore.type,
+                'url' : dataStore.url,
+                'source' : {'request':arr}})              
         }       
              
     }
@@ -213,16 +198,7 @@ const saveData = () =>{
                   </div>
               </div>
           </Box>
-      <div className={props?.style?.padding}>
-              <ButtonStrip end>
-                  <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
-                      <Button large>Cancel</Button>
-                  </Link>
-                  <Button primary large>
-                      Save
-                  </Button>
-              </ButtonStrip>
-          </div>
+      
         </div>
   );
 }

@@ -6,7 +6,7 @@ import DataDimensionsCodes from "../forms/dataDimensionsCodes";
 import OrgUnits from "../forms/orgUnits";
 import { useDataEngine, useDataMutation } from "@dhis2/app-runtime";
 export default function AddNewRequests(props) {
-  var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$style, _props$style2, _props$style3, _props$style4, _props$style5, _props$style6, _props$style7, _props$style8, _props$style9, _props$style10;
+  var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$style, _props$style2, _props$style3, _props$style4, _props$style5, _props$style6, _props$style7, _props$style8, _props$style9;
   const engine = useDataEngine();
   const location = useLocation();
   const orgUnits = props === null || props === void 0 ? void 0 : (_props$data = props.data) === null || _props$data === void 0 ? void 0 : (_props$data$organisat = _props$data.organisationUnits) === null || _props$data$organisat === void 0 ? void 0 : _props$data$organisat.organisationUnits;
@@ -27,19 +27,6 @@ export default function AddNewRequests(props) {
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
   const [Dx, setdx] = useState();
-  const myMutation = {
-    resource: dataStorePath,
-    type: "update",
-    data: _ref => {
-      let {
-        data
-      } = _ref;
-      return data;
-    }
-  };
-  const [mutate, {
-    error
-  }] = useDataMutation(myMutation);
   const setData = selected => {
     setdx(selected);
     const visualisationId = [];
@@ -75,20 +62,20 @@ export default function AddNewRequests(props) {
   };
   //pushing data to dataStore
   const send = async data => {
-    console.log(data);
-    await engine.mutate(myMutation, {
-      variables: {
-        data: data
-      }
-    }).then(res => {
+    const myMutation = {
+      resource: dataStorePath,
+      type: "update",
+      data: data
+    };
+    setLoading(false);
+    await engine.mutate(myMutation).then(res => {
       if (res.httpStatusCode == 200) {
         setLoading(false);
-        setErrorHidden(true);
         setHidden(false);
       }
     }).catch(e => {
+      setMessage(e);
       setLoading(false);
-      setMessage('Failled to save request');
       setErrorHidden(false);
     });
   };
@@ -113,35 +100,29 @@ export default function AddNewRequests(props) {
       setMessage('No periods selected');
       setErrorHidden(false);
     } else {
-      var _dataStore$dataValues, _dataStore$dataValues2;
-      if ((dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$dataValues = dataStore.dataValues) === null || _dataStore$dataValues === void 0 ? void 0 : (_dataStore$dataValues2 = _dataStore$dataValues.source) === null || _dataStore$dataValues2 === void 0 ? void 0 : _dataStore$dataValues2.request) === undefined) {
-        const dSTore = {
+      var _dataStore$source;
+      if ((dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source = dataStore.source) === null || _dataStore$source === void 0 ? void 0 : _dataStore$source.request) === undefined) {
+        var dStore = {
           'createdAt': dataStore.createdAt,
-          'dataValues': {
-            'url': DexUrl,
-            'name': DexName,
-            'type': Dextype,
-            'source': {
-              'request': [{
-                'name': name,
-                "visualization": selectVisualisations,
-                'dx': dx,
-                'pe': periods,
-                'ou': orgS,
-                'inputIdScheme': "code",
-                'outputIdScheme': "code"
-              }]
-            }
+          'dexname': dataStore.dexname,
+          'type': dataStore.type,
+          'url': dataStore.url,
+          'source': {
+            'request': [{
+              'name': name,
+              "visualization": selectVisualisations,
+              'dx': dx,
+              'pe': periods,
+              'ou': orgS,
+              'inputIdScheme': "code",
+              'outputIdScheme': "code"
+            }]
           }
         };
-        console.log(dSTore);
-        //send(dSTore)              
+        send(dStore);
       } else {
-        var _dataStore$dataValues3, _dataStore$dataValues4;
-        console.log({
-          "with req ": dataStore
-        });
-        let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$dataValues3 = dataStore.dataValues) === null || _dataStore$dataValues3 === void 0 ? void 0 : (_dataStore$dataValues4 = _dataStore$dataValues3.source) === null || _dataStore$dataValues4 === void 0 ? void 0 : _dataStore$dataValues4.request;
+        var _dataStore$source2;
+        let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : _dataStore$source2.request;
         arr.push({
           'name': name,
           "visualization": selectVisualisations,
@@ -151,23 +132,18 @@ export default function AddNewRequests(props) {
           'inputIdScheme': "code",
           'outputIdScheme': "code"
         });
-        const dSTore = {
+        send({
           'createdAt': dataStore.createdAt,
-          'dataValues': {
-            'url': DexUrl,
-            'name': DexName,
-            'type': Dextype,
-            'source': {
-              'request': arr
-            }
+          'dexname': dataStore.dexname,
+          'type': dataStore.type,
+          'url': dataStore.url,
+          'source': {
+            'request': arr
           }
-        };
-        console.log(dataStore);
-        //send(dSTore)              
+        });
       }
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -235,20 +211,5 @@ export default function AddNewRequests(props) {
       setHidden(true);
       navigate('/');
     }
-  }, "Innitialisation saved succesifuly")))), /*#__PURE__*/React.createElement("div", {
-    className: props === null || props === void 0 ? void 0 : (_props$style10 = props.style) === null || _props$style10 === void 0 ? void 0 : _props$style10.padding
-  }, /*#__PURE__*/React.createElement(ButtonStrip, {
-    end: true
-  }, /*#__PURE__*/React.createElement(Link, {
-    to: "/",
-    style: {
-      textDecoration: "none",
-      color: "white"
-    }
-  }, /*#__PURE__*/React.createElement(Button, {
-    large: true
-  }, "Cancel")), /*#__PURE__*/React.createElement(Button, {
-    primary: true,
-    large: true
-  }, "Save"))));
+  }, "Innitialisation saved succesifuly")))));
 }
