@@ -36,7 +36,7 @@ export default function UpdateDataInitialization(props) {
     name: "dexname",
     type: "text",
     onChange: inputsHandler,
-    placeholder: props === null || props === void 0 ? void 0 : (_props$data = props.data) === null || _props$data === void 0 ? void 0 : (_props$data$value = _props$data.value) === null || _props$data$value === void 0 ? void 0 : _props$data$value.name,
+    placeholder: props === null || props === void 0 ? void 0 : (_props$data = props.data) === null || _props$data === void 0 ? void 0 : (_props$data$value = _props$data.value) === null || _props$data$value === void 0 ? void 0 : _props$data$value.dexname,
     className: props === null || props === void 0 ? void 0 : (_props$styles = props.styles) === null || _props$styles === void 0 ? void 0 : _props$styles.marginBottom
   }), /*#__PURE__*/React.createElement(Box, {
     className: props === null || props === void 0 ? void 0 : (_props$styles2 = props.styles) === null || _props$styles2 === void 0 ? void 0 : _props$styles2.marginBottom

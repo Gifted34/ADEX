@@ -44,7 +44,7 @@ export default function UpdateDataInitialization(props) {
                       name="dexname"
                       type="text"
                       onChange={inputsHandler}
-                      placeholder={props?.data?.value?.name}
+                      placeholder={props?.data?.value?.dexname}
                       className={props?.styles?.marginBottom}
                     />
                     <Box className={props?.styles?.marginBottom}>

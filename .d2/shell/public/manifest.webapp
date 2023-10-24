@@ -14,7 +14,11 @@
   "icons": {
     "48": "dhis2-app-icon.png"
   },
+<<<<<<< HEAD
   "manifest_generated_at": "Tue Oct 24 2023 13:15:11 GMT+0200 (Central Africa Time)",
+=======
+  "manifest_generated_at": "Tue Oct 24 2023 12:59:32 GMT+0200 (Central Africa Time)",
+>>>>>>> e800444f65120d92282dd59d2aa72dc8c82c8d3a
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff"
