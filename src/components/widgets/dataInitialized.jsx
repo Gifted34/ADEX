@@ -9,6 +9,7 @@ import {
   TableCell,
   Button,
   ButtonStrip,
+  NoticeBox,
 } from "@dhis2/ui";
 import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
@@ -36,73 +37,82 @@ export default function DataInitialized(props) {
 
   return (
     <div>
-      <Table>
-        <TableHead>
-          <TableRowHead>
-            <TableCellHead>Date created</TableCellHead>
-            <TableCellHead>Name</TableCellHead>
-            <TableCellHead>Target</TableCellHead>
-            <TableCellHead></TableCellHead>
-          </TableRowHead>
-        </TableHead>
-        <TableBody>
-          {dexDataStoreValues &&
-            dexDataStoreValues?.dataStore?.entries?.map(
-              (aggregateDataExchange, key) => {
-                return (
-                  <TableRow key={key}>
-                    <TableCell>
-                      {aggregateDataExchange?.value?.createdAt?.split(",")[0]}
-                    </TableCell>
-                    <TableCell>{aggregateDataExchange?.value?.dexname}</TableCell>
-                    <TableCell>
-                      {aggregateDataExchange?.value?.url == undefined
-                        ? aggregateDataExchange?.value?.type
-                        : aggregateDataExchange?.value?.url}
-                    </TableCell>
+      {dexDataStoreValues &&
+      dexDataStoreValues?.dataStore?.entries?.length > 0 ? (
+        <Table>
+          <TableHead>
+            <TableRowHead>
+              <TableCellHead>Date created</TableCellHead>
+              <TableCellHead>Name</TableCellHead>
+              <TableCellHead>Target</TableCellHead>
+              <TableCellHead></TableCellHead>
+            </TableRowHead>
+          </TableHead>
+          <TableBody>
+            {dexDataStoreValues &&
+              dexDataStoreValues?.dataStore?.entries?.map(
+                (aggregateDataExchange, key) => {
+                  return (
+                    <TableRow key={key}>
+                      <TableCell>
+                        {aggregateDataExchange?.value?.createdAt?.split(",")[0]}
+                      </TableCell>
+                      <TableCell>
+                        {aggregateDataExchange?.value?.dexname}
+                      </TableCell>
+                      <TableCell>
+                        {aggregateDataExchange?.value?.url == undefined
+                          ? aggregateDataExchange?.value?.type
+                          : aggregateDataExchange?.value?.url}
+                      </TableCell>
 
-                    <TableCell dense>
-                      <ButtonStrip start>
-                        <Link
-                          to={`/view/${aggregateDataExchange?.key}&${aggregateDataExchange?.value?.dataValues?.name}`}
-                          style={{ textDecoration: "none", color: "black" }}
-                        >
-                          <Button>View</Button>
-                        </Link>
+                      <TableCell dense>
+                        <ButtonStrip start>
+                          <Link
+                            to={`/view/${aggregateDataExchange?.key}&${aggregateDataExchange?.value?.dataValues?.name}`}
+                            style={{ textDecoration: "none", color: "black" }}
+                          >
+                            <Button>View</Button>
+                          </Link>
 
-                        <Link
-                          to={`/new-request/${aggregateDataExchange?.key}`}
-                          style={{ textDecoration: "none", color: "black" }}
-                        >
-                          <Button>Add new</Button>
-                        </Link>
-                        <Button
-                          secondary
-                          onClick={() => {
-                            props?.setOpenUpdate(!props?.openUpdate);
-                            updateEntry(aggregateDataExchange);
-                          }}
-                        >
-                          Update
-                        </Button>
-                        <Button
-                          destructive
-                          onClick={() => {
-                            props?.setOpenDelete(!props?.openDelete);
-                            deleteEntry(aggregateDataExchange);
-                          }}
-                        >
-                          Remove
-                        </Button>
-                        <Button primary>Initialize integration</Button>
-                      </ButtonStrip>
-                    </TableCell>
-                  </TableRow>
-                );
-              }
-            )}
-        </TableBody>
-      </Table>
+                          <Link
+                            to={`/new-request/${aggregateDataExchange?.key}`}
+                            style={{ textDecoration: "none", color: "black" }}
+                          >
+                            <Button>Add new</Button>
+                          </Link>
+                          <Button
+                            secondary
+                            onClick={() => {
+                              props?.setOpenUpdate(!props?.openUpdate);
+                              updateEntry(aggregateDataExchange);
+                            }}
+                          >
+                            Update
+                          </Button>
+                          <Button
+                            destructive
+                            onClick={() => {
+                              props?.setOpenDelete(!props?.openDelete);
+                              deleteEntry(aggregateDataExchange);
+                            }}
+                          >
+                            Remove
+                          </Button>
+                          <Button primary>Initialize integration</Button>
+                        </ButtonStrip>
+                      </TableCell>
+                    </TableRow>
+                  );
+                }
+              )}
+          </TableBody>
+        </Table>
+      ) : (
+        <NoticeBox title="Initialized data exchange">
+          No data is available
+        </NoticeBox>
+      )}
       <Outlet />
     </div>
   );

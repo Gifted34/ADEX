@@ -1,9 +1,9 @@
 import { useDataEngine } from "@dhis2/app-runtime";
-import { Table, TableHead, TableRowHead, TableCellHead, TableBody, TableRow, TableCell, Button, ButtonStrip } from "@dhis2/ui";
+import { Table, TableHead, TableRowHead, TableCellHead, TableBody, TableRow, TableCell, Button, ButtonStrip, NoticeBox } from "@dhis2/ui";
 import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 export default function DataInitialized(props) {
-  var _dexDataStoreValues$d, _dexDataStoreValues$d2;
+  var _dexDataStoreValues$d, _dexDataStoreValues$d2, _dexDataStoreValues$d3, _dexDataStoreValues$d4;
   const [dexDataStoreValues, setDexDataStoreValues] = useState([]);
   // props?.getDataStoreDexValues()?.filter((store) => store === "DEX_values")
   const getData = () => {
@@ -21,7 +21,7 @@ export default function DataInitialized(props) {
   useEffect(() => {
     getData();
   }, [props]);
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Table, null, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRowHead, null, /*#__PURE__*/React.createElement(TableCellHead, null, "Date created"), /*#__PURE__*/React.createElement(TableCellHead, null, "Name"), /*#__PURE__*/React.createElement(TableCellHead, null, "Target"), /*#__PURE__*/React.createElement(TableCellHead, null))), /*#__PURE__*/React.createElement(TableBody, null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d === void 0 ? void 0 : (_dexDataStoreValues$d2 = _dexDataStoreValues$d.entries) === null || _dexDataStoreValues$d2 === void 0 ? void 0 : _dexDataStoreValues$d2.map((aggregateDataExchange, key) => {
+  return /*#__PURE__*/React.createElement("div", null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d === void 0 ? void 0 : (_dexDataStoreValues$d2 = _dexDataStoreValues$d.entries) === null || _dexDataStoreValues$d2 === void 0 ? void 0 : _dexDataStoreValues$d2.length) > 0 ? /*#__PURE__*/React.createElement(Table, null, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRowHead, null, /*#__PURE__*/React.createElement(TableCellHead, null, "Date created"), /*#__PURE__*/React.createElement(TableCellHead, null, "Name"), /*#__PURE__*/React.createElement(TableCellHead, null, "Target"), /*#__PURE__*/React.createElement(TableCellHead, null))), /*#__PURE__*/React.createElement(TableBody, null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d3 = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d3 === void 0 ? void 0 : (_dexDataStoreValues$d4 = _dexDataStoreValues$d3.entries) === null || _dexDataStoreValues$d4 === void 0 ? void 0 : _dexDataStoreValues$d4.map((aggregateDataExchange, key) => {
     var _aggregateDataExchang, _aggregateDataExchang2, _aggregateDataExchang3, _aggregateDataExchang4, _aggregateDataExchang5, _aggregateDataExchang6, _aggregateDataExchang7, _aggregateDataExchang8;
     return /*#__PURE__*/React.createElement(TableRow, {
       key: key
@@ -56,5 +56,7 @@ export default function DataInitialized(props) {
     }, "Remove"), /*#__PURE__*/React.createElement(Button, {
       primary: true
     }, "Initialize integration"))));
-  })))), /*#__PURE__*/React.createElement(Outlet, null));
+  })))) : /*#__PURE__*/React.createElement(NoticeBox, {
+    title: "Initialized data exchange"
+  }, "No data is available"), /*#__PURE__*/React.createElement(Outlet, null));
 }
