@@ -18,6 +18,8 @@
     "@dhis2/app-runtime": "^3.9.4",
     "@dhis2/d2-ui-core": "^7.4.3",
     "@dhis2/d2-ui-forms": "^7.4.3",
-    "@dhis2/ui": "^8.14.0"
+    "@dhis2/ui": "^8.14.0",
+    "loadash": "^1.0.0",
+    "lodash": "^4.17.21"
   }
 }

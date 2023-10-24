@@ -18,7 +18,7 @@ export default function OrgUnits(props) {
                 <OrganisationUnitTree
                     name="Organisation Units"
                     onChange={(e) => {
-                        // props?.setSelecteOrgUnit(e.selected)
+                        props?.setOrg(e.selected)
                         setSelectedOrgUnit(e.selected)
                         console.log(e.selected)
                         }

@@ -16,6 +16,7 @@ export default function DataDimensionsCodes(props) {
         setselectedDimensions(
             e.selected
         )
+        props?.setData(e.selected)
     }
 
     //pushing data elements,indicators,and visualisation into transfer options
@@ -46,9 +47,9 @@ export default function DataDimensionsCodes(props) {
         return codes
     }
 
-    const defaultFilterCallback = (e) => {
-    
+    const defaultFilterCallback = (e) => {    
     }
+
     //filtering options in the dx transfer
     const filterCallback = (options) =>{
         if(dxType === undefined || dxType === 'default'){

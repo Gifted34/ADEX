@@ -17,7 +17,7 @@ export default function OrgUnits(props) {
   }, /*#__PURE__*/React.createElement(OrganisationUnitTree, {
     name: "Organisation Units",
     onChange: e => {
-      // props?.setSelecteOrgUnit(e.selected)
+      props === null || props === void 0 ? void 0 : props.setOrg(e.selected);
       setSelectedOrgUnit(e.selected);
       console.log(e.selected);
     },
