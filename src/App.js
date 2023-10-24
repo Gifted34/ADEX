@@ -19,7 +19,7 @@ import NoPageFound from "./components/widgets/noPageFound";
 import AddNewRequests from "./components/widgets/addNewRequests";
 import ViewDataStoreById from "./components/widgets/view";
 import DeleteEntry from "./components/forms/deleteEntry";
-import UpdateDataInitialization from "./components/forms/update.dataStore.dexEntry";
+import UpdateDataInitialization from "./components/widgets/update.dataStore.dexEntry";
 
 const query = {
   organisationUnits: {
@@ -77,6 +77,10 @@ const query = {
 const validater = new EmailValidator();
 const MyApp = () => {
   const [formInputValues, setFormInputValues] = useState({
+    dexname: "",
+    url: "",
+  });
+  const [updateFormInputValues, setUpdateFormInputValues] = useState({
     dexname: "",
     url: "",
   });
@@ -164,7 +168,7 @@ const MyApp = () => {
         type: "create",
         data: {
           createdAt: new Date().toLocaleString(),
-          name: formInputValues?.dexname,
+          dexname: formInputValues?.dexname,
           url: formInputValues?.url,
           type: type,
         },
@@ -276,35 +280,44 @@ const MyApp = () => {
 
   // update the initialized entry in the datastore
   const updateGeneralInputValues = (data) => {
-    const payload = {
-      resource: "dataStore/DEX_initializer_values",
-      id: data?.key,
-      type: "update",
-      partial: true,
-      data: ({ name, type, url }) => ({
-        name: data?.name,
-        type: data?.type,
-        url: data?.url,
-      }),
-    };
-
-    // engine
-    // .mutate(payload)
-    // .then((res) => {
-    //   console.log(res);
-    //   if (res.httpStatusCode == 200) {
-    //     setOpenDelete(!openDelete);
-    //     setSuccessMessage(true);
-    //     setHidden(false);
-    //     setMessage("Data saved in the datastore successfully.");
-    //   }
-    // })
-    // .catch((e) => {
-    //   setHidden(false);
-    //   setMessage(
-    //     "Error occured. Either server or the inputs causes this error."
-    //   );
-    // });
+    console.log(updateFormInputValues);
+    if (
+      updateFormInputValues?.dexname == "" ||
+      updateFormInputValues?.dexname == null ||
+      updateFormInputValues?.dexname == undefined ||
+      updateFormInputValues?.url == "" ||
+      updateFormInputValues?.url == null ||
+      updateFormInputValues?.url == undefined
+    ) {
+    } else {
+      engine
+        .mutate({
+          resource: `dataStore/DEX_initializer_values/${data?.key}`,
+          type: "update",
+          data: ({}) => ({
+            createdAt: dataToUpdate?.value?.createdAt,
+            updatedAt: new Date().toLocaleDateString(),
+            dexname: updateFormInputValues?.dexname,
+            type: type,
+            url: updateFormInputValues?.url,
+          }),
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.httpStatusCode == 200) {
+            setOpenUpdate(!openUpdate);
+            setSuccessMessage(true);
+            setHidden(false);
+            setMessage("Data saved in the datastore successfully.");
+          }
+        })
+        .catch((e) => {
+          setHidden(false);
+          setMessage(
+            "Error occured. Either server or the inputs causes this error."
+          );
+        });
+    }
   };
   // delete the initialized entry in datastore
   const deleteEntry = (data) => {
@@ -320,7 +333,6 @@ const MyApp = () => {
     engine
       .mutate(payload)
       .then((res) => {
-        console.log(res);
         if (res.httpStatusCode == 200) {
           setOpenDelete(!openDelete);
           setSuccessMessage(true);
@@ -435,8 +447,8 @@ const MyApp = () => {
         type={type}
         setOpenUpdate={setOpenUpdate}
         openUpdate={openUpdate}
-        setFormInputValues={setFormInputValues}
-        formInputValues={formInputValues}
+        setUpdateFormInputValues={setUpdateFormInputValues}
+        updateFormInputValues={updateFormInputValues}
         updateGeneralInputValues={updateGeneralInputValues}
         data={dataToUpdate}
       />
