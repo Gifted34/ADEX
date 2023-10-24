@@ -82,7 +82,7 @@ export default function PeriodsWidget(props) {
         filterable
         hideFilterInput
         onChange={(e) => {
-          props?.selectedPeriod(e.selected)
+          props?.setPeriods(e.selected)
           setselectedDimensions(e.selected)          
         }}
         searchTerm={filterTerm}

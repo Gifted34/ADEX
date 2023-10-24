@@ -79,7 +79,7 @@ export default function PeriodsWidget(props) {
     filterable: true,
     hideFilterInput: true,
     onChange: e => {
-      props === null || props === void 0 ? void 0 : props.selectedPeriod(e.selected);
+      props === null || props === void 0 ? void 0 : props.setPeriods(e.selected);
       setselectedDimensions(e.selected);
     },
     searchTerm: filterTerm,
