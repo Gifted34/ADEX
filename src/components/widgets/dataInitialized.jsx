@@ -69,7 +69,7 @@ export default function DataInitialized(props) {
                       <TableCell dense>
                         <ButtonStrip start>
                           <Link
-                            to={`/view/${aggregateDataExchange?.key}&${aggregateDataExchange?.value?.dataValues?.name}`}
+                            to={`/view/${aggregateDataExchange?.key}`}
                             style={{ textDecoration: "none", color: "black" }}
                           >
                             <Button>View</Button>
