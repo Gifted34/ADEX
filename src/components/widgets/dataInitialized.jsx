@@ -27,6 +27,9 @@ export default function DataInitialized(props) {
   const deleteEntry = (data) => {
     props?.deleteEntry(data);
   };
+  const updateEntry = (data) => {
+    props?.updateEntry(data);
+  };
   useEffect(() => {
     getData();
   }, [props]);
@@ -51,14 +54,11 @@ export default function DataInitialized(props) {
                     <TableCell>
                       {aggregateDataExchange?.value?.createdAt?.split(",")[0]}
                     </TableCell>
+                    <TableCell>{aggregateDataExchange?.value?.name}</TableCell>
                     <TableCell>
-                      {aggregateDataExchange?.value?.dataValues?.name}
-                    </TableCell>
-                    <TableCell>
-                      {aggregateDataExchange?.value?.dataValues?.url ==
-                      undefined
-                        ? aggregateDataExchange?.value?.dataValues?.type
-                        : aggregateDataExchange?.value?.dataValues?.url}
+                      {aggregateDataExchange?.value?.url == undefined
+                        ? aggregateDataExchange?.value?.type
+                        : aggregateDataExchange?.value?.url}
                     </TableCell>
 
                     <TableCell dense>
@@ -69,12 +69,22 @@ export default function DataInitialized(props) {
                         >
                           <Button>View</Button>
                         </Link>
+
                         <Link
                           to={`/new-request/${aggregateDataExchange?.key}`}
                           style={{ textDecoration: "none", color: "black" }}
                         >
                           <Button>Add new</Button>
                         </Link>
+                        <Button
+                          secondary
+                          onClick={() => {
+                            props?.setOpenUpdate(!props?.openUpdate);
+                            updateEntry(aggregateDataExchange);
+                          }}
+                        >
+                          Update
+                        </Button>
                         <Button
                           destructive
                           onClick={() => {

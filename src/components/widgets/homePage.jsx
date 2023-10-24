@@ -40,10 +40,13 @@ export default function HomePage(props) {
         <DataInitialized
           setOpenDelete={props?.setOpenDelete}
           openDelete={props?.openDelete}
+          setOpenUpdate={props?.setOpenUpdate}
+          openUpdate={props?.openUpdate}
           dataStoreDexValues={getDataStoreDexValues}
           data={[]}
           styles={props?.classes}
           deleteEntry={props?.deleteEntry}
+          updateEntry={props?.updateEntry}
         />
       </div>
     </div>

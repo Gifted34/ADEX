@@ -15,24 +15,22 @@ export default function DataInitialized(props) {
   const deleteEntry = data => {
     props === null || props === void 0 ? void 0 : props.deleteEntry(data);
   };
+  const updateEntry = data => {
+    props === null || props === void 0 ? void 0 : props.updateEntry(data);
+  };
   useEffect(() => {
     getData();
   }, [props]);
-<<<<<<< HEAD
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Table, null, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRowHead, null, /*#__PURE__*/React.createElement(TableCellHead, null, "Date created"), /*#__PURE__*/React.createElement(TableCellHead, null, "Name"), /*#__PURE__*/React.createElement(TableCellHead, null, "Target"), /*#__PURE__*/React.createElement(TableCellHead, null))), /*#__PURE__*/React.createElement(TableBody, null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d === void 0 ? void 0 : (_dexDataStoreValues$d2 = _dexDataStoreValues$d.entries) === null || _dexDataStoreValues$d2 === void 0 ? void 0 : _dexDataStoreValues$d2.map((aggregateDataExchange, key) => {
-    var _aggregateDataExchang, _aggregateDataExchang2, _aggregateDataExchang3, _aggregateDataExchang4, _aggregateDataExchang5, _aggregateDataExchang6, _aggregateDataExchang7, _aggregateDataExchang8, _aggregateDataExchang9, _aggregateDataExchang10, _aggregateDataExchang11, _aggregateDataExchang12, _aggregateDataExchang13, _aggregateDataExchang14;
-=======
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Table, null, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRowHead, null, /*#__PURE__*/React.createElement(TableCellHead, null, "Date created"), /*#__PURE__*/React.createElement(TableCellHead, null, "Name"), /*#__PURE__*/React.createElement(TableCellHead, null, "Target"), /*#__PURE__*/React.createElement(TableCellHead, null, "Last updated"), /*#__PURE__*/React.createElement(TableCellHead, null))), /*#__PURE__*/React.createElement(TableBody, null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d === void 0 ? void 0 : (_dexDataStoreValues$d2 = _dexDataStoreValues$d.entries) === null || _dexDataStoreValues$d2 === void 0 ? void 0 : _dexDataStoreValues$d2.map((aggregateDataExchange, key) => {
-    var _aggregateDataExchang, _aggregateDataExchang2, _aggregateDataExchang3, _aggregateDataExchang4, _aggregateDataExchang5, _aggregateDataExchang6, _aggregateDataExchang7, _aggregateDataExchang8, _aggregateDataExchang9, _aggregateDataExchang10, _aggregateDataExchang11, _aggregateDataExchang12;
->>>>>>> 190489f2a092de52054a2e6267f2d9ca44389224
+    var _aggregateDataExchang, _aggregateDataExchang2, _aggregateDataExchang3, _aggregateDataExchang4, _aggregateDataExchang5, _aggregateDataExchang6, _aggregateDataExchang7, _aggregateDataExchang8;
     return /*#__PURE__*/React.createElement(TableRow, {
       key: key
-    }, /*#__PURE__*/React.createElement(TableCell, null, aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang = aggregateDataExchange.value) === null || _aggregateDataExchang === void 0 ? void 0 : (_aggregateDataExchang2 = _aggregateDataExchang.createdAt) === null || _aggregateDataExchang2 === void 0 ? void 0 : _aggregateDataExchang2.split(",")[0]), /*#__PURE__*/React.createElement(TableCell, null, aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang3 = aggregateDataExchange.value) === null || _aggregateDataExchang3 === void 0 ? void 0 : (_aggregateDataExchang4 = _aggregateDataExchang3.dataValues) === null || _aggregateDataExchang4 === void 0 ? void 0 : _aggregateDataExchang4.name), /*#__PURE__*/React.createElement(TableCell, null, (aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang5 = aggregateDataExchange.value) === null || _aggregateDataExchang5 === void 0 ? void 0 : (_aggregateDataExchang6 = _aggregateDataExchang5.dataValues) === null || _aggregateDataExchang6 === void 0 ? void 0 : _aggregateDataExchang6.url) == undefined ? aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang7 = aggregateDataExchange.value) === null || _aggregateDataExchang7 === void 0 ? void 0 : (_aggregateDataExchang8 = _aggregateDataExchang7.dataValues) === null || _aggregateDataExchang8 === void 0 ? void 0 : _aggregateDataExchang8.type : aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang9 = aggregateDataExchange.value) === null || _aggregateDataExchang9 === void 0 ? void 0 : (_aggregateDataExchang10 = _aggregateDataExchang9.dataValues) === null || _aggregateDataExchang10 === void 0 ? void 0 : _aggregateDataExchang10.url), /*#__PURE__*/React.createElement(TableCell, {
+    }, /*#__PURE__*/React.createElement(TableCell, null, aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang = aggregateDataExchange.value) === null || _aggregateDataExchang === void 0 ? void 0 : (_aggregateDataExchang2 = _aggregateDataExchang.createdAt) === null || _aggregateDataExchang2 === void 0 ? void 0 : _aggregateDataExchang2.split(",")[0]), /*#__PURE__*/React.createElement(TableCell, null, aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang3 = aggregateDataExchange.value) === null || _aggregateDataExchang3 === void 0 ? void 0 : _aggregateDataExchang3.name), /*#__PURE__*/React.createElement(TableCell, null, (aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang4 = aggregateDataExchange.value) === null || _aggregateDataExchang4 === void 0 ? void 0 : _aggregateDataExchang4.url) == undefined ? aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang5 = aggregateDataExchange.value) === null || _aggregateDataExchang5 === void 0 ? void 0 : _aggregateDataExchang5.type : aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang6 = aggregateDataExchange.value) === null || _aggregateDataExchang6 === void 0 ? void 0 : _aggregateDataExchang6.url), /*#__PURE__*/React.createElement(TableCell, {
       dense: true
     }, /*#__PURE__*/React.createElement(ButtonStrip, {
       start: true
     }, /*#__PURE__*/React.createElement(Link, {
-      to: `/view/${aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : aggregateDataExchange.key}&${aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang11 = aggregateDataExchange.value) === null || _aggregateDataExchang11 === void 0 ? void 0 : (_aggregateDataExchang12 = _aggregateDataExchang11.dataValues) === null || _aggregateDataExchang12 === void 0 ? void 0 : _aggregateDataExchang12.name}`,
+      to: `/view/${aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : aggregateDataExchange.key}&${aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : (_aggregateDataExchang7 = aggregateDataExchange.value) === null || _aggregateDataExchang7 === void 0 ? void 0 : (_aggregateDataExchang8 = _aggregateDataExchang7.dataValues) === null || _aggregateDataExchang8 === void 0 ? void 0 : _aggregateDataExchang8.name}`,
       style: {
         textDecoration: "none",
         color: "black"
@@ -44,6 +42,12 @@ export default function DataInitialized(props) {
         color: "black"
       }
     }, /*#__PURE__*/React.createElement(Button, null, "Add new")), /*#__PURE__*/React.createElement(Button, {
+      secondary: true,
+      onClick: () => {
+        props === null || props === void 0 ? void 0 : props.setOpenUpdate(!(props !== null && props !== void 0 && props.openUpdate));
+        updateEntry(aggregateDataExchange);
+      }
+    }, "Update"), /*#__PURE__*/React.createElement(Button, {
       destructive: true,
       onClick: () => {
         props === null || props === void 0 ? void 0 : props.setOpenDelete(!(props !== null && props !== void 0 && props.openDelete));

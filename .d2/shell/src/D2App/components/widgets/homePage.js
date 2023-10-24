@@ -37,9 +37,12 @@ export default function HomePage(props) {
   }, /*#__PURE__*/React.createElement(DataInitialized, {
     setOpenDelete: props === null || props === void 0 ? void 0 : props.setOpenDelete,
     openDelete: props === null || props === void 0 ? void 0 : props.openDelete,
+    setOpenUpdate: props === null || props === void 0 ? void 0 : props.setOpenUpdate,
+    openUpdate: props === null || props === void 0 ? void 0 : props.openUpdate,
     dataStoreDexValues: getDataStoreDexValues,
     data: [],
     styles: props === null || props === void 0 ? void 0 : props.classes,
-    deleteEntry: props === null || props === void 0 ? void 0 : props.deleteEntry
+    deleteEntry: props === null || props === void 0 ? void 0 : props.deleteEntry,
+    updateEntry: props === null || props === void 0 ? void 0 : props.updateEntry
   })));
 }

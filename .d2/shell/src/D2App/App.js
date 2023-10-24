@@ -11,6 +11,7 @@ import NoPageFound from "./components/widgets/noPageFound";
 import AddNewRequests from "./components/widgets/addNewRequests";
 import ViewDataStoreById from "./components/widgets/view";
 import DeleteEntry from "./components/forms/deleteEntry";
+import UpdateDataInitialization from "./components/forms/update.dataStore.dexEntry";
 const query = {
   organisationUnits: {
     resource: "organisationUnits",
@@ -21,7 +22,7 @@ const query = {
     }
   },
   visualizations: {
-    resource: 'visualizations',
+    resource: "visualizations",
     params: {
       paging: false,
       field: ["id", "displayName"]
@@ -67,10 +68,14 @@ const MyApp = () => {
     dexname: "",
     url: ""
   });
+
+  // updateFormInputValues
   const [type, setType] = useState("EXTERNAL");
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [dateToDelete, setdateToDelete] = useState();
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [dataToDelete, setDataToDelete] = useState();
+  const [dataToUpdate, setDataToUpdate] = useState();
   const engine = useDataEngine();
   const [formData, setFormData] = useState();
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
@@ -82,10 +87,11 @@ const MyApp = () => {
   //   INTERNAL: "INTERNAL",
   //   EXTERNAL: "EXTERNAL",
   // });
-  const [authType, setAuthType] = useState({
-    TOKEN: "TOKEN",
-    BASICAUTH: "BASICAUTH"
-  });
+  // const [authType, setAuthType] = useState({
+  //   TOKEN: "TOKEN",
+  //   BASICAUTH: "BASICAUTH",
+  // });
+
   const {
     loading,
     error,
@@ -131,11 +137,9 @@ const MyApp = () => {
         type: "create",
         data: {
           createdAt: new Date().toLocaleString(),
-          dataValues: {
-            name: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname,
-            url: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url,
-            type: type
-          }
+          name: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname,
+          url: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url,
+          type: type
         }
       };
       engine.mutate(payload).then(res => {
@@ -226,9 +230,52 @@ const MyApp = () => {
       large: true
     }));
   }
+  const updateEntry = data => {
+    setDataToUpdate(data);
+  };
+
+  // update the initialized entry in the datastore
+  const updateGeneralInputValues = data => {
+    const payload = {
+      resource: "dataStore/DEX_initializer_values",
+      id: data === null || data === void 0 ? void 0 : data.key,
+      type: "update",
+      partial: true,
+      data: _ref => {
+        let {
+          name,
+          type,
+          url
+        } = _ref;
+        return {
+          name: data === null || data === void 0 ? void 0 : data.name,
+          type: data === null || data === void 0 ? void 0 : data.type,
+          url: data === null || data === void 0 ? void 0 : data.url
+        };
+      }
+    };
+
+    // engine
+    // .mutate(payload)
+    // .then((res) => {
+    //   console.log(res);
+    //   if (res.httpStatusCode == 200) {
+    //     setOpenDelete(!openDelete);
+    //     setSuccessMessage(true);
+    //     setHidden(false);
+    //     setMessage("Data saved in the datastore successfully.");
+    //   }
+    // })
+    // .catch((e) => {
+    //   setHidden(false);
+    //   setMessage(
+    //     "Error occured. Either server or the inputs causes this error."
+    //   );
+    // });
+  };
   // delete the initialized entry in datastore
   const deleteEntry = data => {
-    setdateToDelete(data);
+    setDataToDelete(data);
   };
   const deleteDataEntry = data => {
     let payload = {
@@ -259,10 +306,13 @@ const MyApp = () => {
       data: data,
       styles: classes,
       open: open,
+      setOpenUpdate: setOpenUpdate,
+      openUpdate: openUpdate,
       setOpen: setOpen,
       setOpenDelete: setOpenDelete,
       openDelete: openDelete,
-      deleteEntry: deleteEntry
+      deleteEntry: deleteEntry,
+      updateEntry: updateEntry
     })
   }), /*#__PURE__*/React.createElement(Route, {
     path: "/view/:key",
@@ -319,11 +369,21 @@ const MyApp = () => {
     type: type,
     setFormInputValues: setFormInputValues,
     saveGeneralInputValues: saveGeneralInputValues
+  }), /*#__PURE__*/React.createElement(UpdateDataInitialization, {
+    setType: setType,
+    styles: classes,
+    type: type,
+    setOpenUpdate: setOpenUpdate,
+    openUpdate: openUpdate,
+    setFormInputValues: setFormInputValues,
+    formInputValues: formInputValues,
+    updateGeneralInputValues: updateGeneralInputValues,
+    data: dataToUpdate
   }), /*#__PURE__*/React.createElement(DeleteEntry, {
     setOpenDelete: setOpenDelete,
     openDelete: openDelete,
     deleteDataEntry: deleteDataEntry,
-    data: dateToDelete
+    data: dataToDelete
   }));
 };
 export default MyApp;
