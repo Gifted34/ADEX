@@ -275,22 +275,24 @@ const MyApp = () => {
     setDataToDelete(data);
   };
   const deleteDataEntry = data => {
-    let payload = {
-      resource: "dataStore/DEX_initializer_values",
-      id: data === null || data === void 0 ? void 0 : data.key,
-      type: "delete"
-    };
-    engine.mutate(payload).then(res => {
-      if (res.httpStatusCode == 200) {
-        setOpenDelete(!openDelete);
-        setSuccessMessage(true);
+    if ((data === null || data === void 0 ? void 0 : data.key) == null || (data === null || data === void 0 ? void 0 : data.key) == undefined || (data === null || data === void 0 ? void 0 : data.key) == "") {} else {
+      let payload = {
+        resource: "dataStore/DEX_initializer_values",
+        id: data === null || data === void 0 ? void 0 : data.key,
+        type: "delete"
+      };
+      engine.mutate(payload).then(res => {
+        if (res.httpStatusCode == 200) {
+          setOpenDelete(!openDelete);
+          setSuccessMessage(true);
+          setHidden(false);
+          setMessage("Data saved in the datastore successfully.");
+        }
+      }).catch(e => {
         setHidden(false);
-        setMessage("Data saved in the datastore successfully.");
-      }
-    }).catch(e => {
-      setHidden(false);
-      setMessage("Error occured. Either server or the inputs causes this error.");
-    });
+        setMessage("Error occured. Either server or the inputs causes this error.");
+      });
+    }
   };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(HeaderComponent, null), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
     style: {

@@ -324,28 +324,30 @@ const MyApp = () => {
     setDataToDelete(data);
   };
   const deleteDataEntry = (data) => {
-    let payload = {
-      resource: "dataStore/DEX_initializer_values",
-      id: data?.key,
-      type: "delete",
-    };
-
-    engine
-      .mutate(payload)
-      .then((res) => {
-        if (res.httpStatusCode == 200) {
-          setOpenDelete(!openDelete);
-          setSuccessMessage(true);
+    if (data?.key == null || data?.key == undefined || data?.key == "") {
+    } else {
+      let payload = {
+        resource: "dataStore/DEX_initializer_values",
+        id: data?.key,
+        type: "delete",
+      };
+      engine
+        .mutate(payload)
+        .then((res) => {
+          if (res.httpStatusCode == 200) {
+            setOpenDelete(!openDelete);
+            setSuccessMessage(true);
+            setHidden(false);
+            setMessage("Data saved in the datastore successfully.");
+          }
+        })
+        .catch((e) => {
           setHidden(false);
-          setMessage("Data saved in the datastore successfully.");
-        }
-      })
-      .catch((e) => {
-        setHidden(false);
-        setMessage(
-          "Error occured. Either server or the inputs causes this error."
-        );
-      });
+          setMessage(
+            "Error occured. Either server or the inputs causes this error."
+          );
+        });
+    }
   };
   return (
     <div>

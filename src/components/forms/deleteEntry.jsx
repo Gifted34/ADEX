@@ -20,7 +20,15 @@ export default function DeleteEntry({
         <Modal large position="middle">
           <ModalTitle>Delete Entry</ModalTitle>
           <ModalContent>
-            <p>Are sure you want tot delete this entry</p>
+            {!data?.value?.initialized ? (
+              <ModalTitle>
+                This entry is not yet initialized in data exchange!
+              </ModalTitle>
+            ) : (
+              <></>
+            )}
+            <ModalTitle>Are sure you want to delete this entry?</ModalTitle>
+
             <p>{data && data?.name}</p>
           </ModalContent>
           <ModalActions>
