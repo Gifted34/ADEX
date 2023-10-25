@@ -157,14 +157,16 @@ export default function ViewDataStoreById(props) {
     translucent: true
   }, /*#__PURE__*/React.createElement(Center, null, /*#__PURE__*/React.createElement(CircularLoader, {
     large: true
-  }))), /*#__PURE__*/React.createElement(ButtonStrip, null, /*#__PURE__*/React.createElement(Link, {
+  }))), /*#__PURE__*/React.createElement(ButtonStrip, {
+    end: true
+  }, /*#__PURE__*/React.createElement(Link, {
     to: "/",
     style: {
       textDecoration: "none",
       color: "white"
     }
   }, /*#__PURE__*/React.createElement(Button, {
-    secondary: true
+    primary: true
   }, "Back"))), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
     className: `${props === null || props === void 0 ? void 0 : props.styles.padding}`
   }, /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement("span", {
