@@ -1,7 +1,7 @@
-import { Box, Button, ButtonStrip, DataTableCell, DataTableRow, Modal, ModalActions, ModalContent } from '@dhis2/ui';
-import React, { useEffect, useState } from 'react';
+import { Box, Button, ButtonStrip, DataTableCell, DataTableRow, Modal, ModalActions, ModalContent } from "@dhis2/ui";
+import React, { useEffect, useState } from "react";
 function Datatablerow(props) {
-  const request = props === null || props === void 0 ? void 0 : props.request;
+  const request = props === null || props === void 0 ? void 0 : props.requests;
   const indicators = props === null || props === void 0 ? void 0 : props.indicators;
   const dataElements = props === null || props === void 0 ? void 0 : props.dataElements;
   const orgUnits = props === null || props === void 0 ? void 0 : props.orgUnits;
@@ -17,13 +17,13 @@ function Datatablerow(props) {
     });
     return arr === null || arr === void 0 ? void 0 : arr.map(ou => /*#__PURE__*/React.createElement("div", {
       style: {
-        padding: '5px'
+        padding: "5px"
       }
     }, /*#__PURE__*/React.createElement("span", {
       style: {
-        fontFamily: 'sans-serif',
-        fontWeight: 'normal',
-        fontSize: '15px'
+        fontFamily: "sans-serif",
+        fontWeight: "normal",
+        fontSize: "15px"
       }
     }, ou)));
   };
@@ -38,47 +38,49 @@ function Datatablerow(props) {
     return arr === null || arr === void 0 ? void 0 : arr.map(vis => /*#__PURE__*/React.createElement("div", {
       key: vis,
       style: {
-        padding: '5px'
+        padding: "5px"
       }
     }, /*#__PURE__*/React.createElement("span", {
       style: {
-        fontFamily: 'sans-serif',
-        fontWeight: 'normal',
-        fontSize: '15px'
+        fontFamily: "sans-serif",
+        fontWeight: "normal",
+        fontSize: "15px"
       }
     }, vis)));
   };
   const dx = () => {
     var _request$dx;
+    console.log(dataElements);
     return request === null || request === void 0 ? void 0 : (_request$dx = request.dx) === null || _request$dx === void 0 ? void 0 : _request$dx.map(dE => {
-      const dataElement = dataElements === null || dataElements === void 0 ? void 0 : dataElements.filter(de => de.id === dE);
+      const dataElement = dataElements === null || dataElements === void 0 ? void 0 : dataElements.filter(de => de.code === dE);
       if ((dataElement === null || dataElement === void 0 ? void 0 : dataElement.length) < 1) {
         var _ind$, _ind$2;
-        const ind = indicators === null || indicators === void 0 ? void 0 : indicators.filter(ind => ind.id === dE);
+        const ind = indicators === null || indicators === void 0 ? void 0 : indicators.filter(ind => ind.code === dE);
         return /*#__PURE__*/React.createElement("div", {
           key: (_ind$ = ind[0]) === null || _ind$ === void 0 ? void 0 : _ind$.displayName,
           style: {
-            padding: '5px'
+            padding: "5px"
           }
         }, /*#__PURE__*/React.createElement("span", {
           style: {
-            fontFamily: 'sans-serif',
-            fontWeight: 'normal',
-            fontSize: '15px'
+            fontFamily: "sans-serif",
+            fontWeight: "normal",
+            fontSize: "15px"
           }
         }, (_ind$2 = ind[0]) === null || _ind$2 === void 0 ? void 0 : _ind$2.displayName));
       } else {
         var _dataElement$, _dataElement$2;
+        console.log(dataElement);
         return /*#__PURE__*/React.createElement("div", {
           key: (_dataElement$ = dataElement[0]) === null || _dataElement$ === void 0 ? void 0 : _dataElement$.displayName,
           style: {
-            padding: '5px'
+            padding: "5px"
           }
         }, /*#__PURE__*/React.createElement("span", {
           style: {
-            fontFamily: 'sans-serif',
-            fontWeight: 'normal',
-            fontSize: '15px'
+            fontFamily: "sans-serif",
+            fontWeight: "normal",
+            fontSize: "15px"
           }
         }, (_dataElement$2 = dataElement[0]) === null || _dataElement$2 === void 0 ? void 0 : _dataElement$2.displayName));
       }
@@ -89,22 +91,22 @@ function Datatablerow(props) {
     return request === null || request === void 0 ? void 0 : (_request$pe = request.pe) === null || _request$pe === void 0 ? void 0 : _request$pe.map(pe => /*#__PURE__*/React.createElement("div", {
       key: pe,
       style: {
-        padding: '5px'
+        padding: "5px"
       }
     }, /*#__PURE__*/React.createElement("span", {
       style: {
-        fontFamily: 'sans-serif',
-        fontWeight: 'normal',
-        fontSize: '15px'
+        fontFamily: "sans-serif",
+        fontWeight: "normal",
+        fontSize: "15px"
       }
     }, pe)));
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, open && /*#__PURE__*/React.createElement(Modal, {
     fluid: true,
     position: "middle"
-  }, /*#__PURE__*/React.createElement(ModalContent, null, /*#__PURE__*/React.createElement(Box, null, "Are you sure you want to delete Request ", /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement(ModalContent, null, /*#__PURE__*/React.createElement(Box, null, "Are you sure you want to delete Request", " ", /*#__PURE__*/React.createElement("span", {
     style: {
-      fontWeight: 'bold'
+      fontWeight: "bold"
     }
   }, request === null || request === void 0 ? void 0 : request.name), " ?...")), /*#__PURE__*/React.createElement(ModalActions, null, /*#__PURE__*/React.createElement(ButtonStrip, {
     end: true
@@ -119,9 +121,9 @@ function Datatablerow(props) {
     }
   }, "Yes")))), /*#__PURE__*/React.createElement(DataTableRow, null, /*#__PURE__*/React.createElement(DataTableCell, null, /*#__PURE__*/React.createElement("span", {
     style: {
-      fontFamily: 'sans-serif',
-      fontWeight: 'normal',
-      fontSize: '15px'
+      fontFamily: "sans-serif",
+      fontWeight: "normal",
+      fontSize: "15px"
     }
   }, request === null || request === void 0 ? void 0 : request.name)), /*#__PURE__*/React.createElement(DataTableCell, null, orgUnits !== undefined && filterOrgUnits()), /*#__PURE__*/React.createElement(DataTableCell, null, visualisations !== undefined && visualizations()), /*#__PURE__*/React.createElement(DataTableCell, null, dataElements !== undefined && indicators !== undefined && dx()), /*#__PURE__*/React.createElement(DataTableCell, null, periods()), /*#__PURE__*/React.createElement(DataTableCell, null, /*#__PURE__*/React.createElement(Button, {
     destructive: true,

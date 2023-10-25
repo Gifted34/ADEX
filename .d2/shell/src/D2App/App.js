@@ -96,10 +96,6 @@ const MyApp = () => {
   const [hide, setHidden] = useState(true);
   const [message, setMessage] = useState("");
   const [isSuccessMessage, setSuccessMessage] = useState(false);
-  // const [type, setType] = useState({
-  //   INTERNAL: "INTERNAL",
-  //   EXTERNAL: "EXTERNAL",
-  // });
   const [authType, setAuthType] = useState({
     TOKEN: "TOKEN",
     BASICAUTH: "BASICAUTH"
@@ -145,6 +141,7 @@ const MyApp = () => {
   const mutation = data => {
     engine.mutate(data).then(res => {
       if (res.httpStatusCode == 201) {
+        setOpenIntegration(false);
         setSuccessMessage(true);
         setHidden(false);
         setMessage("Data exchange initialization is successfull\nPlease use the Data Exchange app to submit the Data.");
@@ -199,7 +196,6 @@ const MyApp = () => {
                 setHidden(false);
               } else {
                 var _dataToIntegrate$valu9, _dataToIntegrate$valu10, _dataToIntegrate$valu11;
-                console.log(holder);
                 let payload = {
                   resource: "aggregateDataExchanges",
                   type: "create",
@@ -208,9 +204,6 @@ const MyApp = () => {
                     source: {
                       requests: holder
                     },
-                    // source: {
-                    //   requests: dataToIntegrate?.value?.source?.request,
-                    // },
                     target: {
                       type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu10 = dataToIntegrate.value) === null || _dataToIntegrate$valu10 === void 0 ? void 0 : _dataToIntegrate$valu10.type,
                       api: {
@@ -252,10 +245,9 @@ const MyApp = () => {
           }
         }
       };
-      // mutation(payload);
+      mutation(payload);
     }
   };
-
   if (error) {
     return /*#__PURE__*/React.createElement("span", null, " Error : ", error.message);
   }
@@ -396,7 +388,22 @@ const MyApp = () => {
   }), /*#__PURE__*/React.createElement(Route, {
     path: "*",
     element: /*#__PURE__*/React.createElement(NoPageFound, null)
-  }))))), /*#__PURE__*/React.createElement(NewDataInitialization, {
+  })))), /*#__PURE__*/React.createElement(Box, null, isSuccessMessage == true ? /*#__PURE__*/React.createElement(AlertBar, {
+    hidden: hide,
+    success: true,
+    duration: 4000,
+    onHidden: e => {
+      setHidden(true);
+      // window.location.reload(true);
+    }
+  }, message) : /*#__PURE__*/React.createElement(AlertBar, {
+    hidden: hide,
+    warning: true,
+    duration: 4000,
+    onHidden: e => {
+      setHidden(true);
+    }
+  }, message))), /*#__PURE__*/React.createElement(NewDataInitialization, {
     open: open,
     setOpen: setOpen,
     styles: classes,

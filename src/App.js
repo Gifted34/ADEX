@@ -110,10 +110,6 @@ const MyApp = () => {
   const [message, setMessage] = useState("");
 
   const [isSuccessMessage, setSuccessMessage] = useState(false);
-  // const [type, setType] = useState({
-  //   INTERNAL: "INTERNAL",
-  //   EXTERNAL: "EXTERNAL",
-  // });
   const [authType, setAuthType] = useState({
     TOKEN: "TOKEN",
     BASICAUTH: "BASICAUTH",
@@ -172,6 +168,7 @@ const MyApp = () => {
       .mutate(data)
       .then((res) => {
         if (res.httpStatusCode == 201) {
+          setOpenIntegration(false);
           setSuccessMessage(true);
           setHidden(false);
           setMessage(
@@ -231,7 +228,6 @@ const MyApp = () => {
                 setMessage("Username or password is missing");
                 setHidden(false);
               } else {
-                console.log(holder);
                 let payload = {
                   resource: "aggregateDataExchanges",
                   type: "create",
@@ -240,9 +236,6 @@ const MyApp = () => {
                     source: {
                       requests: holder,
                     },
-                    // source: {
-                    //   requests: dataToIntegrate?.value?.source?.request,
-                    // },
                     target: {
                       type: dataToIntegrate?.value?.type,
                       api: {
@@ -283,7 +276,7 @@ const MyApp = () => {
           },
         },
       };
-      // mutation(payload);
+      mutation(payload);
     }
   };
 
@@ -449,51 +442,34 @@ const MyApp = () => {
             </Routes>
           </BrowserRouter>
         </div>
-        {/* <div
-          style={{
-            padding: "20px",
-            justifyContent: "start",
-            display: "flex",
-            display: "none",
-          }}
-        >
-          <Button
-            name="submit"
-            primary
-            onClick={initializeButton}
-            value="default"
-          >
-            Initialise Integration
-          </Button>
-          <div style={{ marginLeft: "50px" }}>
-            <Box>
-              {isSuccessMessage == true ? (
-                <AlertBar
-                  hidden={hide}
-                  success
-                  duration={4000}
-                  onHidden={(e) => {
-                    setHidden(true);
-                    // window.location.reload(true);
-                  }}
-                >
-                  {message}
-                </AlertBar>
-              ) : (
-                <AlertBar
-                  hidden={hide}
-                  warning
-                  duration={4000}
-                  onHidden={(e) => {
-                    setHidden(true);
-                  }}
-                >
-                  {message}
-                </AlertBar>
-              )}
-            </Box>
-          </div>
-        </div> */}
+
+        {/* <div style={{ marginLeft: "50px" }}> */}
+        <Box>
+          {isSuccessMessage == true ? (
+            <AlertBar
+              hidden={hide}
+              success
+              duration={4000}
+              onHidden={(e) => {
+                setHidden(true);
+                // window.location.reload(true);
+              }}
+            >
+              {message}
+            </AlertBar>
+          ) : (
+            <AlertBar
+              hidden={hide}
+              warning
+              duration={4000}
+              onHidden={(e) => {
+                setHidden(true);
+              }}
+            >
+              {message}
+            </AlertBar>
+          )}
+        </Box>
       </div>
       <NewDataInitialization
         open={open}

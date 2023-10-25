@@ -36,7 +36,7 @@ function RequestdataTable(props) {
             request?.map((req) => {
               return (
                 <Datatablerow
-                  request={req}
+                  requests={req}
                   dataExchange={dataExchange}
                   deleteRequest={props?.deleteRequest}
                   indicators={indicators}
