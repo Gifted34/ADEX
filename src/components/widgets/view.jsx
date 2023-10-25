@@ -189,9 +189,9 @@ export default function ViewDataStoreById(props) {
           </Center>
         </Layer>
       )}
-      <ButtonStrip end>
+      <ButtonStrip >
         <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
-          <Button primary>Home</Button>
+          <Button secondary>Back</Button>
         </Link>
       </ButtonStrip>
       <Divider />
