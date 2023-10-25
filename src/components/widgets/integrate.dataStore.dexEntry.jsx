@@ -58,41 +58,43 @@ export default function IntegrateDataStoreInitializationToDEX(props) {
                             value="TOKEN"
                           />
                         </SingleSelect>
-                        {props?.authType == "BASICAUTH" ? (
-                          <div
-                            style={{
-                              width: "500px",
-                              display: "flex",
-                              flexFlow: "row",
-                              gap: "10px",
-                            }}
-                          >
-                            <Input
-                              name="username"
-                              type="text"
-                              onChange={inputsHandler}
-                              placeholder="Username"
-                              className={props?.styles?.marginBottom}
-                            />
-                            <Input
-                              name="password"
-                              onChange={inputsHandler}
-                              type="password"
-                              className={props?.styles?.marginBottom}
-                              placeholder="Password"
-                            />
-                          </div>
-                        ) : (
-                          <div>
-                            <Input
-                              name="token"
-                              type="text"
-                              onChange={inputsHandler}
-                              placeholder="Paste the access token here..."
-                              className={props?.styles?.marginBottom}
-                            />
-                          </div>
-                        )}
+                        <div className="">
+                          {props?.authType == "BASICAUTH" ? (
+                            <div
+                              style={{
+                                width: "500px",
+                                display: "flex",
+                                flexFlow: "row",
+                                gap: "10px",
+                              }}
+                            >
+                              <Input
+                                name="username"
+                                type="text"
+                                onChange={inputsHandler}
+                                placeholder="Username"
+                                className={props?.styles?.marginBottom}
+                              />
+                              <Input
+                                name="password"
+                                onChange={inputsHandler}
+                                type="password"
+                                className={props?.styles?.marginBottom}
+                                placeholder="Password"
+                              />
+                            </div>
+                          ) : (
+                            <div>
+                              <Input
+                                name="token"
+                                type="text"
+                                onChange={inputsHandler}
+                                placeholder="Paste the access token here..."
+                                className={props?.styles?.marginBottom}
+                              />
+                            </div>
+                          )}
+                        </div>
                       </Box>
                     )}
                   </div>

@@ -42,7 +42,7 @@ export default function DataInitialized(props) {
         textDecoration: "none",
         color: "black"
       }
-    }, /*#__PURE__*/React.createElement(Button, null, "Add new")), /*#__PURE__*/React.createElement(Button, {
+    }, /*#__PURE__*/React.createElement(Button, null, "New request")), /*#__PURE__*/React.createElement(Button, {
       secondary: true,
       onClick: () => {
         props === null || props === void 0 ? void 0 : props.setOpenUpdate(!(props !== null && props !== void 0 && props.openUpdate));

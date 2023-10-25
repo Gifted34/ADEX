@@ -1,13 +1,25 @@
 import { Box, Button, ButtonStrip, Field, Input, Modal, ModalActions, ModalContent, ModalTitle, SingleSelect, SingleSelectOption } from "@dhis2/ui";
 import React, { useEffect, useState } from "react";
 export default function UpdateDataInitialization(props) {
-  var _props$data, _props$data$value, _props$styles, _props$styles2, _props$styles3, _props$data2, _props$data2$value;
-  const inputsHandler = e => {
-    props === null || props === void 0 ? void 0 : props.setUpdateFormInputValues({
-      ...(props === null || props === void 0 ? void 0 : props.updateFormInputValues),
-      [e === null || e === void 0 ? void 0 : e.name]: e === null || e === void 0 ? void 0 : e.value
+  var _props$styles, _props$styles2, _props$data3, _props$data3$value, _props$styles3;
+  const [data, setData] = useState({
+    dexname: "",
+    url: ""
+  });
+  const update = e => {
+    props === null || props === void 0 ? void 0 : props.updateGeneralInputValues({
+      data: props === null || props === void 0 ? void 0 : props.data,
+      values: data
     });
   };
+  useEffect(() => {
+    var _props$data, _props$data$value, _props$data2, _props$data2$value;
+    setData({
+      ...data,
+      dexname: props === null || props === void 0 ? void 0 : (_props$data = props.data) === null || _props$data === void 0 ? void 0 : (_props$data$value = _props$data.value) === null || _props$data$value === void 0 ? void 0 : _props$data$value.dexname,
+      url: props === null || props === void 0 ? void 0 : (_props$data2 = props.data) === null || _props$data2 === void 0 ? void 0 : (_props$data2$value = _props$data2.value) === null || _props$data2$value === void 0 ? void 0 : _props$data2$value.url
+    });
+  }, [props]);
   return /*#__PURE__*/React.createElement("div", {
     style: {
       width: "100%"
@@ -35,9 +47,16 @@ export default function UpdateDataInitialization(props) {
   }, /*#__PURE__*/React.createElement(Input, {
     name: "dexname",
     type: "text",
-    onChange: inputsHandler,
-    placeholder: props === null || props === void 0 ? void 0 : (_props$data = props.data) === null || _props$data === void 0 ? void 0 : (_props$data$value = _props$data.value) === null || _props$data$value === void 0 ? void 0 : _props$data$value.dexname,
-    className: props === null || props === void 0 ? void 0 : (_props$styles = props.styles) === null || _props$styles === void 0 ? void 0 : _props$styles.marginBottom
+    onChange: e => {
+      setData({
+        ...data,
+        dexname: e.value
+      });
+    }
+    // placeholder={props?.data?.value?.dexname}
+    ,
+    className: props === null || props === void 0 ? void 0 : (_props$styles = props.styles) === null || _props$styles === void 0 ? void 0 : _props$styles.marginBottom,
+    value: data === null || data === void 0 ? void 0 : data.dexname
   }), /*#__PURE__*/React.createElement(Box, {
     className: props === null || props === void 0 ? void 0 : (_props$styles2 = props.styles) === null || _props$styles2 === void 0 ? void 0 : _props$styles2.marginBottom
   }, /*#__PURE__*/React.createElement(SingleSelect, {
@@ -45,7 +64,7 @@ export default function UpdateDataInitialization(props) {
     onChange: e => {
       props === null || props === void 0 ? void 0 : props.setType(e.selected);
     },
-    selected: props === null || props === void 0 ? void 0 : props.type
+    selected: props === null || props === void 0 ? void 0 : (_props$data3 = props.data) === null || _props$data3 === void 0 ? void 0 : (_props$data3$value = _props$data3.value) === null || _props$data3$value === void 0 ? void 0 : _props$data3$value.type
   }, /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "Internal",
     value: "INTERNAL"
@@ -55,9 +74,15 @@ export default function UpdateDataInitialization(props) {
   }))), (props === null || props === void 0 ? void 0 : props.type) == "EXTERNAL" && /*#__PURE__*/React.createElement(Input, {
     name: "url",
     type: "text",
-    onChange: inputsHandler,
-    className: props === null || props === void 0 ? void 0 : (_props$styles3 = props.styles) === null || _props$styles3 === void 0 ? void 0 : _props$styles3.marginBottom,
-    placeholder: props === null || props === void 0 ? void 0 : (_props$data2 = props.data) === null || _props$data2 === void 0 ? void 0 : (_props$data2$value = _props$data2.value) === null || _props$data2$value === void 0 ? void 0 : _props$data2$value.url
+    onChange: e => {
+      setData({
+        ...data,
+        url: e.value
+      });
+    },
+    value: data === null || data === void 0 ? void 0 : data.url,
+    className: props === null || props === void 0 ? void 0 : (_props$styles3 = props.styles) === null || _props$styles3 === void 0 ? void 0 : _props$styles3.marginBottom
+    // placeholder={props?.data?.value?.url}
   }))))), /*#__PURE__*/React.createElement(ModalActions, null, /*#__PURE__*/React.createElement(ButtonStrip, {
     end: true
   }, /*#__PURE__*/React.createElement(Button, {
@@ -66,9 +91,7 @@ export default function UpdateDataInitialization(props) {
     },
     destructive: true
   }, "Cancel"), /*#__PURE__*/React.createElement(Button, {
-    onClick: () => {
-      props === null || props === void 0 ? void 0 : props.updateGeneralInputValues(props === null || props === void 0 ? void 0 : props.data);
-    },
+    onClick: update,
     primary: true
   }, "Save to Initialization"))))));
 }

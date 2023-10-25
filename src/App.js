@@ -11,7 +11,6 @@ import {
   Divider,
   I,
 } from "@dhis2/ui";
-import EmailValidator from "./services/emailValidator";
 import HomePage from "./components/widgets/homePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NewDataInitialization from "./components/widgets/newDataInitialization";
@@ -21,6 +20,7 @@ import ViewDataStoreById from "./components/widgets/view";
 import DeleteEntry from "./components/forms/deleteEntry";
 import UpdateDataInitialization from "./components/widgets/update.dataStore.dexEntry";
 import IntegrateDataStoreInitializationToDEX from "./components/widgets/integrate.dataStore.dexEntry";
+import UrlValidator from "./services/urlValidator";
 
 const query = {
   organisationUnits: {
@@ -75,7 +75,7 @@ const query = {
   },
 };
 
-const validater = new EmailValidator();
+// const validater = new UrlValidator();
 const MyApp = () => {
   const [formInputValues, setFormInputValues] = useState({
     dexname: "",
@@ -120,39 +120,6 @@ const MyApp = () => {
   });
 
   const { loading, error, data, refetch } = useDataQuery(query);
-  // inputs data from general section passed in state
-  const formInputs = (data) => {
-    setFormData(data);
-  };
-
-  // a post request to the data echange resource
-  const mutation = (data) => {
-    engine
-      .mutate(data)
-      .then((res) => {
-        if (res.httpStatusCode == 201) {
-          setSuccessMessage(true);
-          setHidden(false);
-          setMessage(
-            "Data exchange initialization is successfull\nPlease use the Data Exchange app to submit the Data."
-          );
-        }
-      })
-      .catch((e) => {
-        setHidden(false);
-        setMessage(
-          "Error occured. Either server or the inputs causes this error."
-        );
-      });
-  };
-  // check if token or password
-  const checkIfTokenOrBasiAuth = (authTypeValue) => {
-    if (authTypeValue == authType.BASICAUTH) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   // save to datastore
   const saveGeneralInputValues = () => {
@@ -199,66 +166,125 @@ const MyApp = () => {
         });
     }
   };
+  // a post request to the data echange resource
+  const mutation = (data) => {
+    engine
+      .mutate(data)
+      .then((res) => {
+        if (res.httpStatusCode == 201) {
+          setSuccessMessage(true);
+          setHidden(false);
+          setMessage(
+            "Data exchange initialization is successfull\nPlease use the Data Exchange app to submit the Data."
+          );
+        }
+      })
+      .catch((e) => {
+        setHidden(false);
+        setMessage(
+          "Error occured. Either server or the inputs causes this error."
+        );
+      });
+  };
+
+  // check if token or password
+  const checkIfTokenOrBasiAuth = (authTypeValue) => {
+    if (authTypeValue == authType.BASICAUTH) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   // constructing a data exchange api layout as defined in the url
   // https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/data-exchange.html
-  const initializeButton = () => {
-    let payload = {
-      resource: "aggregateDataExchanges",
-      type: "create",
-      data: {
-        name: dataToIntegrate?.value?.dexname,
-        source: dataToIntegrate?.value?.source,
-        target: {
-          type: dataToIntegrate?.value?.type,
-          api: {
-            url: dataToIntegrate?.value?.url,
-            username: formData?.formInputs?.username,
-            password: formData?.formInputs?.password,
-          },
-          request: {
-            idScheme: "code",
+  const initializeIntegration = (data) => {
+    if (formData?.type == type?.EXTERNAL) {
+      if (dataToIntegrate?.value?.url == "") {
+        setMessage("Please enter target DHIS2 instance url");
+        setHidden(false);
+      } else {
+        if (UrlValidator?.isValidUrl(dataToIntegrate?.value?.url) == false) {
+          setMessage("The url format is invalid.");
+          setHidden(false);
+        } else {
+          if (checkIfTokenOrBasiAuth(authType?.authType) == true) {
+            if (dataToIntegrate?.value?.source?.requests?.length > 0) {
+              let holder = [];
+              dataToIntegrate?.value?.source?.requests?.map((dd) => {
+                holder.push({
+                  name: dd?.name,
+                  visualization: dd?.visualizations,
+                  dx: dd?.dx,
+                  pe: dd?.pe,
+                  ou: dd?.ou,
+                  inputIdScheme: "code",
+                  outputIdScheme: "code",
+                });
+              });
+              if (
+                authValues?.username == undefined ||
+                authValues?.username == "" ||
+                authValues?.password == undefined ||
+                authValues?.password == ""
+              ) {
+                setMessage("Username or password is missing");
+                setHidden(false);
+              } else {
+                console.log(holder);
+                let payload = {
+                  resource: "aggregateDataExchanges",
+                  type: "create",
+                  data: {
+                    name: dataToIntegrate?.value?.dexname + " two",
+                    source: {
+                      requests: holder,
+                    },
+                    // source: {
+                    //   requests: dataToIntegrate?.value?.source?.request,
+                    // },
+                    target: {
+                      type: dataToIntegrate?.value?.type,
+                      api: {
+                        url: dataToIntegrate?.value?.url,
+                        username: authValues?.username,
+                        password: authValues?.password,
+                      },
+                      request: {
+                        idScheme: "code",
+                      },
+                    },
+                  },
+                };
+                mutation(payload);
+              }
+            } else {
+            }
+          } else {
+          }
+        }
+      }
+    } else {
+      let payload = {
+        resource: "aggregateDataExchanges",
+        type: "create",
+        data: {
+          name: dataToIntegrate?.value?.dexname,
+          source: { requests: dataToIntegrate?.value?.source?.request },
+          target: {
+            type: dataToIntegrate?.value?.type,
+            api: {
+              url: dataToIntegrate?.value?.url,
+              accessToken: authValues?.token,
+            },
+            request: {
+              idScheme: "code",
+            },
           },
         },
-      },
-    };
-
-    // if (formData?.formInputs?.dexname == undefined) {
-    //   setMessage("Name is missing");
-    //   setHidden(false);
-    // } else if (formData?.formInputs?.period == undefined) {
-    //   setMessage("Period is missing");
-    //   setHidden(false);
-    // } else {
-    //   if (formData?.type == type?.EXTERNAL) {
-    //     // payload?.data?.target?.type == type?.EXTERNAL;
-    //     if (formData?.formInputs?.url == "") {
-    //       setMessage("Please enter target DHIS2 instance url");
-    //       setHidden(false);
-    //     } else {
-    //       if (validater.isValidUrl(formData?.formInputs?.url) == false) {
-    //         setMessage("The email format is invalid.");
-    //         setHidden(false);
-    //       } else {
-    //         if (checkIfTokenOrBasiAuth(formData?.authType) == true) {
-    //           if (
-    //             formData?.formInputs?.username == undefined ||
-    //             formData?.formInputs?.username == "" ||
-    //             formData?.formInputs?.password == undefined ||
-    //             formData?.formInputs?.password == ""
-    //           ) {
-    //             setMessage("Username or password is missing");
-    //             setHidden(false);
-    //           } else {
-    //             mutation(payload);
-    //           }
-    //         } else {
-    //         }
-    //       }
-    //     }
-    //   } else {
-    //     mutation(payload);
-    //   }
-    // }
+      };
+      // mutation(payload);
+    }
   };
 
   if (error) {
@@ -276,15 +302,15 @@ const MyApp = () => {
   };
 
   // update the initialized entry in the datastore
-  const updateGeneralInputValues = (data) => {
-    console.log(updateFormInputValues);
+  const updateGeneralInputValues = ({ data, values }) => {
+    console.log({ data, values });
     if (
-      updateFormInputValues?.dexname == "" ||
-      updateFormInputValues?.dexname == null ||
-      updateFormInputValues?.dexname == undefined ||
-      updateFormInputValues?.url == "" ||
-      updateFormInputValues?.url == null ||
-      updateFormInputValues?.url == undefined
+      values?.dexname == "" ||
+      values?.dexname == null ||
+      values?.dexname == undefined ||
+      values?.url == "" ||
+      values?.url == null ||
+      values?.url == undefined
     ) {
     } else {
       engine
@@ -294,13 +320,12 @@ const MyApp = () => {
           data: ({}) => ({
             createdAt: dataToUpdate?.value?.createdAt,
             updatedAt: new Date().toLocaleDateString(),
-            dexname: updateFormInputValues?.dexname,
+            dexname: values?.dexname,
             type: type,
-            url: updateFormInputValues?.url,
+            url: values?.url,
           }),
         })
         .then((res) => {
-          console.log(res);
           if (res.httpStatusCode == 200) {
             setOpenUpdate(!openUpdate);
             setSuccessMessage(true);
@@ -324,9 +349,7 @@ const MyApp = () => {
   const integrateEntry = (data) => {
     setDataToIntegrate(data);
   };
-  const initializeIntegration = (data) => {
-    console.log(data);
-  };
+
   const deleteDataEntry = (data) => {
     if (data?.key == null || data?.key == undefined || data?.key == "") {
     } else {
@@ -394,8 +417,7 @@ const MyApp = () => {
             </Routes>
           </BrowserRouter>
         </div>
-
-        <div
+        {/* <div
           style={{
             padding: "20px",
             justifyContent: "start",
@@ -439,7 +461,7 @@ const MyApp = () => {
               )}
             </Box>
           </div>
-        </div>
+        </div> */}
       </div>
       <NewDataInitialization
         open={open}

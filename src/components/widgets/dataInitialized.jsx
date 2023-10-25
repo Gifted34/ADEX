@@ -80,7 +80,7 @@ export default function DataInitialized(props) {
                             to={`/new-request/${aggregateDataExchange?.key}`}
                             style={{ textDecoration: "none", color: "black" }}
                           >
-                            <Button>Add new</Button>
+                            <Button>New request</Button>
                           </Link>
                           <Button
                             secondary

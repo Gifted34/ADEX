@@ -14,12 +14,22 @@ import {
 import React, { useEffect, useState } from "react";
 
 export default function UpdateDataInitialization(props) {
-  const inputsHandler = (e) => {
-    props?.setUpdateFormInputValues({
-      ...props?.updateFormInputValues,
-      [e?.name]: e?.value,
-    });
+  const [data, setData] = useState({
+    dexname: "",
+    url: "",
+  });
+  const update = (e) => {
+    props?.updateGeneralInputValues({ data: props?.data, values: data });
   };
+
+  useEffect(() => {
+    setData({
+      ...data,
+      dexname: props?.data?.value?.dexname,
+      url: props?.data?.value?.url,
+    });
+  }, [props]);
+
   return (
     <div
       style={{
@@ -43,9 +53,12 @@ export default function UpdateDataInitialization(props) {
                     <Input
                       name="dexname"
                       type="text"
-                      onChange={inputsHandler}
-                      placeholder={props?.data?.value?.dexname}
+                      onChange={(e) => {
+                        setData({ ...data, dexname: e.value });
+                      }}
+                      // placeholder={props?.data?.value?.dexname}
                       className={props?.styles?.marginBottom}
+                      value={data?.dexname}
                     />
                     <Box className={props?.styles?.marginBottom}>
                       <SingleSelect
@@ -53,7 +66,7 @@ export default function UpdateDataInitialization(props) {
                         onChange={(e) => {
                           props?.setType(e.selected);
                         }}
-                        selected={props?.type}
+                        selected={props?.data?.value?.type}
                       >
                         <SingleSelectOption label="Internal" value="INTERNAL" />
                         <SingleSelectOption label="External" value="EXTERNAL" />
@@ -63,9 +76,12 @@ export default function UpdateDataInitialization(props) {
                       <Input
                         name="url"
                         type="text"
-                        onChange={inputsHandler}
+                        onChange={(e) => {
+                          setData({ ...data, url: e.value });
+                        }}
+                        value={data?.url}
                         className={props?.styles?.marginBottom}
-                        placeholder={props?.data?.value?.url}
+                        // placeholder={props?.data?.value?.url}
                       />
                     )}
                   </div>
@@ -82,12 +98,7 @@ export default function UpdateDataInitialization(props) {
                 >
                   Cancel
                 </Button>
-                <Button
-                  onClick={() => {
-                    props?.updateGeneralInputValues(props?.data);
-                  }}
-                  primary
-                >
+                <Button onClick={update} primary>
                   Save to Initialization
                 </Button>
               </ButtonStrip>

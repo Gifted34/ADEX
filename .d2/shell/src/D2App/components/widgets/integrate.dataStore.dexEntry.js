@@ -46,7 +46,9 @@ export default function IntegrateDataStoreInitializationToDEX(props) {
   }), /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "Access Token",
     value: "TOKEN"
-  })), (props === null || props === void 0 ? void 0 : props.authType) == "BASICAUTH" ? /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("div", {
+    className: ""
+  }, (props === null || props === void 0 ? void 0 : props.authType) == "BASICAUTH" ? /*#__PURE__*/React.createElement("div", {
     style: {
       width: "500px",
       display: "flex",
@@ -71,7 +73,7 @@ export default function IntegrateDataStoreInitializationToDEX(props) {
     onChange: inputsHandler,
     placeholder: "Paste the access token here...",
     className: props === null || props === void 0 ? void 0 : (_props$styles5 = props.styles) === null || _props$styles5 === void 0 ? void 0 : _props$styles5.marginBottom
-  }))))))), /*#__PURE__*/React.createElement(ModalActions, null, /*#__PURE__*/React.createElement(ButtonStrip, {
+  })))))))), /*#__PURE__*/React.createElement(ModalActions, null, /*#__PURE__*/React.createElement(ButtonStrip, {
     end: true
   }, /*#__PURE__*/React.createElement(Button, {
     onClick: () => {
