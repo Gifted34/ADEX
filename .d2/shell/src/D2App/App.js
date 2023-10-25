@@ -204,7 +204,7 @@ const MyApp = () => {
                   resource: "aggregateDataExchanges",
                   type: "create",
                   data: {
-                    name: (dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu9 = dataToIntegrate.value) === null || _dataToIntegrate$valu9 === void 0 ? void 0 : _dataToIntegrate$valu9.dexname) + " two",
+                    name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu9 = dataToIntegrate.value) === null || _dataToIntegrate$valu9 === void 0 ? void 0 : _dataToIntegrate$valu9.dexname,
                     source: {
                       requests: holder
                     },
@@ -274,36 +274,62 @@ const MyApp = () => {
       data,
       values
     } = _ref;
-    console.log({
-      data,
-      values
-    });
     if ((values === null || values === void 0 ? void 0 : values.dexname) == "" || (values === null || values === void 0 ? void 0 : values.dexname) == null || (values === null || values === void 0 ? void 0 : values.dexname) == undefined || (values === null || values === void 0 ? void 0 : values.url) == "" || (values === null || values === void 0 ? void 0 : values.url) == null || (values === null || values === void 0 ? void 0 : values.url) == undefined) {} else {
-      engine.mutate({
-        resource: `dataStore/DEX_initializer_values/${data === null || data === void 0 ? void 0 : data.key}`,
-        type: "update",
-        data: _ref2 => {
-          var _dataToUpdate$value;
-          let {} = _ref2;
-          return {
-            createdAt: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value = dataToUpdate.value) === null || _dataToUpdate$value === void 0 ? void 0 : _dataToUpdate$value.createdAt,
-            updatedAt: new Date().toLocaleDateString(),
-            dexname: values === null || values === void 0 ? void 0 : values.dexname,
-            type: type,
-            url: values === null || values === void 0 ? void 0 : values.url
-          };
-        }
-      }).then(res => {
-        if (res.httpStatusCode == 200) {
-          setOpenUpdate(!openUpdate);
-          setSuccessMessage(true);
+      var _dataToUpdate$value, _dataToUpdate$value2;
+      if ((dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value = dataToUpdate.value) === null || _dataToUpdate$value === void 0 ? void 0 : _dataToUpdate$value.source) == undefined || (dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value2 = dataToUpdate.value) === null || _dataToUpdate$value2 === void 0 ? void 0 : _dataToUpdate$value2.source) == null) {
+        engine.mutate({
+          resource: `dataStore/DEX_initializer_values/${data === null || data === void 0 ? void 0 : data.key}`,
+          type: "update",
+          data: _ref2 => {
+            var _dataToUpdate$value3;
+            let {} = _ref2;
+            return {
+              createdAt: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value3 = dataToUpdate.value) === null || _dataToUpdate$value3 === void 0 ? void 0 : _dataToUpdate$value3.createdAt,
+              updatedAt: new Date().toLocaleDateString(),
+              dexname: values === null || values === void 0 ? void 0 : values.dexname,
+              type: type,
+              url: values === null || values === void 0 ? void 0 : values.url
+            };
+          }
+        }).then(res => {
+          if (res.httpStatusCode == 200) {
+            setOpenUpdate(!openUpdate);
+            setSuccessMessage(true);
+            setHidden(false);
+            setMessage("Data saved in the datastore successfully.");
+          }
+        }).catch(e => {
           setHidden(false);
-          setMessage("Data saved in the datastore successfully.");
-        }
-      }).catch(e => {
-        setHidden(false);
-        setMessage("Error occured. Either server or the inputs causes this error.");
-      });
+          setMessage("Error occured. Either server or the inputs causes this error.");
+        });
+      } else {
+        engine.mutate({
+          resource: `dataStore/DEX_initializer_values/${data === null || data === void 0 ? void 0 : data.key}`,
+          type: "update",
+          data: _ref3 => {
+            var _dataToUpdate$value4, _dataToUpdate$value5;
+            let {} = _ref3;
+            return {
+              createdAt: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value4 = dataToUpdate.value) === null || _dataToUpdate$value4 === void 0 ? void 0 : _dataToUpdate$value4.createdAt,
+              updatedAt: new Date().toLocaleDateString(),
+              dexname: values === null || values === void 0 ? void 0 : values.dexname,
+              source: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value5 = dataToUpdate.value) === null || _dataToUpdate$value5 === void 0 ? void 0 : _dataToUpdate$value5.source,
+              type: type,
+              url: values === null || values === void 0 ? void 0 : values.url
+            };
+          }
+        }).then(res => {
+          if (res.httpStatusCode == 200) {
+            setOpenUpdate(!openUpdate);
+            setSuccessMessage(true);
+            setHidden(false);
+            setMessage("Data saved in the datastore successfully.");
+          }
+        }).catch(e => {
+          setHidden(false);
+          setMessage("Error occured. Either server or the inputs causes this error.");
+        });
+      }
     }
   };
   // delete the initialized entry in datastore
