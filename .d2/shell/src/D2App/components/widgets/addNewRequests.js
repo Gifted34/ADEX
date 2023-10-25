@@ -101,14 +101,14 @@ export default function AddNewRequests(props) {
       setErrorHidden(false);
     } else {
       var _dataStore$source;
-      if ((dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source = dataStore.source) === null || _dataStore$source === void 0 ? void 0 : _dataStore$source.request) === undefined) {
+      if ((dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source = dataStore.source) === null || _dataStore$source === void 0 ? void 0 : _dataStore$source.requests) === undefined) {
         var dStore = {
           'createdAt': dataStore.createdAt,
           'dexname': dataStore.dexname,
           'type': dataStore.type,
           'url': dataStore.url,
           'source': {
-            'request': [{
+            'requests': [{
               'name': name,
               "visualization": selectVisualisations,
               'dx': dx,
@@ -122,7 +122,7 @@ export default function AddNewRequests(props) {
         send(dStore);
       } else {
         var _dataStore$source2;
-        let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : _dataStore$source2.request;
+        let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : _dataStore$source2.requests;
         arr.push({
           'name': name,
           "visualization": selectVisualisations,
@@ -132,13 +132,14 @@ export default function AddNewRequests(props) {
           'inputIdScheme': "code",
           'outputIdScheme': "code"
         });
+        console.log(arr);
         send({
           'createdAt': dataStore.createdAt,
           'dexname': dataStore.dexname,
           'type': dataStore.type,
           'url': dataStore.url,
           'source': {
-            'request': arr
+            'requests': arr
           }
         });
       }

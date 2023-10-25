@@ -134,7 +134,7 @@ export default function ViewDataStoreById(props) {
         type: dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.type,
         url: dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.url,
         source: {
-          request: requests
+          requests: requests
         }
       }
     };

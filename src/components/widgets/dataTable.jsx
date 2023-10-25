@@ -16,6 +16,10 @@ function RequestdataTable(props) {
   const visualisations = props?.visualisations;
   const request = dataExchange?.source?.requests;
 
+  useEffect(()=>{
+    console.log(dataExchange)
+  },[])
+
   return (
     <div style={{ padding: "30px" }}>
       <DataTable>

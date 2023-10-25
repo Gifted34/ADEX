@@ -111,13 +111,13 @@ const saveData = () =>{
         setMessage('No periods selected')
         setErrorHidden(false)
     }else{
-        if(dataStore?.source?.request === undefined){
+        if(dataStore?.source?.requests === undefined){
             var dStore =  {
                 'createdAt' : dataStore.createdAt,
                 'dexname' :  dataStore.dexname,
                 'type' : dataStore.type,
                 'url' : dataStore.url,
-                'source' : {'request': [{
+                'source' : {'requests': [{
                                      'name' : name,
                                      "visualization": selectVisualisations,
                                      'dx' : dx,
@@ -130,7 +130,7 @@ const saveData = () =>{
              
             send(dStore)       
         }else{
-                let arr = dataStore?.source?.request
+                let arr = dataStore?.source?.requests
                  arr.push({'name' : name,
                  "visualization": selectVisualisations,
                  'dx' : dx,
@@ -138,13 +138,13 @@ const saveData = () =>{
                  'ou' : orgS,
                  'inputIdScheme': "code",
                  'outputIdScheme': "code",})
-                
+                console.log(arr)
                  send({
                 'createdAt' : dataStore.createdAt,
                 'dexname' :  dataStore.dexname,
                 'type' : dataStore.type,
                 'url' : dataStore.url,
-                'source' : {'request':arr}})              
+                'source' : {'requests':arr}})              
         }       
              
     }
