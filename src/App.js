@@ -236,7 +236,7 @@ const MyApp = () => {
                   resource: "aggregateDataExchanges",
                   type: "create",
                   data: {
-                    name: dataToIntegrate?.value?.dexname + " two",
+                    name: dataToIntegrate?.value?.dexname,
                     source: {
                       requests: holder,
                     },

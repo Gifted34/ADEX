@@ -204,7 +204,7 @@ const MyApp = () => {
                   resource: "aggregateDataExchanges",
                   type: "create",
                   data: {
-                    name: (dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu9 = dataToIntegrate.value) === null || _dataToIntegrate$valu9 === void 0 ? void 0 : _dataToIntegrate$valu9.dexname) + " two",
+                    name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu9 = dataToIntegrate.value) === null || _dataToIntegrate$valu9 === void 0 ? void 0 : _dataToIntegrate$valu9.dexname,
                     source: {
                       requests: holder
                     },
