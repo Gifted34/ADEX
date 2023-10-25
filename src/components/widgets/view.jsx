@@ -67,7 +67,7 @@ export default function ViewDataStoreById(props) {
   const [orgUnits, setOrgUnits] = useState()
   const [loading,setLoading] = useState(false)
   const[hidden,setHidden] = useState(true)
-  const [errorHide,setErrorHide] = useState(false)
+  const [errorHide,setErrorHide] = useState(true)
 
   const query = {
     organisationUnits: {
@@ -223,12 +223,16 @@ export default function ViewDataStoreById(props) {
           
         </Box>
       </div>
-      <AlertBar success hide={hidden} duration={2000} onhidden={()=> setHidden(true)}>
+      <div style={{alignContent: 'center',justifyContent: 'center'}}>
+      <Center>
+      <AlertBar success hidden={hidden} duration={2000} onhidden={()=> setHidden(true)}>
         Request deleted succesifuly
       </AlertBar>
-      <AlertBar warning hide={errorHide} duration={2000} onhidden={()=>setErrorHide(true)}>
+      <AlertBar warning hidden={errorHide} duration={2000} onhidden={()=>setErrorHide(true)}>
         Failled to delete request
       </AlertBar>
+      </Center>
+      </div>
     </div>
   );
 }

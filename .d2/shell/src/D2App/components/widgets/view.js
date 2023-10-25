@@ -64,7 +64,7 @@ export default function ViewDataStoreById(props) {
   const [orgUnits, setOrgUnits] = useState();
   const [loading, setLoading] = useState(false);
   const [hidden, setHidden] = useState(true);
-  const [errorHide, setErrorHide] = useState(false);
+  const [errorHide, setErrorHide] = useState(true);
   const query = {
     organisationUnits: {
       resource: "organisationUnits",
@@ -185,15 +185,20 @@ export default function ViewDataStoreById(props) {
     dataExchange: dataExchange,
     dataElements: dataElements,
     visualisations: visualisations
-  })))), /*#__PURE__*/React.createElement(AlertBar, {
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      alignContent: 'center',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/React.createElement(Center, null, /*#__PURE__*/React.createElement(AlertBar, {
     success: true,
-    hide: hidden,
+    hidden: hidden,
     duration: 2000,
     onhidden: () => setHidden(true)
   }, "Request deleted succesifuly"), /*#__PURE__*/React.createElement(AlertBar, {
     warning: true,
-    hide: errorHide,
+    hidden: errorHide,
     duration: 2000,
     onhidden: () => setErrorHide(true)
-  }, "Failled to delete request"));
+  }, "Failled to delete request"))));
 }
