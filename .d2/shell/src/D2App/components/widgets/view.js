@@ -55,7 +55,7 @@ const query = {
 };
 export default function ViewDataStoreById(props) {
   const location = useLocation();
-  const path = location.pathname.split('/').slice(-1)[0];
+  const path = location.pathname.split("/").slice(-1)[0];
   const dataStorePath = `dataStore/DEX_initializer_values/${path}`;
   const [dataExchange, setExchange] = useState();
   const [indicators, setIndicators] = useState();
@@ -110,33 +110,35 @@ export default function ViewDataStoreById(props) {
   };
   const engine = useDataEngine();
   const fetch = async () => {
+    var _res$visualizations, _res$indicators, _res$dataElements, _res$organisationUnit;
     const res = await engine.query(query);
-    setExchange(res.dataStore);
-    setVis(res.visualizations.visualizations);
-    setIndicators(res.indicators.indicators);
-    setDataElements(res.dataElements.dataElements);
-    setOrgUnits(res.organisationUnits.organisationUnits);
+    setExchange(res === null || res === void 0 ? void 0 : res.dataStore);
+    setVis(res === null || res === void 0 ? void 0 : (_res$visualizations = res.visualizations) === null || _res$visualizations === void 0 ? void 0 : _res$visualizations.visualizations);
+    setIndicators(res === null || res === void 0 ? void 0 : (_res$indicators = res.indicators) === null || _res$indicators === void 0 ? void 0 : _res$indicators.indicators);
+    setDataElements(res === null || res === void 0 ? void 0 : (_res$dataElements = res.dataElements) === null || _res$dataElements === void 0 ? void 0 : _res$dataElements.dataElements);
+    setOrgUnits(res === null || res === void 0 ? void 0 : (_res$organisationUnit = res.organisationUnits) === null || _res$organisationUnit === void 0 ? void 0 : _res$organisationUnit.organisationUnits);
   };
   useEffect(() => {
     fetch();
   }, []);
   const deleteRequest = async filter => {
+    var _dataExchange$source;
     setLoading(true);
-    const requests = dataExchange.source.request.filter(req => req.name !== filter.name);
+    const requests = dataExchange === null || dataExchange === void 0 ? void 0 : (_dataExchange$source = dataExchange.source) === null || _dataExchange$source === void 0 ? void 0 : _dataExchange$source.requests.filter(req => req.name !== filter.name);
     const myMutation = {
       resource: dataStorePath,
       type: "update",
       data: {
-        'createdAt': dataExchange.createdAt,
-        'dexname': dataExchange.dexname,
-        'type': dataExchange.type,
-        'url': dataExchange.url,
-        'source': {
-          'request': requests
+        createdAt: dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.createdAt,
+        dexname: dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.dexname,
+        type: dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.type,
+        url: dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.url,
+        source: {
+          request: requests
         }
       }
     };
-    setExchange(myMutation.data);
+    setExchange(myMutation === null || myMutation === void 0 ? void 0 : myMutation.data);
     await engine.mutate(myMutation).then(res => {
       if (res.httpStatusCode === 200) {
         setLoading(false);
@@ -155,29 +157,33 @@ export default function ViewDataStoreById(props) {
     translucent: true
   }, /*#__PURE__*/React.createElement(Center, null, /*#__PURE__*/React.createElement(CircularLoader, {
     large: true
-  }))), /*#__PURE__*/React.createElement(ButtonStrip, null, /*#__PURE__*/React.createElement(Link, {
+  }))), /*#__PURE__*/React.createElement(ButtonStrip, {
+    end: true
+  }, /*#__PURE__*/React.createElement(Link, {
     to: "/",
     style: {
       textDecoration: "none",
       color: "white"
     }
-  }, /*#__PURE__*/React.createElement(Button, null, "Home"))), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(Button, {
+    primary: true
+  }, "Home"))), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
     className: `${props === null || props === void 0 ? void 0 : props.styles.padding}`
   }, /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement("span", {
     style: {
-      padding: '10px',
-      fontFamily: 'sans-serif',
-      fontWeight: 'bold',
-      fontSize: '20px'
+      padding: "10px",
+      fontFamily: "sans-serif",
+      fontWeight: "bold",
+      fontSize: "20px"
     }
-  }, " Agreggate exchange Details "), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(StackedTable, null, /*#__PURE__*/React.createElement(StackedTableHead, null, /*#__PURE__*/React.createElement(StackedTableRowHead, null, /*#__PURE__*/React.createElement(StackedTableCellHead, null, "Created at"), /*#__PURE__*/React.createElement(StackedTableCellHead, null, "Name"), /*#__PURE__*/React.createElement(StackedTableCellHead, null, "Target"), /*#__PURE__*/React.createElement(StackedTableCellHead, null, "Type"))), /*#__PURE__*/React.createElement(StackedTableBody, null, /*#__PURE__*/React.createElement(StackedTableRow, null, /*#__PURE__*/React.createElement(StackedTableCell, null, dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.createdAt), /*#__PURE__*/React.createElement(StackedTableCell, null, dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.dexname), /*#__PURE__*/React.createElement(StackedTableCell, null, dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.url), /*#__PURE__*/React.createElement(StackedTableCell, null, dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.type))))), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement("span", {
+  }, " ", "Agreggate exchange Details", " "), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(StackedTable, null, /*#__PURE__*/React.createElement(StackedTableHead, null, /*#__PURE__*/React.createElement(StackedTableRowHead, null, /*#__PURE__*/React.createElement(StackedTableCellHead, null, "Created at"), /*#__PURE__*/React.createElement(StackedTableCellHead, null, "Name"), /*#__PURE__*/React.createElement(StackedTableCellHead, null, "Target"), /*#__PURE__*/React.createElement(StackedTableCellHead, null, "Type"))), /*#__PURE__*/React.createElement(StackedTableBody, null, /*#__PURE__*/React.createElement(StackedTableRow, null, /*#__PURE__*/React.createElement(StackedTableCell, null, dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.createdAt), /*#__PURE__*/React.createElement(StackedTableCell, null, dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.dexname), /*#__PURE__*/React.createElement(StackedTableCell, null, dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.url), /*#__PURE__*/React.createElement(StackedTableCell, null, dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.type))))), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement("span", {
     style: {
-      padding: '20px',
-      fontFamily: 'sans-serif',
-      fontWeight: 'normal',
-      fontSize: '20px'
+      padding: "20px",
+      fontFamily: "sans-serif",
+      fontWeight: "normal",
+      fontSize: "20px"
     }
-  }, " Requests "), /*#__PURE__*/React.createElement(RequestdataTable, {
+  }, " ", "Requests", " "), /*#__PURE__*/React.createElement(RequestdataTable, {
     key: dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.url,
     deleteRequest: deleteRequest,
     orgUnits: orgUnits,
@@ -187,8 +193,8 @@ export default function ViewDataStoreById(props) {
     visualisations: visualisations
   })))), /*#__PURE__*/React.createElement("div", {
     style: {
-      alignContent: 'center',
-      justifyContent: 'center'
+      alignContent: "center",
+      justifyContent: "center"
     }
   }, /*#__PURE__*/React.createElement(Center, null, /*#__PURE__*/React.createElement(AlertBar, {
     success: true,
