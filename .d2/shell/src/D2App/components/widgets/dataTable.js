@@ -9,6 +9,9 @@ function RequestdataTable(props) {
   const dataElements = props === null || props === void 0 ? void 0 : props.dataElements;
   const visualisations = props === null || props === void 0 ? void 0 : props.visualisations;
   const request = dataExchange === null || dataExchange === void 0 ? void 0 : (_dataExchange$source = dataExchange.source) === null || _dataExchange$source === void 0 ? void 0 : _dataExchange$source.requests;
+  useEffect(() => {
+    console.log(dataExchange);
+  }, []);
   return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "30px"

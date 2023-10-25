@@ -95,7 +95,6 @@ export default function AddNewRequests(props) {
         setErrorHidden(false);
       });
   };
-
   //updating the dataStore object in dataStore
   const saveData = () => {
     setLoading(true);
@@ -149,7 +148,7 @@ export default function AddNewRequests(props) {
           inputIdScheme: "code",
           outputIdScheme: "code",
         });
-
+        console.log(arr);
         send({
           createdAt: dataStore.createdAt,
           dexname: dataStore.dexname,

@@ -103,6 +103,7 @@ export default function AddNewRequests(props) {
       var _dataStore$source;
       if ((dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source = dataStore.source) === null || _dataStore$source === void 0 ? void 0 : _dataStore$source.requests) === undefined) {
         var dStore = {
+<<<<<<< HEAD
           createdAt: dataStore.createdAt,
           dexname: dataStore.dexname,
           type: dataStore.type,
@@ -116,6 +117,21 @@ export default function AddNewRequests(props) {
               ou: orgS,
               inputIdScheme: "code",
               outputIdScheme: "code"
+=======
+          'createdAt': dataStore.createdAt,
+          'dexname': dataStore.dexname,
+          'type': dataStore.type,
+          'url': dataStore.url,
+          'source': {
+            'requests': [{
+              'name': name,
+              "visualization": selectVisualisations,
+              'dx': dx,
+              'pe': periods,
+              'ou': orgS,
+              'inputIdScheme': "code",
+              'outputIdScheme': "code"
+>>>>>>> ab877a92700ad83e0b47314ae5c232d11505ad09
             }]
           }
         };
@@ -132,13 +148,23 @@ export default function AddNewRequests(props) {
           inputIdScheme: "code",
           outputIdScheme: "code"
         });
+        console.log(arr);
         send({
+<<<<<<< HEAD
           createdAt: dataStore.createdAt,
           dexname: dataStore.dexname,
           type: dataStore.type,
           url: dataStore.url,
           source: {
             requests: arr
+=======
+          'createdAt': dataStore.createdAt,
+          'dexname': dataStore.dexname,
+          'type': dataStore.type,
+          'url': dataStore.url,
+          'source': {
+            'requests': arr
+>>>>>>> ab877a92700ad83e0b47314ae5c232d11505ad09
           }
         });
       }
