@@ -60,7 +60,10 @@ function Datatablerow(props) {
                     <Button primary onClick={() => setOpen(false)}>
                         No
                     </Button>
-                    <Button destructive onClick={()=> props?.deleteRequest(request)}>
+                    <Button destructive onClick={()=>{
+                        setOpen(false)
+                        props?.deleteRequest(request)    
+                    } }>
                         Yes
                     </Button>
                 </ButtonStrip>

@@ -113,7 +113,10 @@ function Datatablerow(props) {
     onClick: () => setOpen(false)
   }, "No"), /*#__PURE__*/React.createElement(Button, {
     destructive: true,
-    onClick: () => props === null || props === void 0 ? void 0 : props.deleteRequest(request)
+    onClick: () => {
+      setOpen(false);
+      props === null || props === void 0 ? void 0 : props.deleteRequest(request);
+    }
   }, "Yes")))), /*#__PURE__*/React.createElement(DataTableRow, null, /*#__PURE__*/React.createElement(DataTableCell, null, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'sans-serif',

@@ -1,5 +1,5 @@
 import { useDataEngine } from "@dhis2/app-runtime";
-import { Box, Button, ButtonStrip, Center, CircularLoader, Divider, Layer, StackedTable, StackedTableBody, StackedTableCell, StackedTableCellHead, StackedTableHead, StackedTableRow, StackedTableRowHead } from "@dhis2/ui";
+import { AlertBar, Box, Button, ButtonStrip, Center, CircularLoader, Divider, Layer, StackedTable, StackedTableBody, StackedTableCell, StackedTableCellHead, StackedTableHead, StackedTableRow, StackedTableRowHead } from "@dhis2/ui";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import RequestdataTable from "./dataTable";
@@ -63,6 +63,8 @@ export default function ViewDataStoreById(props) {
   const [visualisations, setVis] = useState();
   const [orgUnits, setOrgUnits] = useState();
   const [loading, setLoading] = useState(false);
+  const [hidden, setHidden] = useState(true);
+  const [errorHide, setErrorHide] = useState(false);
   const query = {
     organisationUnits: {
       resource: "organisationUnits",
@@ -118,14 +120,40 @@ export default function ViewDataStoreById(props) {
   useEffect(() => {
     fetch();
   }, []);
-  const deleteRequest = requestName => {
-    console.log(dataExchange.source.request);
+  const deleteRequest = async filter => {
+    setLoading(true);
+    const requests = dataExchange.source.request.filter(req => req.name !== filter.name);
+    const myMutation = {
+      resource: dataStorePath,
+      type: "update",
+      data: {
+        'createdAt': dataExchange.createdAt,
+        'dexname': dataExchange.dexname,
+        'type': dataExchange.type,
+        'url': dataExchange.url,
+        'source': {
+          'request': requests
+        }
+      }
+    };
+    setExchange(myMutation.data);
+    await engine.mutate(myMutation).then(res => {
+      if (res.httpStatusCode === 200) {
+        setLoading(false);
+        setHidden(false);
+      }
+    }).catch(e => {
+      setLoading(false);
+      setErrorHide(false);
+    });
   };
   return /*#__PURE__*/React.createElement("div", {
     style: {
       width: "100%"
     }
-  }, loading && /*#__PURE__*/React.createElement(Layer, null, /*#__PURE__*/React.createElement(Center, null, /*#__PURE__*/React.createElement(CircularLoader, {
+  }, loading && /*#__PURE__*/React.createElement(Layer, {
+    translucent: true
+  }, /*#__PURE__*/React.createElement(Center, null, /*#__PURE__*/React.createElement(CircularLoader, {
     large: true
   }))), /*#__PURE__*/React.createElement(ButtonStrip, null, /*#__PURE__*/React.createElement(Link, {
     to: "/",
@@ -157,5 +185,15 @@ export default function ViewDataStoreById(props) {
     dataExchange: dataExchange,
     dataElements: dataElements,
     visualisations: visualisations
-  })))));
+  })))), /*#__PURE__*/React.createElement(AlertBar, {
+    success: true,
+    hide: hidden,
+    duration: 2000,
+    onhidden: () => setHidden(true)
+  }, "Request deleted succesifuly"), /*#__PURE__*/React.createElement(AlertBar, {
+    warning: true,
+    hide: errorHide,
+    duration: 2000,
+    onhidden: () => setErrorHide(true)
+  }, "Failled to delete request"));
 }
