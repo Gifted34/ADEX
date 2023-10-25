@@ -1,7 +1,8 @@
 import { useDataEngine } from "@dhis2/app-runtime";
-import { Box, Button, ButtonStrip, Divider, StackedTable, StackedTableBody, StackedTableCell, StackedTableCellHead, StackedTableHead, StackedTableRow, StackedTableRowHead } from "@dhis2/ui";
+import { AlertBar, Box, Button, ButtonStrip, Center, CircularLoader, Divider, Layer, StackedTable, StackedTableBody, StackedTableCell, StackedTableCellHead, StackedTableHead, StackedTableRow, StackedTableRowHead } from "@dhis2/ui";
 import React,{useEffect,useState} from "react";
 import { Link, useLocation } from "react-router-dom";
+import RequestdataTable from "./dataTable";
 
 const query = {
   organisationUnits: {
@@ -60,6 +61,13 @@ export default function ViewDataStoreById(props) {
   const path = location.pathname.split('/').slice(-1)[0]  
   const dataStorePath = `dataStore/DEX_initializer_values/${path}` 
   const [dataExchange,setExchange] = useState()
+  const [indicators,setIndicators] = useState()
+  const [dataElements, setDataElements] = useState()
+  const[ visualisations,setVis] = useState()
+  const [orgUnits, setOrgUnits] = useState()
+  const [loading,setLoading] = useState(false)
+  const[hidden,setHidden] = useState(true)
+  const [errorHide,setErrorHide] = useState(true)
 
   const query = {
     organisationUnits: {
@@ -109,16 +117,46 @@ export default function ViewDataStoreById(props) {
 
   const engine = useDataEngine()
 
-  const fetch = async() => {
-    console.log('fetch')    
+  const fetch = async() => {   
           const res = await engine.query(query)
           setExchange(res.dataStore)
-          console.log(res.dataStore)
-        
+          setVis(res.visualizations.visualizations)
+          setIndicators(res.indicators.indicators)
+          setDataElements(res.dataElements.dataElements)  
+          setOrgUnits(res.organisationUnits.organisationUnits)        
   }
   useEffect(()=>{
-    fetch()
+    fetch()    
   },[])
+
+  const deleteRequest = async(filter) => {
+    setLoading(true)
+    const requests = dataExchange.source.request.filter((req) => req.name !== filter.name)
+    const myMutation = {
+        resource: dataStorePath,
+        type: "update",
+        data: {
+          'createdAt' : dataExchange.createdAt,
+          'dexname' : dataExchange.dexname,
+          'type' : dataExchange.type,
+          'url' : dataExchange.url,
+          'source':{
+            'request' : requests
+          }
+        }
+        }
+        setExchange (myMutation.data)
+        await engine.mutate(myMutation).then(res =>{
+          if(res.httpStatusCode === 200){
+            setLoading(false)
+            setHidden(false)
+          }
+         }).catch((e)=>{
+          setLoading(false)
+          setErrorHide(false)
+         })
+  }
+
   
   return (
     <div
@@ -126,7 +164,11 @@ export default function ViewDataStoreById(props) {
         width: "100%",
       }}
     >
-
+      {loading && <Layer translucent>
+          <Center>
+            <CircularLoader large />
+          </Center>
+        </Layer>}
       <ButtonStrip >
         <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
           <Button >Home</Button>
@@ -158,22 +200,38 @@ export default function ViewDataStoreById(props) {
               <StackedTableBody>
                 <StackedTableRow>
                   <StackedTableCell>
-                    {dataExchange.createdAt}
+                    {dataExchange?.createdAt}
                   </StackedTableCell>
                   <StackedTableCell>
-                    {dataExchange.dexname}
+                    {dataExchange?.dexname}
                   </StackedTableCell>
                   <StackedTableCell>
-                    {dataExchange.url}
+                    {dataExchange?.url}
                   </StackedTableCell>
                   <StackedTableCell>
-                    {dataExchange.type}
+                    {dataExchange?.type}
                   </StackedTableCell>
                 </StackedTableRow>
               </StackedTableBody>
             </StackedTable>
           </Box>
+          <Divider />
+          <Box>
+            <span style={{padding: '20px',fontFamily: 'sans-serif',fontWeight:'normal',fontSize: '20px'}}> Requests </span>
+            <RequestdataTable key={dataExchange?.url} deleteRequest={deleteRequest} orgUnits={orgUnits} indicators={indicators} dataExchange={dataExchange} dataElements={dataElements} visualisations={visualisations}/>
+          </Box>
+          
         </Box>
+      </div>
+      <div style={{alignContent: 'center',justifyContent: 'center'}}>
+      <Center>
+      <AlertBar success hidden={hidden} duration={2000} onhidden={()=> setHidden(true)}>
+        Request deleted succesifuly
+      </AlertBar>
+      <AlertBar warning hidden={errorHide} duration={2000} onhidden={()=>setErrorHide(true)}>
+        Failled to delete request
+      </AlertBar>
+      </Center>
       </div>
     </div>
   );

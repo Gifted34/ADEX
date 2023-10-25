@@ -13,7 +13,7 @@ export default function AddNewRequests(props) {
   const Visualizations = props === null || props === void 0 ? void 0 : (_props$data2 = props.data) === null || _props$data2 === void 0 ? void 0 : (_props$data2$visualiz = _props$data2.visualizations) === null || _props$data2$visualiz === void 0 ? void 0 : _props$data2$visualiz.visualizations;
   const dataElements = props === null || props === void 0 ? void 0 : (_props$data3 = props.data) === null || _props$data3 === void 0 ? void 0 : (_props$data3$dataElem = _props$data3.dataElements) === null || _props$data3$dataElem === void 0 ? void 0 : _props$data3$dataElem.dataElements;
   const indicators = props === null || props === void 0 ? void 0 : (_props$data4 = props.data) === null || _props$data4 === void 0 ? void 0 : (_props$data4$indicato = _props$data4.indicators) === null || _props$data4$indicato === void 0 ? void 0 : _props$data4$indicato.indicators;
-  const path = location.pathname.split("/").slice(-1)[0];
+  const path = location.pathname.split('/').slice(-1)[0];
   const dataStorePath = `dataStore/DEX_initializer_values/${path}`;
   const navigate = useNavigate();
   const [selectVisualisations, setVisualisation] = useState();
@@ -37,13 +37,13 @@ export default function AddNewRequests(props) {
   const setorgUnits = orgUnits => {
     let array = [];
     orgUnits === null || orgUnits === void 0 ? void 0 : orgUnits.map(object => {
-      const arr = object.split("/");
+      const arr = object.split('/');
       array.push(...arr.slice(-1));
     });
     setOrg(array);
   };
 
-  // //fetchig data store values using the datastore key passed in the locations path
+  // //fetchig data store values using the datastore key passed in the locations path  
   const fetchData = async () => {
     const query = {
       dataStore: {
@@ -85,60 +85,60 @@ export default function AddNewRequests(props) {
     setLoading(true);
     if (name === undefined || name === null) {
       setLoading(false);
-      setMessage("Request name is required");
+      setMessage('Request name is required');
       setErrorHidden(false);
     } else if (Dx === undefined || (Dx === null || Dx === void 0 ? void 0 : Dx.length) < 1) {
       setLoading(false);
-      setMessage("No data elements,indicators,or visualisations selected");
+      setMessage('No data elements,indicators,or visualisations selected');
       setErrorHidden(false);
     } else if (orgS === undefined || (orgS === null || orgS === void 0 ? void 0 : orgS.length) < 1) {
       setLoading(false);
-      setMessage("No organisation units selected");
+      setMessage('No organisation units selected');
       setErrorHidden(false);
     } else if (periods === undefined || (periods === null || periods === void 0 ? void 0 : periods.length) < 1) {
       setLoading(false);
-      setMessage("No periods selected");
+      setMessage('No periods selected');
       setErrorHidden(false);
     } else {
       var _dataStore$source;
-      if ((dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source = dataStore.source) === null || _dataStore$source === void 0 ? void 0 : _dataStore$source.requests) === undefined) {
+      if ((dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source = dataStore.source) === null || _dataStore$source === void 0 ? void 0 : _dataStore$source.request) === undefined) {
         var dStore = {
-          createdAt: dataStore.createdAt,
-          dexname: dataStore.dexname,
-          type: dataStore.type,
-          url: dataStore.url,
-          source: {
-            requests: [{
-              name: name,
-              visualization: selectVisualisations,
-              dx: dx,
-              pe: periods,
-              ou: orgS,
-              inputIdScheme: "code",
-              outputIdScheme: "code"
+          'createdAt': dataStore.createdAt,
+          'dexname': dataStore.dexname,
+          'type': dataStore.type,
+          'url': dataStore.url,
+          'source': {
+            'request': [{
+              'name': name,
+              "visualization": selectVisualisations,
+              'dx': dx,
+              'pe': periods,
+              'ou': orgS,
+              'inputIdScheme': "code",
+              'outputIdScheme': "code"
             }]
           }
         };
         send(dStore);
       } else {
         var _dataStore$source2;
-        let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : _dataStore$source2.requests;
+        let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : _dataStore$source2.request;
         arr.push({
-          name: name,
-          visualization: selectVisualisations,
-          dx: dx,
-          pe: periods,
-          ou: orgS,
-          inputIdScheme: "code",
-          outputIdScheme: "code"
+          'name': name,
+          "visualization": selectVisualisations,
+          'dx': dx,
+          'pe': periods,
+          'ou': orgS,
+          'inputIdScheme': "code",
+          'outputIdScheme': "code"
         });
         send({
-          createdAt: dataStore.createdAt,
-          dexname: dataStore.dexname,
-          type: dataStore.type,
-          url: dataStore.url,
-          source: {
-            request: arr
+          'createdAt': dataStore.createdAt,
+          'dexname': dataStore.dexname,
+          'type': dataStore.type,
+          'url': dataStore.url,
+          'source': {
+            'request': arr
           }
         });
       }
@@ -209,7 +209,7 @@ export default function AddNewRequests(props) {
     duration: 2000,
     onHidden: () => {
       setHidden(true);
-      navigate("/");
+      navigate('/');
     }
   }, "Innitialisation saved succesifuly")))));
 }
