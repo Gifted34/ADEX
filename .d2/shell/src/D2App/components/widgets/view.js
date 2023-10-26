@@ -1,7 +1,6 @@
 import { useDataEngine } from "@dhis2/app-runtime";
 import { AlertBar, Box, Button, ButtonStrip, Center, CircularLoader, Divider, Layer, StackedTable, StackedTableBody, StackedTableCell, StackedTableCellHead, StackedTableHead, StackedTableRow, StackedTableRowHead } from "@dhis2/ui";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import RequestdataTable from "./dataTable";
 const query = {
   organisationUnits: {
@@ -54,9 +53,7 @@ const query = {
   }
 };
 export default function ViewDataStoreById(props) {
-  const location = useLocation();
-  const path = location.pathname.split("/").slice(-1)[0];
-  const dataStorePath = `dataStore/DEX_initializer_values/${path}`;
+  const dataStorePath = `dataStore/DEX_initializer_values/${props === null || props === void 0 ? void 0 : props.id}`;
   const [dataExchange, setExchange] = useState();
   const [indicators, setIndicators] = useState();
   const [dataElements, setDataElements] = useState();
@@ -159,15 +156,10 @@ export default function ViewDataStoreById(props) {
     large: true
   }))), /*#__PURE__*/React.createElement(ButtonStrip, {
     end: true
-  }, /*#__PURE__*/React.createElement(Link, {
-    to: "/",
-    style: {
-      textDecoration: "none",
-      color: "white"
-    }
   }, /*#__PURE__*/React.createElement(Button, {
-    primary: true
-  }, "Back"))), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
+    primary: true,
+    onClick: () => props === null || props === void 0 ? void 0 : props.setPath('Home')
+  }, "Back")), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
     className: `${props === null || props === void 0 ? void 0 : props.styles.padding}`
   }, /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement("span", {
     style: {

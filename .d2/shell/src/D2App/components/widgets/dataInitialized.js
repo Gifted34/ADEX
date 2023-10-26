@@ -30,19 +30,17 @@ export default function DataInitialized(props) {
       dense: true
     }, /*#__PURE__*/React.createElement(ButtonStrip, {
       start: true
-    }, /*#__PURE__*/React.createElement(Link, {
-      to: `/view/${aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : aggregateDataExchange.key}`,
-      style: {
-        textDecoration: "none",
-        color: "black"
+    }, /*#__PURE__*/React.createElement(Button, {
+      onClick: () => {
+        props === null || props === void 0 ? void 0 : props.setPath('View');
+        props.setID(aggregateDataExchange.key);
       }
-    }, /*#__PURE__*/React.createElement(Button, null, "View")), /*#__PURE__*/React.createElement(Link, {
-      to: `/new-request/${aggregateDataExchange === null || aggregateDataExchange === void 0 ? void 0 : aggregateDataExchange.key}`,
-      style: {
-        textDecoration: "none",
-        color: "black"
+    }, "View"), /*#__PURE__*/React.createElement(Button, {
+      onClick: () => {
+        props === null || props === void 0 ? void 0 : props.setPath('new request');
+        props.setID(aggregateDataExchange.key);
       }
-    }, /*#__PURE__*/React.createElement(Button, null, "New request")), /*#__PURE__*/React.createElement(Button, {
+    }, "New request"), /*#__PURE__*/React.createElement(Button, {
       secondary: true,
       onClick: () => {
         props === null || props === void 0 ? void 0 : props.setOpenUpdate(!(props !== null && props !== void 0 && props.openUpdate));

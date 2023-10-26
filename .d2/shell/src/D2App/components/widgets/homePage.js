@@ -2,7 +2,6 @@ import { Button, ButtonStrip, Divider } from "@dhis2/ui";
 import React, { useEffect, useState } from "react";
 import DataInitialized from "./dataInitialized";
 import { useDataEngine } from "@dhis2/app-runtime";
-import { Link } from "react-router-dom";
 export default function HomePage(props) {
   const engine = useDataEngine();
   let dataStorePath = "dataStore/DEX_initializer_values";
@@ -35,6 +34,8 @@ export default function HomePage(props) {
       marginTop: "10px"
     }
   }, /*#__PURE__*/React.createElement(DataInitialized, {
+    setPath: props === null || props === void 0 ? void 0 : props.setPath,
+    setID: props === null || props === void 0 ? void 0 : props.setID,
     setOpenDelete: props === null || props === void 0 ? void 0 : props.setOpenDelete,
     openDelete: props === null || props === void 0 ? void 0 : props.openDelete,
     setOpenUpdate: props === null || props === void 0 ? void 0 : props.setOpenUpdate,

@@ -1,0 +1,11 @@
+{
+  "type": "app",
+  "icon": "../dhis2-app-icon.png",
+  "name": "Data Exchange Initializer",
+  "version": "1.0.0",
+  "description": "HISP Malawi translate the Data exchage module that uses API tools for the initialization off the data exchange between two systems. This web base module makes use of the json payload design for the data exchange by providing a graphical user interface inorder to give a user experience optimization",
+  "title": "Data Exchange Initializer",
+  "entryPoints": {
+    "app": "index.html"
+  }
+}

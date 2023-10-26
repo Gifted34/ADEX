@@ -4,7 +4,6 @@ import classes from "./App.module.css";
 import HeaderComponent from "./components/widgets/headerComponent";
 import { AlertBar, Box, Button, Center, CircularLoader, Divider, I, Layer } from "@dhis2/ui";
 import HomePage from "./components/widgets/homePage";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NewDataInitialization from "./components/widgets/newDataInitialization";
 import NoPageFound from "./components/widgets/noPageFound";
 import AddNewRequests from "./components/widgets/addNewRequests";
@@ -90,7 +89,9 @@ const MyApp = () => {
   const [dataToUpdate, setDataToUpdate] = useState();
   const [dataToIntegrate, setDataToIntegrate] = useState();
   const engine = useDataEngine();
+  const [path, setPath] = useState('Home');
   const [formData, setFormData] = useState();
+  const [id, setID] = useState();
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
   const [selectedDataDimensionsCodes, setSelectedDataDimensionsCodes] = useState([]);
   const [hide, setHidden] = useState(true);
@@ -355,40 +356,34 @@ const MyApp = () => {
     style: {
       padding: "20px"
     }
-  }, /*#__PURE__*/React.createElement(BrowserRouter, null, /*#__PURE__*/React.createElement(Routes, null, /*#__PURE__*/React.createElement(Route, {
-    index: true,
-    element: /*#__PURE__*/React.createElement(HomePage, {
-      data: data,
-      styles: classes,
-      open: open,
-      setOpenUpdate: setOpenUpdate,
-      openUpdate: openUpdate,
-      openIntegration: openIntegration,
-      setOpenIntegration: setOpenIntegration,
-      setOpen: setOpen,
-      setOpenDelete: setOpenDelete,
-      openDelete: openDelete,
-      deleteEntry: deleteEntry,
-      updateEntry: updateEntry,
-      integrateEntry: integrateEntry
-      // initializeIntegration={initializeIntegration}
-    })
-  }), /*#__PURE__*/React.createElement(Route, {
-    path: "/view/:key",
-    element: /*#__PURE__*/React.createElement(ViewDataStoreById, {
-      data: data,
-      styles: classes
-    })
-  }), /*#__PURE__*/React.createElement(Route, {
-    path: "/new-request/:key",
-    element: /*#__PURE__*/React.createElement(AddNewRequests, {
-      data: data,
-      style: classes
-    })
-  }), /*#__PURE__*/React.createElement(Route, {
-    path: "*",
-    element: /*#__PURE__*/React.createElement(NoPageFound, null)
-  })))), !hide && /*#__PURE__*/React.createElement(Layer, {
+  }, path === 'Home' ? /*#__PURE__*/React.createElement(HomePage, {
+    data: data,
+    setPath: setPath,
+    setID: setID,
+    styles: classes,
+    open: open,
+    setOpenUpdate: setOpenUpdate,
+    openUpdate: openUpdate,
+    openIntegration: openIntegration,
+    setOpenIntegration: setOpenIntegration,
+    setOpen: setOpen,
+    setOpenDelete: setOpenDelete,
+    openDelete: openDelete,
+    deleteEntry: deleteEntry,
+    updateEntry: updateEntry,
+    integrateEntry: integrateEntry
+    // initializeIntegration={initializeIntegration}
+  }) : /*#__PURE__*/React.createElement(React.Fragment, null, path === 'View' ? /*#__PURE__*/React.createElement(ViewDataStoreById, {
+    id: id,
+    setPath: setPath,
+    data: data,
+    styles: classes
+  }) : /*#__PURE__*/React.createElement(AddNewRequests, {
+    id: id,
+    setPath: setPath,
+    data: data,
+    style: classes
+  }))), !hide && /*#__PURE__*/React.createElement(Layer, {
     translucent: true
   }, /*#__PURE__*/React.createElement("div", {
     style: {

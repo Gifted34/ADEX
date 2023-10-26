@@ -69,19 +69,16 @@ export default function DataInitialized(props) {
 
                       <TableCell dense>
                         <ButtonStrip start>
-                          <Link
-                            to={`/view/${aggregateDataExchange?.key}`}
-                            style={{ textDecoration: "none", color: "black" }}
-                          >
-                            <Button>View</Button>
-                          </Link>
-
-                          <Link
-                            to={`/new-request/${aggregateDataExchange?.key}`}
-                            style={{ textDecoration: "none", color: "black" }}
-                          >
-                            <Button>New request</Button>
-                          </Link>
+                          
+                            <Button onClick={()=> {
+                              props?.setPath('View')
+                              props.setID(aggregateDataExchange.key)
+                            }}>View</Button>
+                          
+                            <Button onClick={()=>{
+                              props?.setPath('new request')
+                              props.setID(aggregateDataExchange.key)
+                            }}>New request</Button>
                           <Button
                             secondary
                             onClick={() => {

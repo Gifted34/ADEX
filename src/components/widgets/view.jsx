@@ -17,7 +17,6 @@ import {
   StackedTableRowHead,
 } from "@dhis2/ui";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import RequestdataTable from "./dataTable";
 
 const query = {
@@ -73,9 +72,7 @@ const query = {
   },
 };
 export default function ViewDataStoreById(props) {
-  const location = useLocation();
-  const path = location.pathname.split("/").slice(-1)[0];
-  const dataStorePath = `dataStore/DEX_initializer_values/${path}`;
+    const dataStorePath = `dataStore/DEX_initializer_values/${props?.id}`;
   const [dataExchange, setExchange] = useState();
   const [indicators, setIndicators] = useState();
   const [dataElements, setDataElements] = useState();
@@ -190,9 +187,8 @@ export default function ViewDataStoreById(props) {
         </Layer>
       )}
       <ButtonStrip end>
-        <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
-          <Button primary>Back</Button>
-        </Link>
+        <Button primary onClick={()=>props?.setPath('Home')}>Back</Button>
+        
       </ButtonStrip>
       <Divider />
       <div className={`${props?.styles.padding}`}>

@@ -2,7 +2,7 @@ import { Button, ButtonStrip, Divider } from "@dhis2/ui";
 import React, { useEffect, useState } from "react";
 import DataInitialized from "./dataInitialized";
 import { useDataEngine } from "@dhis2/app-runtime";
-import { Link } from "react-router-dom";
+
 
 export default function HomePage(props) {
   const engine = useDataEngine();
@@ -24,6 +24,7 @@ export default function HomePage(props) {
     } catch (e) {}
   };
 
+
   return (
     <div
       style={{
@@ -38,6 +39,8 @@ export default function HomePage(props) {
       <Divider />
       <div className="" style={{ marginTop: "10px" }}>
         <DataInitialized
+          setPath={props?.setPath}
+          setID={props?.setID}
           setOpenDelete={props?.setOpenDelete}
           openDelete={props?.openDelete}
           setOpenUpdate={props?.setOpenUpdate}

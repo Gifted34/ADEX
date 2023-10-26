@@ -18,15 +18,13 @@ import { useDataEngine, useDataMutation } from "@dhis2/app-runtime";
 
 export default function AddNewRequests(props) {
   const engine = useDataEngine();
-  const location = useLocation();
-
+  
   const orgUnits = props?.data?.organisationUnits?.organisationUnits;
   const Visualizations = props?.data?.visualizations?.visualizations;
   const dataElements = props?.data?.dataElements?.dataElements;
   const indicators = props?.data?.indicators?.indicators;
   const path = location.pathname.split("/").slice(-1)[0];
-  const dataStorePath = `dataStore/DEX_initializer_values/${path}`;
-  const navigate = useNavigate();
+  const dataStorePath = `dataStore/DEX_initializer_values/${props?.id}`;
   const [selectVisualisations, setVisualisation] = useState();
   const [dx, setDx] = useState();
   const [name, setName] = useState();
@@ -212,9 +210,7 @@ export default function AddNewRequests(props) {
               <Button primary large onClick={() => saveData()}>
                 Save
               </Button>
-              <Link to={"/"} style={{ textDecoration: "none", color: "white" }}>
-                <Button large>Cancel</Button>
-              </Link>
+              <Button large onClick={()=>props?.setPath('Home')}>Cancel</Button>
             </ButtonStrip>
             <AlertBar
               warning
@@ -230,7 +226,7 @@ export default function AddNewRequests(props) {
               duration={2000}
               onHidden={() => {
                 setHidden(true);
-                navigate("/");
+                setTimeout(()=>props?.setPath('Home'),2000)
               }}
             >
               Innitialisation saved succesifuly

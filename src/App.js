@@ -13,7 +13,6 @@ import {
   Layer,
 } from "@dhis2/ui";
 import HomePage from "./components/widgets/homePage";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NewDataInitialization from "./components/widgets/newDataInitialization";
 import NoPageFound from "./components/widgets/noPageFound";
 import AddNewRequests from "./components/widgets/addNewRequests";
@@ -101,9 +100,10 @@ const MyApp = () => {
   const [dataToDelete, setDataToDelete] = useState();
   const [dataToUpdate, setDataToUpdate] = useState();
   const [dataToIntegrate, setDataToIntegrate] = useState();
-
   const engine = useDataEngine();
+  const [path,setPath] = useState('Home')
   const [formData, setFormData] = useState();
+  const [id,setID] = useState()
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
   const [selectedDataDimensionsCodes, setSelectedDataDimensionsCodes] =
     useState([]);
@@ -193,6 +193,7 @@ const MyApp = () => {
       return false;
     }
   };
+
 
   // constructing a data exchange api layout as defined in the url
   // https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/data-exchange.html
@@ -408,40 +409,33 @@ const MyApp = () => {
         <HeaderComponent />
         <br />
         <div style={{ padding: "20px" }}>
-          <BrowserRouter>
-            <Routes>
-              <Route
-                index
-                element={
-                  <HomePage
-                    data={data}
-                    styles={classes}
-                    open={open}
-                    setOpenUpdate={setOpenUpdate}
-                    openUpdate={openUpdate}
-                    openIntegration={openIntegration}
-                    setOpenIntegration={setOpenIntegration}
-                    setOpen={setOpen}
-                    setOpenDelete={setOpenDelete}
-                    openDelete={openDelete}
-                    deleteEntry={deleteEntry}
-                    updateEntry={updateEntry}
-                    integrateEntry={integrateEntry}
-                    // initializeIntegration={initializeIntegration}
-                  />
-                }
-              />
-              <Route
-                path="/view/:key"
-                element={<ViewDataStoreById data={data} styles={classes} />}
-              />
-              <Route
-                path="/new-request/:key"
-                element={<AddNewRequests data={data} style={classes} />}
-              />
-              <Route path="*" element={<NoPageFound />} />
-            </Routes>
-          </BrowserRouter>
+            {path === 'Home' ? 
+            <HomePage
+            data={data}
+            setPath={setPath}
+            setID={setID}
+            styles={classes}
+            open={open}
+            setOpenUpdate={setOpenUpdate}
+            openUpdate={openUpdate}
+            openIntegration={openIntegration}
+            setOpenIntegration={setOpenIntegration}
+            setOpen={setOpen}
+            setOpenDelete={setOpenDelete}
+            openDelete={openDelete}
+            deleteEntry={deleteEntry}
+            updateEntry={updateEntry}
+            integrateEntry={integrateEntry}
+            // initializeIntegration={initializeIntegration}
+          />
+          : <>{ path === 'View'?  <ViewDataStoreById id = {id} setPath={setPath} data={data} styles={classes} />: 
+          <AddNewRequests id={id} setPath={setPath} data={data} style={classes} /> }</>
+
+            }        
+                  
+                  
+              
+              
         </div>
 
         {/* <div style={{ marginLeft: "50px" }}> */}

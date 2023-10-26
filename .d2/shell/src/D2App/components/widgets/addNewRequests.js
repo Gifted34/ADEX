@@ -8,14 +8,12 @@ import { useDataEngine, useDataMutation } from "@dhis2/app-runtime";
 export default function AddNewRequests(props) {
   var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$style, _props$style2, _props$style3, _props$style4, _props$style5, _props$style6, _props$style7, _props$style8, _props$style9;
   const engine = useDataEngine();
-  const location = useLocation();
   const orgUnits = props === null || props === void 0 ? void 0 : (_props$data = props.data) === null || _props$data === void 0 ? void 0 : (_props$data$organisat = _props$data.organisationUnits) === null || _props$data$organisat === void 0 ? void 0 : _props$data$organisat.organisationUnits;
   const Visualizations = props === null || props === void 0 ? void 0 : (_props$data2 = props.data) === null || _props$data2 === void 0 ? void 0 : (_props$data2$visualiz = _props$data2.visualizations) === null || _props$data2$visualiz === void 0 ? void 0 : _props$data2$visualiz.visualizations;
   const dataElements = props === null || props === void 0 ? void 0 : (_props$data3 = props.data) === null || _props$data3 === void 0 ? void 0 : (_props$data3$dataElem = _props$data3.dataElements) === null || _props$data3$dataElem === void 0 ? void 0 : _props$data3$dataElem.dataElements;
   const indicators = props === null || props === void 0 ? void 0 : (_props$data4 = props.data) === null || _props$data4 === void 0 ? void 0 : (_props$data4$indicato = _props$data4.indicators) === null || _props$data4$indicato === void 0 ? void 0 : _props$data4$indicato.indicators;
   const path = location.pathname.split("/").slice(-1)[0];
-  const dataStorePath = `dataStore/DEX_initializer_values/${path}`;
-  const navigate = useNavigate();
+  const dataStorePath = `dataStore/DEX_initializer_values/${props === null || props === void 0 ? void 0 : props.id}`;
   const [selectVisualisations, setVisualisation] = useState();
   const [dx, setDx] = useState();
   const [name, setName] = useState();
@@ -196,15 +194,10 @@ export default function AddNewRequests(props) {
     primary: true,
     large: true,
     onClick: () => saveData()
-  }, "Save"), /*#__PURE__*/React.createElement(Link, {
-    to: "/",
-    style: {
-      textDecoration: "none",
-      color: "white"
-    }
-  }, /*#__PURE__*/React.createElement(Button, {
-    large: true
-  }, "Cancel"))), /*#__PURE__*/React.createElement(AlertBar, {
+  }, "Save"), /*#__PURE__*/React.createElement(Button, {
+    large: true,
+    onClick: () => props === null || props === void 0 ? void 0 : props.setPath('Home')
+  }, "Cancel")), /*#__PURE__*/React.createElement(AlertBar, {
     warning: true,
     hidden: errorHidden,
     onHidden: () => setErrorHidden(true),
@@ -215,7 +208,7 @@ export default function AddNewRequests(props) {
     duration: 2000,
     onHidden: () => {
       setHidden(true);
-      navigate("/");
+      setTimeout(() => props === null || props === void 0 ? void 0 : props.setPath('Home'), 2000);
     }
   }, "Innitialisation saved succesifuly")))));
 }
