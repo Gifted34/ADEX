@@ -35,13 +35,31 @@ export default function DataInitialized(props) {
         props === null || props === void 0 ? void 0 : props.setPath('View');
         props.setID(aggregateDataExchange.key);
       }
-    }, "View"), /*#__PURE__*/React.createElement(Button, {
+    }, "View"), /*#__PURE__*/React.createElement("button", {
+      style: {
+        background: '#E18427',
+        borderRadius: '5px',
+        border: 'none',
+        color: '#FFFFFF',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        "&:hover": {
+          background: '#E37F1B'
+        }
+      },
       onClick: () => {
         props === null || props === void 0 ? void 0 : props.setPath('new request');
         props.setID(aggregateDataExchange.key);
       }
-    }, "New request"), /*#__PURE__*/React.createElement(Button, {
-      secondary: true,
+    }, "New request"), /*#__PURE__*/React.createElement("button", {
+      style: {
+        background: '#4CAF50',
+        borderRadius: '5px',
+        border: 'none',
+        color: '#FFFFFF',
+        textAlign: 'center',
+        fontWeight: 'bold'
+      },
       onClick: () => {
         props === null || props === void 0 ? void 0 : props.setOpenUpdate(!(props !== null && props !== void 0 && props.openUpdate));
         updateEntry(aggregateDataExchange);

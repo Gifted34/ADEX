@@ -75,19 +75,45 @@ export default function DataInitialized(props) {
                               props.setID(aggregateDataExchange.key)
                             }}>View</Button>
                           
-                            <Button onClick={()=>{
+                            <button style={{
+                              background: '#E18427',
+                              borderRadius : '5px',
+                              border: 'none',
+                              color: '#FFFFFF',
+                              textAlign: 'center',
+                              fontWeight: 'bold',
+                              "&:hover" : {
+                                background: '#E37F1B',
+                              }
+                            }}  onClick={()=>{
                               props?.setPath('new request')
                               props.setID(aggregateDataExchange.key)
-                            }}>New request</Button>
-                          <Button
+                            }}>New request</button>
+                            <button style={{
+                              background: '#4CAF50',
+                              borderRadius : '5px',
+                              border: 'none',
+                              color: '#FFFFFF',
+                              textAlign: 'center',
+                              fontWeight: 'bold'
+                            }} onClick={() => {
+                              props?.setOpenUpdate(!props?.openUpdate);
+                              updateEntry(aggregateDataExchange);
+                            }}>
+                              Update
+                            </button>
+                          {/* <Button
                             secondary
+                            style={{
+                              
+                            }}
                             onClick={() => {
                               props?.setOpenUpdate(!props?.openUpdate);
                               updateEntry(aggregateDataExchange);
                             }}
                           >
                             Update
-                          </Button>
+                          </Button> */}
                           <Button
                             destructive
                             onClick={() => {
