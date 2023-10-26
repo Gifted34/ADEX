@@ -51,7 +51,7 @@ export default function DataInitialized(props) {
           </TableHead>
           <TableBody>
             {dexDataStoreValues &&
-              dexDataStoreValues?.dataStore?.entries?.map(
+              dexDataStoreValues?.dataStore?.entries?.reverse()?.map(
                 (aggregateDataExchange, key) => {
                   return (
                     <TableRow key={key}>
