@@ -51,8 +51,9 @@ export default function DataInitialized(props) {
           </TableHead>
           <TableBody>
             {dexDataStoreValues &&
-              dexDataStoreValues?.dataStore?.entries?.reverse()?.map(
-                (aggregateDataExchange, key) => {
+              dexDataStoreValues?.dataStore?.entries
+                ?.reverse()
+                ?.map((aggregateDataExchange, key) => {
                   return (
                     <TableRow key={key}>
                       <TableCell>
@@ -69,43 +70,42 @@ export default function DataInitialized(props) {
 
                       <TableCell dense>
                         <ButtonStrip start>
-                          
-                            <Button onClick={()=> {
-                              props?.setPath('View')
-                              props.setID(aggregateDataExchange.key)
-                            }}>View</Button>
-                          
-                            <button style={{
-                              background: '#E18427',
-                              borderRadius : '5px',
-                              border: 'none',
-                              color: '#FFFFFF',
-                              textAlign: 'center',
-                              fontWeight: 'bold',
-                              "&:hover" : {
-                                background: '#E37F1B',
-                              }
-                            }}  onClick={()=>{
-                              props?.setPath('new request')
-                              props.setID(aggregateDataExchange.key)
-                            }}>New request</button>
-                            <button style={{
-                              background: '#4CAF50',
-                              borderRadius : '5px',
-                              border: 'none',
-                              color: '#FFFFFF',
-                              textAlign: 'center',
-                              fontWeight: 'bold'
-                            }} onClick={() => {
-                              props?.setOpenUpdate(!props?.openUpdate);
-                              updateEntry(aggregateDataExchange);
-                            }}>
-                              Update
-                            </button>
-                          {/* <Button
-                            secondary
+                          <Button
+                            onClick={() => {
+                              props?.setPath("View");
+                              props.setID(aggregateDataExchange.key);
+                            }}
+                          >
+                            View
+                          </Button>
+
+                          <button
                             style={{
-                              
+                              background: "#E18427",
+                              borderRadius: "5px",
+                              border: "none",
+                              color: "#FFFFFF",
+                              textAlign: "center",
+                              fontWeight: "bold",
+                              "&:hover": {
+                                background: "#E37F1B",
+                              },
+                            }}
+                            onClick={() => {
+                              props?.setPath("new request");
+                              props.setID(aggregateDataExchange.key);
+                            }}
+                          >
+                            New request
+                          </button>
+                          <button
+                            style={{
+                              background: "#4CAF50",
+                              borderRadius: "5px",
+                              border: "none",
+                              color: "#FFFFFF",
+                              textAlign: "center",
+                              fontWeight: "bold",
                             }}
                             onClick={() => {
                               props?.setOpenUpdate(!props?.openUpdate);
@@ -113,7 +113,8 @@ export default function DataInitialized(props) {
                             }}
                           >
                             Update
-                          </Button> */}
+                          </button>
+
                           <Button
                             destructive
                             onClick={() => {
@@ -123,23 +124,30 @@ export default function DataInitialized(props) {
                           >
                             Remove
                           </Button>
-                          <Button
-                            primary
-                            onClick={() => {
-                              props?.setOpenIntegration(
-                                !props?.openIntegration
-                              );
-                              integrateEntry(aggregateDataExchange);
-                            }}
-                          >
-                            Initialize integration
-                          </Button>
+                          {aggregateDataExchange?.value?.source == undefined ||
+                          aggregateDataExchange?.value?.source?.requests
+                            ?.length < 1 ? (
+                            <Button secondary disabled>
+                              No request(s) attached
+                            </Button>
+                          ) : (
+                            <Button
+                              primary
+                              onClick={() => {
+                                props?.setOpenIntegration(
+                                  !props?.openIntegration
+                                );
+                                integrateEntry(aggregateDataExchange);
+                              }}
+                            >
+                              Initialize integration
+                            </Button>
+                          )}
                         </ButtonStrip>
                       </TableCell>
                     </TableRow>
                   );
-                }
-              )}
+                })}
           </TableBody>
         </Table>
       ) : (
