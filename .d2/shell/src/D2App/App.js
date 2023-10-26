@@ -97,10 +97,7 @@ const MyApp = () => {
   const [hide, setHidden] = useState(true);
   const [message, setMessage] = useState("");
   const [isSuccessMessage, setSuccessMessage] = useState(false);
-  const [authType, setAuthType] = useState({
-    TOKEN: "TOKEN",
-    BASICAUTH: "BASICAUTH"
-  });
+  const [authType, setAuthType] = useState("");
   const {
     loading,
     error,
@@ -179,7 +176,7 @@ const MyApp = () => {
 
   // check if token or password
   const checkIfTokenOrBasiAuth = authTypeValue => {
-    if (authTypeValue == authType.BASICAUTH) {
+    if (authTypeValue === "BASICAUTH") {
       return true;
     } else {
       return false;
@@ -200,7 +197,7 @@ const MyApp = () => {
           setMessage("The url format is invalid.");
           setHidden(false);
         } else {
-          if (checkIfTokenOrBasiAuth(authType === null || authType === void 0 ? void 0 : authType.authType) == true) {
+          if (checkIfTokenOrBasiAuth(authType)) {
             var _dataToIntegrate$valu8, _dataToIntegrate$valu9, _dataToIntegrate$valu10;
             if ((dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu8 = dataToIntegrate.value) === null || _dataToIntegrate$valu8 === void 0 ? void 0 : (_dataToIntegrate$valu9 = _dataToIntegrate$valu8.source) === null || _dataToIntegrate$valu9 === void 0 ? void 0 : (_dataToIntegrate$valu10 = _dataToIntegrate$valu9.requests) === null || _dataToIntegrate$valu10 === void 0 ? void 0 : _dataToIntegrate$valu10.length) > 0) {
               var _dataToIntegrate$valu11, _dataToIntegrate$valu12, _dataToIntegrate$valu13;
@@ -244,24 +241,74 @@ const MyApp = () => {
                 };
                 mutation(payload);
               }
-            } else {}
-          } else {}
+            } else {
+              setMessage("No requests attached");
+              setHidden(false);
+            }
+          } else {
+            var _dataToIntegrate$valu17, _dataToIntegrate$valu18, _dataToIntegrate$valu19;
+            if ((dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu17 = dataToIntegrate.value) === null || _dataToIntegrate$valu17 === void 0 ? void 0 : (_dataToIntegrate$valu18 = _dataToIntegrate$valu17.source) === null || _dataToIntegrate$valu18 === void 0 ? void 0 : (_dataToIntegrate$valu19 = _dataToIntegrate$valu18.requests) === null || _dataToIntegrate$valu19 === void 0 ? void 0 : _dataToIntegrate$valu19.length) > 0) {
+              var _dataToIntegrate$valu20, _dataToIntegrate$valu21, _dataToIntegrate$valu22;
+              let holder = [];
+              dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu20 = dataToIntegrate.value) === null || _dataToIntegrate$valu20 === void 0 ? void 0 : (_dataToIntegrate$valu21 = _dataToIntegrate$valu20.source) === null || _dataToIntegrate$valu21 === void 0 ? void 0 : (_dataToIntegrate$valu22 = _dataToIntegrate$valu21.requests) === null || _dataToIntegrate$valu22 === void 0 ? void 0 : _dataToIntegrate$valu22.map(dd => {
+                holder.push({
+                  name: dd === null || dd === void 0 ? void 0 : dd.name,
+                  visualization: dd === null || dd === void 0 ? void 0 : dd.visualizations,
+                  dx: dd === null || dd === void 0 ? void 0 : dd.dx,
+                  pe: dd === null || dd === void 0 ? void 0 : dd.pe,
+                  ou: dd === null || dd === void 0 ? void 0 : dd.ou,
+                  inputIdScheme: "code",
+                  outputIdScheme: "code"
+                });
+              });
+              if ((authValues === null || authValues === void 0 ? void 0 : authValues.token) == undefined || (authValues === null || authValues === void 0 ? void 0 : authValues.token) == "" || (authValues === null || authValues === void 0 ? void 0 : authValues.token) == null) {
+                setMessage("Token is missing");
+                setHidden(false);
+              } else {
+                var _dataToIntegrate$valu23, _dataToIntegrate$valu24, _dataToIntegrate$valu25;
+                let payload = {
+                  resource: "aggregateDataExchanges",
+                  type: "create",
+                  data: {
+                    name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu23 = dataToIntegrate.value) === null || _dataToIntegrate$valu23 === void 0 ? void 0 : _dataToIntegrate$valu23.dexname,
+                    source: {
+                      requests: holder
+                    },
+                    target: {
+                      type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu24 = dataToIntegrate.value) === null || _dataToIntegrate$valu24 === void 0 ? void 0 : _dataToIntegrate$valu24.type,
+                      api: {
+                        url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu25 = dataToIntegrate.value) === null || _dataToIntegrate$valu25 === void 0 ? void 0 : _dataToIntegrate$valu25.url,
+                        accessToken: authValues === null || authValues === void 0 ? void 0 : authValues.token
+                      },
+                      request: {
+                        idScheme: "code"
+                      }
+                    }
+                  }
+                };
+                mutation(payload);
+              }
+            } else {
+              setMessage("No requests attached");
+              setHidden(false);
+            }
+          }
         }
       }
     } else {
-      var _dataToIntegrate$valu17, _dataToIntegrate$valu18, _dataToIntegrate$valu19, _dataToIntegrate$valu20, _dataToIntegrate$valu21;
+      var _dataToIntegrate$valu26, _dataToIntegrate$valu27, _dataToIntegrate$valu28, _dataToIntegrate$valu29, _dataToIntegrate$valu30;
       let payload = {
         resource: "aggregateDataExchanges",
         type: "create",
         data: {
-          name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu17 = dataToIntegrate.value) === null || _dataToIntegrate$valu17 === void 0 ? void 0 : _dataToIntegrate$valu17.dexname,
+          name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu26 = dataToIntegrate.value) === null || _dataToIntegrate$valu26 === void 0 ? void 0 : _dataToIntegrate$valu26.dexname,
           source: {
-            requests: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu18 = dataToIntegrate.value) === null || _dataToIntegrate$valu18 === void 0 ? void 0 : (_dataToIntegrate$valu19 = _dataToIntegrate$valu18.source) === null || _dataToIntegrate$valu19 === void 0 ? void 0 : _dataToIntegrate$valu19.request
+            requests: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu27 = dataToIntegrate.value) === null || _dataToIntegrate$valu27 === void 0 ? void 0 : (_dataToIntegrate$valu28 = _dataToIntegrate$valu27.source) === null || _dataToIntegrate$valu28 === void 0 ? void 0 : _dataToIntegrate$valu28.request
           },
           target: {
-            type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu20 = dataToIntegrate.value) === null || _dataToIntegrate$valu20 === void 0 ? void 0 : _dataToIntegrate$valu20.type,
+            type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu29 = dataToIntegrate.value) === null || _dataToIntegrate$valu29 === void 0 ? void 0 : _dataToIntegrate$valu29.type,
             api: {
-              url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu21 = dataToIntegrate.value) === null || _dataToIntegrate$valu21 === void 0 ? void 0 : _dataToIntegrate$valu21.url,
+              url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu30 = dataToIntegrate.value) === null || _dataToIntegrate$valu30 === void 0 ? void 0 : _dataToIntegrate$valu30.url,
               accessToken: authValues === null || authValues === void 0 ? void 0 : authValues.token
             },
             request: {

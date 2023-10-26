@@ -111,10 +111,7 @@ const MyApp = () => {
   const [message, setMessage] = useState("");
 
   const [isSuccessMessage, setSuccessMessage] = useState(false);
-  const [authType, setAuthType] = useState({
-    TOKEN: "TOKEN",
-    BASICAUTH: "BASICAUTH",
-  });
+  const [authType, setAuthType] = useState("");
 
   const { loading, error, data, refetch } = useDataQuery(query);
 
@@ -212,7 +209,7 @@ const MyApp = () => {
 
   // check if token or password
   const checkIfTokenOrBasiAuth = (authTypeValue) => {
-    if (authTypeValue == authType.BASICAUTH) {
+    if (authTypeValue === "BASICAUTH") {
       return true;
     } else {
       return false;
@@ -231,7 +228,7 @@ const MyApp = () => {
           setMessage("The url format is invalid.");
           setHidden(false);
         } else {
-          if (checkIfTokenOrBasiAuth(authType?.authType) == true) {
+          if (checkIfTokenOrBasiAuth(authType)) {
             if (dataToIntegrate?.value?.source?.requests?.length > 0) {
               let holder = [];
               dataToIntegrate?.value?.source?.requests?.map((dd) => {
@@ -278,8 +275,57 @@ const MyApp = () => {
                 mutation(payload);
               }
             } else {
+              setMessage("No requests attached");
+              setHidden(false);
             }
           } else {
+            if (dataToIntegrate?.value?.source?.requests?.length > 0) {
+              let holder = [];
+              dataToIntegrate?.value?.source?.requests?.map((dd) => {
+                holder.push({
+                  name: dd?.name,
+                  visualization: dd?.visualizations,
+                  dx: dd?.dx,
+                  pe: dd?.pe,
+                  ou: dd?.ou,
+                  inputIdScheme: "code",
+                  outputIdScheme: "code",
+                });
+              });
+              if (
+                authValues?.token == undefined ||
+                authValues?.token == "" ||
+                authValues?.token == null
+              ) {
+                setMessage("Token is missing");
+                setHidden(false);
+              } else {
+                let payload = {
+                  resource: "aggregateDataExchanges",
+                  type: "create",
+                  data: {
+                    name: dataToIntegrate?.value?.dexname,
+                    source: {
+                      requests: holder,
+                    },
+                    target: {
+                      type: dataToIntegrate?.value?.type,
+                      api: {
+                        url: dataToIntegrate?.value?.url,
+                        accessToken: authValues?.token,
+                      },
+                      request: {
+                        idScheme: "code",
+                      },
+                    },
+                  },
+                };
+                mutation(payload);
+              }
+            } else {
+              setMessage("No requests attached");
+              setHidden(false);
+            }
           }
         }
       }
