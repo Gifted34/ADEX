@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { OrganisationUnitTree, Field } from '@dhis2/ui';
+import React, { useState } from "react";
+import { OrganisationUnitTree, Field } from "@dhis2/ui";
 export default function OrgUnits(props) {
   var _props$styles;
   const [selectedOrgUnit, setSelectedOrgUnit] = useState([]);
   const orgUnitLevels = orgs => {
     let orgsList = [];
     orgs === null || orgs === void 0 ? void 0 : orgs.map(org => {
-      (org === null || org === void 0 ? void 0 : org.level) == 1 && (orgsList === null || orgsList === void 0 ? void 0 : orgsList.push(org === null || org === void 0 ? void 0 : org.id));
+      (org === null || org === void 0 ? void 0 : org.level) == 1 && (orgsList === null || orgsList === void 0 ? void 0 : orgsList.push(org === null || org === void 0 ? void 0 : org.code));
     });
     return orgsList;
   };

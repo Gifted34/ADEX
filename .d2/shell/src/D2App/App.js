@@ -371,7 +371,6 @@ const MyApp = () => {
       deleteEntry: deleteEntry,
       updateEntry: updateEntry,
       integrateEntry: integrateEntry
-      // initializeIntegration={initializeIntegration}
     })
   }), /*#__PURE__*/React.createElement(Route, {
     path: "/view/:key",
@@ -394,7 +393,6 @@ const MyApp = () => {
     duration: 4000,
     onHidden: e => {
       setHidden(true);
-      // window.location.reload(true);
     }
   }, message) : /*#__PURE__*/React.createElement(AlertBar, {
     hidden: hide,

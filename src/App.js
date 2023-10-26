@@ -426,7 +426,6 @@ const MyApp = () => {
                     deleteEntry={deleteEntry}
                     updateEntry={updateEntry}
                     integrateEntry={integrateEntry}
-                    // initializeIntegration={initializeIntegration}
                   />
                 }
               />
@@ -442,8 +441,6 @@ const MyApp = () => {
             </Routes>
           </BrowserRouter>
         </div>
-
-        {/* <div style={{ marginLeft: "50px" }}> */}
         <Box>
           {isSuccessMessage == true ? (
             <AlertBar
@@ -452,7 +449,6 @@ const MyApp = () => {
               duration={4000}
               onHidden={(e) => {
                 setHidden(true);
-                // window.location.reload(true);
               }}
             >
               {message}
