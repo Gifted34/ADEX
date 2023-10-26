@@ -3,7 +3,7 @@ import { Table, TableHead, TableRowHead, TableCellHead, TableBody, TableRow, Tab
 import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 export default function DataInitialized(props) {
-  var _dexDataStoreValues$d, _dexDataStoreValues$d2, _dexDataStoreValues$d3, _dexDataStoreValues$d4;
+  var _dexDataStoreValues$d, _dexDataStoreValues$d2, _dexDataStoreValues$d3, _dexDataStoreValues$d4, _dexDataStoreValues$d5;
   const [dexDataStoreValues, setDexDataStoreValues] = useState([]);
   const getData = () => {
     props && (props === null || props === void 0 ? void 0 : props.dataStoreDexValues().then(res => {
@@ -22,7 +22,7 @@ export default function DataInitialized(props) {
   useEffect(() => {
     getData();
   }, [props]);
-  return /*#__PURE__*/React.createElement("div", null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d === void 0 ? void 0 : (_dexDataStoreValues$d2 = _dexDataStoreValues$d.entries) === null || _dexDataStoreValues$d2 === void 0 ? void 0 : _dexDataStoreValues$d2.length) > 0 ? /*#__PURE__*/React.createElement(Table, null, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRowHead, null, /*#__PURE__*/React.createElement(TableCellHead, null, "Date created"), /*#__PURE__*/React.createElement(TableCellHead, null, "Name"), /*#__PURE__*/React.createElement(TableCellHead, null, "Target"), /*#__PURE__*/React.createElement(TableCellHead, null))), /*#__PURE__*/React.createElement(TableBody, null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d3 = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d3 === void 0 ? void 0 : (_dexDataStoreValues$d4 = _dexDataStoreValues$d3.entries) === null || _dexDataStoreValues$d4 === void 0 ? void 0 : _dexDataStoreValues$d4.map((aggregateDataExchange, key) => {
+  return /*#__PURE__*/React.createElement("div", null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d === void 0 ? void 0 : (_dexDataStoreValues$d2 = _dexDataStoreValues$d.entries) === null || _dexDataStoreValues$d2 === void 0 ? void 0 : _dexDataStoreValues$d2.length) > 0 ? /*#__PURE__*/React.createElement(Table, null, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRowHead, null, /*#__PURE__*/React.createElement(TableCellHead, null, "Date created"), /*#__PURE__*/React.createElement(TableCellHead, null, "Name"), /*#__PURE__*/React.createElement(TableCellHead, null, "Target"), /*#__PURE__*/React.createElement(TableCellHead, null))), /*#__PURE__*/React.createElement(TableBody, null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d3 = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d3 === void 0 ? void 0 : (_dexDataStoreValues$d4 = _dexDataStoreValues$d3.entries) === null || _dexDataStoreValues$d4 === void 0 ? void 0 : (_dexDataStoreValues$d5 = _dexDataStoreValues$d4.reverse()) === null || _dexDataStoreValues$d5 === void 0 ? void 0 : _dexDataStoreValues$d5.map((aggregateDataExchange, key) => {
     var _aggregateDataExchang, _aggregateDataExchang2, _aggregateDataExchang3, _aggregateDataExchang4, _aggregateDataExchang5, _aggregateDataExchang6;
     return /*#__PURE__*/React.createElement(TableRow, {
       key: key
@@ -35,13 +35,31 @@ export default function DataInitialized(props) {
         props === null || props === void 0 ? void 0 : props.setPath('View');
         props.setID(aggregateDataExchange.key);
       }
-    }, "View"), /*#__PURE__*/React.createElement(Button, {
+    }, "View"), /*#__PURE__*/React.createElement("button", {
+      style: {
+        background: '#E18427',
+        borderRadius: '5px',
+        border: 'none',
+        color: '#FFFFFF',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        "&:hover": {
+          background: '#E37F1B'
+        }
+      },
       onClick: () => {
         props === null || props === void 0 ? void 0 : props.setPath('new request');
         props.setID(aggregateDataExchange.key);
       }
-    }, "New request"), /*#__PURE__*/React.createElement(Button, {
-      secondary: true,
+    }, "New request"), /*#__PURE__*/React.createElement("button", {
+      style: {
+        background: '#4CAF50',
+        borderRadius: '5px',
+        border: 'none',
+        color: '#FFFFFF',
+        textAlign: 'center',
+        fontWeight: 'bold'
+      },
       onClick: () => {
         props === null || props === void 0 ? void 0 : props.setOpenUpdate(!(props !== null && props !== void 0 && props.openUpdate));
         updateEntry(aggregateDataExchange);
