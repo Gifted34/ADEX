@@ -11,7 +11,7 @@ function Datatablerow(props) {
     var _request$ou;
     let arr = [];
     request === null || request === void 0 ? void 0 : (_request$ou = request.ou) === null || _request$ou === void 0 ? void 0 : _request$ou.map(ou => {
-      const orgs = orgUnits === null || orgUnits === void 0 ? void 0 : orgUnits.filter(org => org.id === ou);
+      const orgs = orgUnits === null || orgUnits === void 0 ? void 0 : orgUnits.filter(org => org.code === ou);
       const name = orgs[0].name;
       arr === null || arr === void 0 ? void 0 : arr.push(name);
     });

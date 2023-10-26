@@ -90,7 +90,7 @@ export default function ViewDataStoreById(props) {
       resource: "organisationUnits",
       params: {
         paging: false,
-        fields: ["id,name,displayName"],
+        fields: ["id,name,displayName,code"],
       },
     },
     visualizations: {

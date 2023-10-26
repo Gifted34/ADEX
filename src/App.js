@@ -10,6 +10,7 @@ import {
   CircularLoader,
   Divider,
   I,
+  Layer,
 } from "@dhis2/ui";
 import HomePage from "./components/widgets/homePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -444,6 +445,8 @@ const MyApp = () => {
         </div>
 
         {/* <div style={{ marginLeft: "50px" }}> */}
+        {!hide &&<Layer translucent>
+          <div style={{position: 'absolute',bottom: '0px',right: '25%',left:'35%',}}>        
         <Box>
           {isSuccessMessage == true ? (
             <AlertBar
@@ -470,6 +473,8 @@ const MyApp = () => {
             </AlertBar>
           )}
         </Box>
+        </div>
+        </Layer>}
       </div>
       <NewDataInitialization
         open={open}

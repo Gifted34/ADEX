@@ -21,7 +21,7 @@ function Datatablerow(props) {
   const filterOrgUnits = () => {
     let arr = [];
     request?.ou?.map((ou) => {
-      const orgs = orgUnits?.filter((org) => org.id === ou);
+      const orgs = orgUnits?.filter((org) => org.code === ou);
       const name = orgs[0].name;
       arr?.push(name);
     });

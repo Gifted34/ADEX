@@ -34,13 +34,19 @@ export default function AddNewRequests(props) {
     setVisualisation(_.intersection(selected, visualisationId));
     setDx(_.difference(selected, _.intersection(selected, visualisationId)));
   };
-  const setorgUnits = orgUnits => {
+  const setorgUnits = orgnits => {
     let array = [];
-    orgUnits === null || orgUnits === void 0 ? void 0 : orgUnits.map(object => {
+    orgnits === null || orgnits === void 0 ? void 0 : orgnits.map(object => {
       const arr = object.split("/");
       array.push(...arr.slice(-1));
     });
-    setOrg(array);
+    let orgCode = [];
+    orgUnits.map(org => {
+      if (array.includes(org.id)) {
+        orgCode.push(org.code);
+      }
+    });
+    setOrg(orgCode);
   };
 
   // //fetchig data store values using the datastore key passed in the locations path

@@ -4,6 +4,7 @@ import { OrganisationUnitTree, Field } from '@dhis2/ui'
 export default function OrgUnits(props) {
     const [selectedOrgUnit, setSelectedOrgUnit] = useState([])
     const orgUnitLevels = (orgs) => {
+        console.log(orgs)
         let orgsList = []
         orgs?.map(org => {
             org?.level == 1 && orgsList?.push(org?.id)
@@ -20,7 +21,6 @@ export default function OrgUnits(props) {
                     onChange={(e) => {
                         props?.setOrg(e.selected)
                         setSelectedOrgUnit(e.selected)
-                        console.log(e.selected)
                         }
                     }
                     roots={orgUnitLevels(props?.orgUnits)}

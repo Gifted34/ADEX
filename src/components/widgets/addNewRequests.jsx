@@ -47,13 +47,19 @@ export default function AddNewRequests(props) {
     setDx(_.difference(selected, _.intersection(selected, visualisationId)));
   };
 
-  const setorgUnits = (orgUnits) => {
+  const setorgUnits = (orgnits) => {
     let array = [];
-    orgUnits?.map((object) => {
+    orgnits?.map((object) => {
       const arr = object.split("/");
       array.push(...arr.slice(-1));
     });
-    setOrg(array);
+    let orgCode = []
+    orgUnits.map((org)=> {
+      if(array.includes(org.id)){
+        orgCode.push(org.code)
+      }
+    })
+    setOrg(orgCode)
   };
 
   // //fetchig data store values using the datastore key passed in the locations path
