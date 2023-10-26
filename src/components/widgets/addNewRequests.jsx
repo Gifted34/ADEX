@@ -139,9 +139,7 @@ export default function AddNewRequests(props) {
             ],
           },
         };
-        console.log(orgS);
-
-        // send(dStore);
+        send(dStore);
       } else {
         let arr = dataStore?.source?.requests;
         arr.push({
@@ -153,14 +151,13 @@ export default function AddNewRequests(props) {
           inputIdScheme: "code",
           outputIdScheme: "code",
         });
-        console.log(orgS);
-        // send({
-        //   createdAt: dataStore.createdAt,
-        //   dexname: dataStore.dexname,
-        //   type: dataStore.type,
-        //   url: dataStore.url,
-        //   source: { requests: arr },
-        // });
+        send({
+          createdAt: dataStore.createdAt,
+          dexname: dataStore.dexname,
+          type: dataStore.type,
+          url: dataStore.url,
+          source: { requests: arr },
+        });
       }
     }
   };

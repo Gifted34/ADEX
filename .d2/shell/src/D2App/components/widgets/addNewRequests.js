@@ -122,9 +122,7 @@ export default function AddNewRequests(props) {
             }]
           }
         };
-        console.log(orgS);
-
-        // send(dStore);
+        send(dStore);
       } else {
         var _dataStore$source2;
         let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : _dataStore$source2.requests;
@@ -137,18 +135,18 @@ export default function AddNewRequests(props) {
           inputIdScheme: "code",
           outputIdScheme: "code"
         });
-        console.log(orgS);
-        // send({
-        //   createdAt: dataStore.createdAt,
-        //   dexname: dataStore.dexname,
-        //   type: dataStore.type,
-        //   url: dataStore.url,
-        //   source: { requests: arr },
-        // });
+        send({
+          createdAt: dataStore.createdAt,
+          dexname: dataStore.dexname,
+          type: dataStore.type,
+          url: dataStore.url,
+          source: {
+            requests: arr
+          }
+        });
       }
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);

@@ -6,7 +6,7 @@ export default function OrgUnits(props) {
   const orgUnitLevels = (orgs) => {
     let orgsList = [];
     orgs?.map((org) => {
-      org?.level == 1 && orgsList?.push(org?.code);
+      org?.level == 1 && orgsList?.push(org?.id);
     });
     return orgsList;
   };

@@ -6,7 +6,7 @@ export default function OrgUnits(props) {
   const orgUnitLevels = orgs => {
     let orgsList = [];
     orgs === null || orgs === void 0 ? void 0 : orgs.map(org => {
-      (org === null || org === void 0 ? void 0 : org.level) == 1 && (orgsList === null || orgsList === void 0 ? void 0 : orgsList.push(org === null || org === void 0 ? void 0 : org.code));
+      (org === null || org === void 0 ? void 0 : org.level) == 1 && (orgsList === null || orgsList === void 0 ? void 0 : orgsList.push(org === null || org === void 0 ? void 0 : org.id));
     });
     return orgsList;
   };
