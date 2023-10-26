@@ -49,7 +49,7 @@ export default function HomePage(props) {
           openUpdate={props?.openUpdate}
           dataStoreDexValues={getDataStoreDexValues}
           data={[]}
-          styles={props?.classes}
+          styles={props?.styles}
           deleteEntry={props?.deleteEntry}
           updateEntry={props?.updateEntry}
           integrateEntry={props?.integrateEntry}

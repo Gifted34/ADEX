@@ -44,7 +44,7 @@ export default function HomePage(props) {
     openUpdate: props === null || props === void 0 ? void 0 : props.openUpdate,
     dataStoreDexValues: getDataStoreDexValues,
     data: [],
-    styles: props === null || props === void 0 ? void 0 : props.classes,
+    styles: props === null || props === void 0 ? void 0 : props.styles,
     deleteEntry: props === null || props === void 0 ? void 0 : props.deleteEntry,
     updateEntry: props === null || props === void 0 ? void 0 : props.updateEntry,
     integrateEntry: props === null || props === void 0 ? void 0 : props.integrateEntry
