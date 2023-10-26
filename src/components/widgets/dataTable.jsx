@@ -16,10 +16,6 @@ function RequestdataTable(props) {
   const visualisations = props?.visualisations;
   const request = dataExchange?.source?.requests;
 
-  useEffect(()=>{
-    console.log(dataExchange)
-  },[])
-
   return (
     <div style={{ padding: "30px" }}>
       <DataTable>
@@ -37,9 +33,10 @@ function RequestdataTable(props) {
         </TableHead>
         <TableBody>
           {request !== undefined &&
-            request?.map((req) => {
+            request?.map((req, key) => {
               return (
                 <Datatablerow
+                  key={key}
                   requests={req}
                   dataExchange={dataExchange}
                   deleteRequest={props?.deleteRequest}

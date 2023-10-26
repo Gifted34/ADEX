@@ -101,9 +101,9 @@ const MyApp = () => {
   const [dataToUpdate, setDataToUpdate] = useState();
   const [dataToIntegrate, setDataToIntegrate] = useState();
   const engine = useDataEngine();
-  const [path,setPath] = useState('Home')
+  const [path, setPath] = useState("Home");
   const [formData, setFormData] = useState();
-  const [id,setID] = useState()
+  const [id, setID] = useState();
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
   const [selectedDataDimensionsCodes, setSelectedDataDimensionsCodes] =
     useState([]);
@@ -165,16 +165,41 @@ const MyApp = () => {
   };
   // a post request to the data echange resource
   const mutation = (data) => {
+    console.log(dataToIntegrate);
     engine
       .mutate(data)
       .then((res) => {
         if (res.httpStatusCode == 201) {
-          setOpenIntegration(false);
-          setSuccessMessage(true);
-          setHidden(false);
-          setMessage(
-            "Data exchange initialization is successfull\nPlease use the Data Exchange app to submit the Data."
-          );
+          engine
+            .mutate({
+              resource: `dataStore/DEX_initializer_values/${dataToIntegrate?.key}`,
+              type: "update",
+              data: ({}) => ({
+                createdAt: dataToIntegrate?.value?.createdAt,
+                updatedAt: new Date().toLocaleDateString(),
+                dexname: dataToIntegrate?.value?.dexname,
+                source: dataToIntegrate?.value?.source,
+                type: dataToIntegrate?.value?.type,
+                url: dataToIntegrate?.value?.url,
+                initialized: true,
+              }),
+            })
+            .then((res) => {
+              if (res.httpStatusCode == 200) {
+                setOpenIntegration(false);
+                setSuccessMessage(true);
+                setHidden(false);
+                setMessage(
+                  "Data exchange initialization is successfull\nPlease use the Data Exchange app to submit the Data."
+                );
+              }
+            })
+            .catch((e) => {
+              setHidden(false);
+              setMessage(
+                "Error occured. Either server or the inputs causes this error."
+              );
+            });
         }
       })
       .catch((e) => {
@@ -193,7 +218,6 @@ const MyApp = () => {
       return false;
     }
   };
-
 
   // constructing a data exchange api layout as defined in the url
   // https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/data-exchange.html
@@ -409,66 +433,86 @@ const MyApp = () => {
         <HeaderComponent />
         <br />
         <div style={{ padding: "20px" }}>
-            {path === 'Home' ? 
+          {path === "Home" ? (
             <HomePage
-            data={data}
-            setPath={setPath}
-            setID={setID}
-            styles={classes}
-            open={open}
-            setOpenUpdate={setOpenUpdate}
-            openUpdate={openUpdate}
-            openIntegration={openIntegration}
-            setOpenIntegration={setOpenIntegration}
-            setOpen={setOpen}
-            setOpenDelete={setOpenDelete}
-            openDelete={openDelete}
-            deleteEntry={deleteEntry}
-            updateEntry={updateEntry}
-            integrateEntry={integrateEntry}
-            // initializeIntegration={initializeIntegration}
-          />
-          : <>{ path === 'View'?  <ViewDataStoreById id = {id} setPath={setPath} data={data} styles={classes} />: 
-          <AddNewRequests id={id} setPath={setPath} data={data} style={classes} /> }</>
-
-            }        
-                  
-                  
-              
-              
+              data={data}
+              setPath={setPath}
+              setID={setID}
+              styles={classes}
+              open={open}
+              setOpenUpdate={setOpenUpdate}
+              openUpdate={openUpdate}
+              openIntegration={openIntegration}
+              setOpenIntegration={setOpenIntegration}
+              setOpen={setOpen}
+              setOpenDelete={setOpenDelete}
+              openDelete={openDelete}
+              deleteEntry={deleteEntry}
+              updateEntry={updateEntry}
+              integrateEntry={integrateEntry}
+              // initializeIntegration={initializeIntegration}
+            />
+          ) : (
+            <>
+              {path === "View" ? (
+                <ViewDataStoreById
+                  id={id}
+                  setPath={setPath}
+                  data={data}
+                  styles={classes}
+                />
+              ) : (
+                <AddNewRequests
+                  id={id}
+                  setPath={setPath}
+                  data={data}
+                  style={classes}
+                />
+              )}
+            </>
+          )}
         </div>
 
         {/* <div style={{ marginLeft: "50px" }}> */}
-        {!hide &&<Layer translucent>
-          <div style={{position: 'absolute',bottom: '0px',right: '25%',left:'35%',}}>        
-        <Box>
-          {isSuccessMessage == true ? (
-            <AlertBar
-              hidden={hide}
-              success
-              duration={4000}
-              onHidden={(e) => {
-                setHidden(true);
-                // window.location.reload(true);
+        {!hide && (
+          <Layer translucent>
+            <div
+              style={{
+                position: "absolute",
+                bottom: "0px",
+                right: "25%",
+                left: "35%",
               }}
             >
-              {message}
-            </AlertBar>
-          ) : (
-            <AlertBar
-              hidden={hide}
-              warning
-              duration={4000}
-              onHidden={(e) => {
-                setHidden(true);
-              }}
-            >
-              {message}
-            </AlertBar>
-          )}
-        </Box>
-        </div>
-        </Layer>}
+              <Box>
+                {isSuccessMessage == true ? (
+                  <AlertBar
+                    hidden={hide}
+                    success
+                    duration={4000}
+                    onHidden={(e) => {
+                      setHidden(true);
+                      // window.location.reload(true);
+                    }}
+                  >
+                    {message}
+                  </AlertBar>
+                ) : (
+                  <AlertBar
+                    hidden={hide}
+                    warning
+                    duration={4000}
+                    onHidden={(e) => {
+                      setHidden(true);
+                    }}
+                  >
+                    {message}
+                  </AlertBar>
+                )}
+              </Box>
+            </div>
+          </Layer>
+        )}
       </div>
       <NewDataInitialization
         open={open}
