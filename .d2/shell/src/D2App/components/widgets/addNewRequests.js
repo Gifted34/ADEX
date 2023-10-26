@@ -34,13 +34,25 @@ export default function AddNewRequests(props) {
     setVisualisation(_.intersection(selected, visualisationId));
     setDx(_.difference(selected, _.intersection(selected, visualisationId)));
   };
+<<<<<<< HEAD
   const setOrgUnits = orgs => {
     let array = [];
     orgs === null || orgs === void 0 ? void 0 : orgs.map(object => {
+=======
+  const setorgUnits = orgnits => {
+    let array = [];
+    orgnits === null || orgnits === void 0 ? void 0 : orgnits.map(object => {
+>>>>>>> 9213b2a9a24704ed1db1cc2a6295a991aad0bf3a
       const arr = object.split("/");
       array.push(...arr.slice(-1));
     });
-    setOrg(array);
+    let orgCode = [];
+    orgUnits.map(org => {
+      if (array.includes(org.id)) {
+        orgCode.push(org.code);
+      }
+    });
+    setOrg(orgCode);
   };
 
   // //fetchig data store values using the datastore key passed in the locations path

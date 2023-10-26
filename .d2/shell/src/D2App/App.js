@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DataQuery, useDataEngine, useDataQuery } from "@dhis2/app-runtime";
 import classes from "./App.module.css";
 import HeaderComponent from "./components/widgets/headerComponent";
-import { AlertBar, Box, Button, Center, CircularLoader, Divider, I } from "@dhis2/ui";
+import { AlertBar, Box, Button, Center, CircularLoader, Divider, I, Layer } from "@dhis2/ui";
 import HomePage from "./components/widgets/homePage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NewDataInitialization from "./components/widgets/newDataInitialization";
@@ -387,7 +387,16 @@ const MyApp = () => {
   }), /*#__PURE__*/React.createElement(Route, {
     path: "*",
     element: /*#__PURE__*/React.createElement(NoPageFound, null)
-  })))), /*#__PURE__*/React.createElement(Box, null, isSuccessMessage == true ? /*#__PURE__*/React.createElement(AlertBar, {
+  })))), !hide && /*#__PURE__*/React.createElement(Layer, {
+    translucent: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: '0px',
+      right: '25%',
+      left: '35%'
+    }
+  }, /*#__PURE__*/React.createElement(Box, null, isSuccessMessage == true ? /*#__PURE__*/React.createElement(AlertBar, {
     hidden: hide,
     success: true,
     duration: 4000,
@@ -401,7 +410,7 @@ const MyApp = () => {
     onHidden: e => {
       setHidden(true);
     }
-  }, message))), /*#__PURE__*/React.createElement(NewDataInitialization, {
+  }, message))))), /*#__PURE__*/React.createElement(NewDataInitialization, {
     open: open,
     setOpen: setOpen,
     styles: classes,
