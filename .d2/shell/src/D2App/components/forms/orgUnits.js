@@ -4,7 +4,6 @@ export default function OrgUnits(props) {
   var _props$styles;
   const [selectedOrgUnit, setSelectedOrgUnit] = useState([]);
   const orgUnitLevels = orgs => {
-    console.log(orgs);
     let orgsList = [];
     orgs === null || orgs === void 0 ? void 0 : orgs.map(org => {
       (org === null || org === void 0 ? void 0 : org.level) == 1 && (orgsList === null || orgsList === void 0 ? void 0 : orgsList.push(org === null || org === void 0 ? void 0 : org.code));
@@ -20,6 +19,7 @@ export default function OrgUnits(props) {
     onChange: e => {
       props === null || props === void 0 ? void 0 : props.setOrg(e.selected);
       setSelectedOrgUnit(e.selected);
+      console.log(e.selected);
     },
     roots: orgUnitLevels(props === null || props === void 0 ? void 0 : props.orgUnits),
     hideMemberCount: false,
