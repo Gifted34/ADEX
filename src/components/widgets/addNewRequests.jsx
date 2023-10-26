@@ -45,9 +45,9 @@ export default function AddNewRequests(props) {
     setDx(_.difference(selected, _.intersection(selected, visualisationId)));
   };
 
-  const setorgUnits = (orgnits) => {
+  const setOrgUnits = (orgs) => {
     let array = [];
-    orgnits?.map((object) => {
+    orgs?.map((object) => {
       const arr = object.split("/");
       array.push(...arr.slice(-1));
     });
@@ -139,8 +139,9 @@ export default function AddNewRequests(props) {
             ],
           },
         };
+        console.log(orgS);
 
-        send(dStore);
+        // send(dStore);
       } else {
         let arr = dataStore?.source?.requests;
         arr.push({
@@ -152,14 +153,14 @@ export default function AddNewRequests(props) {
           inputIdScheme: "code",
           outputIdScheme: "code",
         });
-        console.log(arr);
-        send({
-          createdAt: dataStore.createdAt,
-          dexname: dataStore.dexname,
-          type: dataStore.type,
-          url: dataStore.url,
-          source: { requests: arr },
-        });
+        console.log(orgS);
+        // send({
+        //   createdAt: dataStore.createdAt,
+        //   dexname: dataStore.dexname,
+        //   type: dataStore.type,
+        //   url: dataStore.url,
+        //   source: { requests: arr },
+        // });
       }
     }
   };
@@ -179,7 +180,7 @@ export default function AddNewRequests(props) {
       )}
       <Box className={props?.style?.display}>
         <Box className={props?.style?.padding}>
-          <OrgUnits orgUnits={orgUnits} setOrg={setorgUnits} />
+          <OrgUnits orgUnits={orgUnits} setOrg={setOrgUnits} />
         </Box>
         <div>
           <Box className={`${props?.style?.width} ${props?.style?.padding}`}>

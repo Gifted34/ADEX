@@ -32,9 +32,15 @@ export default function AddNewRequests(props) {
     setVisualisation(_.intersection(selected, visualisationId));
     setDx(_.difference(selected, _.intersection(selected, visualisationId)));
   };
+<<<<<<< HEAD
+  const setOrgUnits = orgs => {
+    let array = [];
+    orgs === null || orgs === void 0 ? void 0 : orgs.map(object => {
+=======
   const setorgUnits = orgnits => {
     let array = [];
     orgnits === null || orgnits === void 0 ? void 0 : orgnits.map(object => {
+>>>>>>> 9213b2a9a24704ed1db1cc2a6295a991aad0bf3a
       const arr = object.split("/");
       array.push(...arr.slice(-1));
     });
@@ -122,7 +128,9 @@ export default function AddNewRequests(props) {
             }]
           }
         };
-        send(dStore);
+        console.log(orgS);
+
+        // send(dStore);
       } else {
         var _dataStore$source2;
         let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : _dataStore$source2.requests;
@@ -135,19 +143,18 @@ export default function AddNewRequests(props) {
           inputIdScheme: "code",
           outputIdScheme: "code"
         });
-        console.log(arr);
-        send({
-          createdAt: dataStore.createdAt,
-          dexname: dataStore.dexname,
-          type: dataStore.type,
-          url: dataStore.url,
-          source: {
-            requests: arr
-          }
-        });
+        console.log(orgS);
+        // send({
+        //   createdAt: dataStore.createdAt,
+        //   dexname: dataStore.dexname,
+        //   type: dataStore.type,
+        //   url: dataStore.url,
+        //   source: { requests: arr },
+        // });
       }
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -163,7 +170,7 @@ export default function AddNewRequests(props) {
     className: props === null || props === void 0 ? void 0 : (_props$style3 = props.style) === null || _props$style3 === void 0 ? void 0 : _props$style3.padding
   }, /*#__PURE__*/React.createElement(OrgUnits, {
     orgUnits: orgUnits,
-    setOrg: setorgUnits
+    setOrg: setOrgUnits
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Box, {
     className: `${props === null || props === void 0 ? void 0 : (_props$style4 = props.style) === null || _props$style4 === void 0 ? void 0 : _props$style4.width} ${props === null || props === void 0 ? void 0 : (_props$style5 = props.style) === null || _props$style5 === void 0 ? void 0 : _props$style5.padding}`
   }, /*#__PURE__*/React.createElement(Field, {

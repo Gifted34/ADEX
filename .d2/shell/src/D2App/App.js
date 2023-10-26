@@ -356,6 +356,7 @@ const MyApp = () => {
     style: {
       padding: "20px"
     }
+<<<<<<< HEAD
   }, path === 'Home' ? /*#__PURE__*/React.createElement(HomePage, {
     data: data,
     setPath: setPath,
@@ -384,6 +385,41 @@ const MyApp = () => {
     data: data,
     style: classes
   }))), !hide && /*#__PURE__*/React.createElement(Layer, {
+=======
+  }, /*#__PURE__*/React.createElement(BrowserRouter, null, /*#__PURE__*/React.createElement(Routes, null, /*#__PURE__*/React.createElement(Route, {
+    index: true,
+    element: /*#__PURE__*/React.createElement(HomePage, {
+      data: data,
+      styles: classes,
+      open: open,
+      setOpenUpdate: setOpenUpdate,
+      openUpdate: openUpdate,
+      openIntegration: openIntegration,
+      setOpenIntegration: setOpenIntegration,
+      setOpen: setOpen,
+      setOpenDelete: setOpenDelete,
+      openDelete: openDelete,
+      deleteEntry: deleteEntry,
+      updateEntry: updateEntry,
+      integrateEntry: integrateEntry
+    })
+  }), /*#__PURE__*/React.createElement(Route, {
+    path: "/view/:key",
+    element: /*#__PURE__*/React.createElement(ViewDataStoreById, {
+      data: data,
+      styles: classes
+    })
+  }), /*#__PURE__*/React.createElement(Route, {
+    path: "/new-request/:key",
+    element: /*#__PURE__*/React.createElement(AddNewRequests, {
+      data: data,
+      style: classes
+    })
+  }), /*#__PURE__*/React.createElement(Route, {
+    path: "*",
+    element: /*#__PURE__*/React.createElement(NoPageFound, null)
+  })))), !hide && /*#__PURE__*/React.createElement(Layer, {
+>>>>>>> 8d3798b6bc5f142bc629218b901b6317f7a69c08
     translucent: true
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -398,7 +434,6 @@ const MyApp = () => {
     duration: 4000,
     onHidden: e => {
       setHidden(true);
-      // window.location.reload(true);
     }
   }, message) : /*#__PURE__*/React.createElement(AlertBar, {
     hidden: hide,
