@@ -37,9 +37,10 @@ export default function DataInitialized(props) {
       }
     }, "View"), /*#__PURE__*/React.createElement("button", {
       style: {
-        background: '#E18427',
+        background: ' #4CAF50',
         borderRadius: '5px',
         border: 'none',
+        cursor: 'pointer',
         color: '#FFFFFF',
         textAlign: 'center',
         fontWeight: 'bold',
@@ -53,7 +54,8 @@ export default function DataInitialized(props) {
       }
     }, "New request"), /*#__PURE__*/React.createElement("button", {
       style: {
-        background: '#4CAF50',
+        background: '#E18427',
+        cursor: 'pointer',
         borderRadius: '5px',
         border: 'none',
         color: '#FFFFFF',
