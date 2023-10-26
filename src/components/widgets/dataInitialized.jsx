@@ -34,7 +34,6 @@ export default function DataInitialized(props) {
   };
   useEffect(() => {
     getData();
-    console.log(props)
   }, []);
 
   return (
