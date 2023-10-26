@@ -34,7 +34,7 @@ export default function DataInitialized(props) {
   };
   useEffect(() => {
     getData();
-  }, [props]);
+  }, []);
 
   return (
     <div>
@@ -80,17 +80,7 @@ export default function DataInitialized(props) {
                           </Button>
 
                           <button
-                            style={{
-                              background: "#E18427",
-                              borderRadius: "5px",
-                              border: "none",
-                              color: "#FFFFFF",
-                              textAlign: "center",
-                              fontWeight: "bold",
-                              "&:hover": {
-                                background: "#E37F1B",
-                              },
-                            }}
+                            className={props?.styles?.newRequestBtn}
                             onClick={() => {
                               props?.setPath("new request");
                               props.setID(aggregateDataExchange.key);
@@ -99,14 +89,7 @@ export default function DataInitialized(props) {
                             New request
                           </button>
                           <button
-                            style={{
-                              background: "#4CAF50",
-                              borderRadius: "5px",
-                              border: "none",
-                              color: "#FFFFFF",
-                              textAlign: "center",
-                              fontWeight: "bold",
-                            }}
+                            className={props?.styles?.updateBtn}
                             onClick={() => {
                               props?.setOpenUpdate(!props?.openUpdate);
                               updateEntry(aggregateDataExchange);

@@ -190,13 +190,13 @@ export default function AddNewRequests(props) {
   }, /*#__PURE__*/React.createElement(ButtonStrip, {
     end: true
   }, /*#__PURE__*/React.createElement(Button, {
+    large: true,
+    onClick: () => props === null || props === void 0 ? void 0 : props.setPath("Home")
+  }, "Cancel"), /*#__PURE__*/React.createElement(Button, {
     primary: true,
     large: true,
     onClick: () => saveData()
-  }, "Save"), /*#__PURE__*/React.createElement(Button, {
-    large: true,
-    onClick: () => props === null || props === void 0 ? void 0 : props.setPath('Home')
-  }, "Cancel")), /*#__PURE__*/React.createElement(AlertBar, {
+  }, "Save")), /*#__PURE__*/React.createElement(AlertBar, {
     warning: true,
     hidden: errorHidden,
     onHidden: () => setErrorHidden(true),
@@ -207,7 +207,7 @@ export default function AddNewRequests(props) {
     duration: 2000,
     onHidden: () => {
       setHidden(true);
-      setTimeout(() => props === null || props === void 0 ? void 0 : props.setPath('Home'), 2000);
+      setTimeout(() => props === null || props === void 0 ? void 0 : props.setPath("Home"), 2000);
     }
   }, "Innitialisation saved succesifuly")))));
 }

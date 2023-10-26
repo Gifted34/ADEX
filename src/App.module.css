@@ -61,3 +61,28 @@
         display: block;
     }
 }
+.updateBtn {
+    background: #E18427;
+    cursor: pointer;
+    border-radius : 5px;
+    border: none;
+    color: #FFFFFF;
+    text-align : center;
+    font-weight: bold                              
+  }
+.updateBtn:hover{
+    background: #c2670c;
+}
+
+.newRequestBtn {
+    background: #4CAF50;
+    cursor: pointer;
+    border-radius : 5px;
+    border: none;
+    color: #FFFFFF;
+    text-align : center;
+    font-weight: bold                              
+  }
+.newRequestBtn:hover{
+    background: #318734;
+}

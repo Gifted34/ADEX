@@ -18,7 +18,7 @@ import { useDataEngine, useDataMutation } from "@dhis2/app-runtime";
 
 export default function AddNewRequests(props) {
   const engine = useDataEngine();
-  
+
   const orgUnits = props?.data?.organisationUnits?.organisationUnits;
   const Visualizations = props?.data?.visualizations?.visualizations;
   const dataElements = props?.data?.dataElements?.dataElements;
@@ -51,13 +51,13 @@ export default function AddNewRequests(props) {
       const arr = object.split("/");
       array.push(...arr.slice(-1));
     });
-    let orgCode = []
-    orgUnits.map((org)=> {
-      if(array.includes(org.id)){
-        orgCode.push(org.code)
+    let orgCode = [];
+    orgUnits.map((org) => {
+      if (array.includes(org.id)) {
+        orgCode.push(org.code);
       }
-    })
-    setOrg(orgCode)
+    });
+    setOrg(orgCode);
   };
 
   // //fetchig data store values using the datastore key passed in the locations path
@@ -205,10 +205,12 @@ export default function AddNewRequests(props) {
           </div>
           <div className={props?.style?.padding}>
             <ButtonStrip end>
+              <Button large onClick={() => props?.setPath("Home")}>
+                Cancel
+              </Button>
               <Button primary large onClick={() => saveData()}>
                 Save
               </Button>
-              <Button large onClick={()=>props?.setPath('Home')}>Cancel</Button>
             </ButtonStrip>
             <AlertBar
               warning
@@ -224,7 +226,7 @@ export default function AddNewRequests(props) {
               duration={2000}
               onHidden={() => {
                 setHidden(true);
-                setTimeout(()=>props?.setPath('Home'),2000)
+                setTimeout(() => props?.setPath("Home"), 2000);
               }}
             >
               Innitialisation saved succesifuly
