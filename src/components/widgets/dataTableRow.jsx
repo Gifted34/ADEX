@@ -62,7 +62,6 @@ function Datatablerow(props) {
   };
 
   const dx = () => {
-    console.log(dataElements);
     return request?.dx?.map((dE) => {
       const dataElement = dataElements?.filter((de) => de.code === dE);
       if (dataElement?.length < 1) {
@@ -81,7 +80,6 @@ function Datatablerow(props) {
           </div>
         );
       } else {
-        console.log(dataElement);
         return (
           <div key={dataElement[0]?.displayName} style={{ padding: "5px" }}>
             <span

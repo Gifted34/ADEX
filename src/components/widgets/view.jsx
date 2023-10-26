@@ -72,7 +72,7 @@ const query = {
   },
 };
 export default function ViewDataStoreById(props) {
-    const dataStorePath = `dataStore/DEX_initializer_values/${props?.id}`;
+  const dataStorePath = `dataStore/DEX_initializer_values/${props?.id}`;
   const [dataExchange, setExchange] = useState();
   const [indicators, setIndicators] = useState();
   const [dataElements, setDataElements] = useState();
@@ -187,8 +187,9 @@ export default function ViewDataStoreById(props) {
         </Layer>
       )}
       <ButtonStrip end>
-        <Button primary onClick={()=>props?.setPath('Home')}>Back</Button>
-        
+        <Button primary onClick={() => props?.setPath("Home")}>
+          Back
+        </Button>
       </ButtonStrip>
       <Divider />
       <div className={`${props?.styles.padding}`}>
@@ -209,7 +210,7 @@ export default function ViewDataStoreById(props) {
             <StackedTable>
               <StackedTableHead>
                 <StackedTableRowHead>
-                  <StackedTableCellHead>Created at</StackedTableCellHead>
+                  <StackedTableCellHead>Created</StackedTableCellHead>
                   <StackedTableCellHead>Name</StackedTableCellHead>
                   <StackedTableCellHead>Target</StackedTableCellHead>
                   <StackedTableCellHead>Type</StackedTableCellHead>

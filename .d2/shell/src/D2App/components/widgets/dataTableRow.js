@@ -50,7 +50,6 @@ function Datatablerow(props) {
   };
   const dx = () => {
     var _request$dx;
-    console.log(dataElements);
     return request === null || request === void 0 ? void 0 : (_request$dx = request.dx) === null || _request$dx === void 0 ? void 0 : _request$dx.map(dE => {
       const dataElement = dataElements === null || dataElements === void 0 ? void 0 : dataElements.filter(de => de.code === dE);
       if ((dataElement === null || dataElement === void 0 ? void 0 : dataElement.length) < 1) {
@@ -70,7 +69,6 @@ function Datatablerow(props) {
         }, (_ind$2 = ind[0]) === null || _ind$2 === void 0 ? void 0 : _ind$2.displayName));
       } else {
         var _dataElement$, _dataElement$2;
-        console.log(dataElement);
         return /*#__PURE__*/React.createElement("div", {
           key: (_dataElement$ = dataElement[0]) === null || _dataElement$ === void 0 ? void 0 : _dataElement$.displayName,
           style: {
