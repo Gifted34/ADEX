@@ -3,9 +3,7 @@ import {DataTableCell,TableBody
 import React ,{useEffect}from 'react';
 
 function ExpandContent(props) {
-    useEffect(()=>{
-        console.log(props)
-    },[])
+   
     return (
         <div>
             <TableBody>

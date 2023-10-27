@@ -2,9 +2,6 @@ import { DataTableCell, TableBody } from '@dhis2/ui';
 import React, { useEffect } from 'react';
 function ExpandContent(props) {
   var _props$style, _props$style2, _props$style3;
-  useEffect(() => {
-    console.log(props);
-  }, []);
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(TableBody, null, /*#__PURE__*/React.createElement(DataTableCell, null, /*#__PURE__*/React.createElement("span", {
     style: {
       fontWeight: 'bold',
