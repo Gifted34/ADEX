@@ -9,6 +9,7 @@ import {
   ModalContent,
 } from "@dhis2/ui";
 import React, { useEffect, useState } from "react";
+import ExpandContent from "./expandContent";
 
 function Datatablerow(props) {
   const request = props?.requests;
@@ -17,6 +18,7 @@ function Datatablerow(props) {
   const orgUnits = props?.orgUnits;
   const visualisations = props?.visualisations;
   const [open, setOpen] = useState(false);
+  const [expndd,setExpanded] = useState(false)
 
   const filterOrgUnits = () => {
     let arr = [];
@@ -141,7 +143,9 @@ function Datatablerow(props) {
           </ModalActions>
         </Modal>
       )}
-      <DataTableRow>
+      <DataTableRow expanded={expndd}  expandableContent={<ExpandContent style={props?.styles} orgUnits={orgUnits !== undefined&&filterOrgUnits()?.length > 4 && filterOrgUnits()?.splice(4,filterOrgUnits()?.length -4)} dx={dataElements !== undefined && dx()?.length > 4 && dx()?.splice(4,dx().length - 4)} vis={visualisations !== undefined && visualizations()?.length >4 && visualizations()?.splice(4,visualisations()?.length -4)} />} onExpandToggle={(payload)=>{
+         setExpanded(!expndd)
+      }}>
         <DataTableCell>
           <span
             style={{
@@ -153,14 +157,14 @@ function Datatablerow(props) {
             {request?.name}
           </span>
         </DataTableCell>
-        <DataTableCell>
-          {orgUnits !== undefined && filterOrgUnits()}
+        <DataTableCell >
+          {orgUnits !== undefined && filterOrgUnits()?.splice(0,4)}
         </DataTableCell>
         <DataTableCell>
-          {visualisations !== undefined && visualizations()}
+          {visualisations !== undefined && visualizations()?.splice(0,4)}
         </DataTableCell>
         <DataTableCell>
-          {dataElements !== undefined && indicators !== undefined && dx()}
+          {dataElements !== undefined && indicators !== undefined && dx()?.splice(0,4)}
         </DataTableCell>
         <DataTableCell>{periods()}</DataTableCell>
         <DataTableCell>
