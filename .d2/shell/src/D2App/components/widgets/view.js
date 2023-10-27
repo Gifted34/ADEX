@@ -176,6 +176,7 @@ export default function ViewDataStoreById(props) {
       fontSize: "20px"
     }
   }, " ", "Requests", " "), /*#__PURE__*/React.createElement(RequestdataTable, {
+    styles: props === null || props === void 0 ? void 0 : props.styles,
     key: dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.url,
     deleteRequest: deleteRequest,
     orgUnits: orgUnits,

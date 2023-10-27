@@ -240,6 +240,7 @@ export default function ViewDataStoreById(props) {
               Requests{" "}
             </span>
             <RequestdataTable
+              styles={props?.styles}
               key={dataExchange?.url}
               deleteRequest={deleteRequest}
               orgUnits={orgUnits}
