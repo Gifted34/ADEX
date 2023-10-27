@@ -3,11 +3,14 @@ import { Table, TableHead, TableRowHead, TableCellHead, TableBody, TableRow, Tab
 import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 export default function DataInitialized(props) {
-  var _dexDataStoreValues$d, _dexDataStoreValues$d2, _dexDataStoreValues$d3, _dexDataStoreValues$d4, _dexDataStoreValues$d5;
+  var _dexDataStoreValues$d, _dexDataStoreValues$d2;
   const [dexDataStoreValues, setDexDataStoreValues] = useState([]);
+  const [entries, setEntries] = useState();
   const getData = () => {
     props && (props === null || props === void 0 ? void 0 : props.dataStoreDexValues().then(res => {
+      var _res$dataStore, _res$dataStore$entrie;
       setDexDataStoreValues(res);
+      setEntries(res === null || res === void 0 ? void 0 : (_res$dataStore = res.dataStore) === null || _res$dataStore === void 0 ? void 0 : (_res$dataStore$entrie = _res$dataStore.entries) === null || _res$dataStore$entrie === void 0 ? void 0 : _res$dataStore$entrie.reverse());
     }));
   };
   const deleteEntry = data => {
@@ -22,7 +25,7 @@ export default function DataInitialized(props) {
   useEffect(() => {
     getData();
   }, []);
-  return /*#__PURE__*/React.createElement("div", null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d === void 0 ? void 0 : (_dexDataStoreValues$d2 = _dexDataStoreValues$d.entries) === null || _dexDataStoreValues$d2 === void 0 ? void 0 : _dexDataStoreValues$d2.length) > 0 ? /*#__PURE__*/React.createElement(Table, null, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRowHead, null, /*#__PURE__*/React.createElement(TableCellHead, null, "Date created"), /*#__PURE__*/React.createElement(TableCellHead, null, "Name"), /*#__PURE__*/React.createElement(TableCellHead, null, "Target"), /*#__PURE__*/React.createElement(TableCellHead, null))), /*#__PURE__*/React.createElement(TableBody, null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d3 = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d3 === void 0 ? void 0 : (_dexDataStoreValues$d4 = _dexDataStoreValues$d3.entries) === null || _dexDataStoreValues$d4 === void 0 ? void 0 : (_dexDataStoreValues$d5 = _dexDataStoreValues$d4.reverse()) === null || _dexDataStoreValues$d5 === void 0 ? void 0 : _dexDataStoreValues$d5.map((aggregateDataExchange, key) => {
+  return /*#__PURE__*/React.createElement("div", null, dexDataStoreValues && (dexDataStoreValues === null || dexDataStoreValues === void 0 ? void 0 : (_dexDataStoreValues$d = dexDataStoreValues.dataStore) === null || _dexDataStoreValues$d === void 0 ? void 0 : (_dexDataStoreValues$d2 = _dexDataStoreValues$d.entries) === null || _dexDataStoreValues$d2 === void 0 ? void 0 : _dexDataStoreValues$d2.length) > 0 ? /*#__PURE__*/React.createElement(Table, null, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(TableRowHead, null, /*#__PURE__*/React.createElement(TableCellHead, null, "Date created"), /*#__PURE__*/React.createElement(TableCellHead, null, "Name"), /*#__PURE__*/React.createElement(TableCellHead, null, "Target"), /*#__PURE__*/React.createElement(TableCellHead, null))), /*#__PURE__*/React.createElement(TableBody, null, dexDataStoreValues && (entries === null || entries === void 0 ? void 0 : entries.map((aggregateDataExchange, key) => {
     var _aggregateDataExchang, _aggregateDataExchang2, _aggregateDataExchang3, _aggregateDataExchang4, _aggregateDataExchang5, _aggregateDataExchang6, _props$styles, _props$styles2, _aggregateDataExchang7, _aggregateDataExchang8, _aggregateDataExchang9, _aggregateDataExchang10;
     return /*#__PURE__*/React.createElement(TableRow, {
       key: key

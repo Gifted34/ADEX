@@ -16,10 +16,12 @@ import { Outlet, Link } from "react-router-dom";
 
 export default function DataInitialized(props) {
   const [dexDataStoreValues, setDexDataStoreValues] = useState([]);
+  const [entries, setEntries]= useState()
   const getData = () => {
     props &&
       props?.dataStoreDexValues().then((res) => {
         setDexDataStoreValues(res);
+        setEntries(res?.dataStore?.entries?.reverse())
       });
   };
 
@@ -51,9 +53,7 @@ export default function DataInitialized(props) {
           </TableHead>
           <TableBody>
             {dexDataStoreValues &&
-              dexDataStoreValues?.dataStore?.entries
-                ?.reverse()
-                ?.map((aggregateDataExchange, key) => {
+              entries?.map((aggregateDataExchange, key) => {
                   return (
                     <TableRow key={key}>
                       <TableCell>

@@ -100,6 +100,7 @@ const MyApp = () => {
   const [dataToDelete, setDataToDelete] = useState();
   const [dataToUpdate, setDataToUpdate] = useState();
   const [dataToIntegrate, setDataToIntegrate] = useState();
+  const [ke,setKey] = useState(Math.random())
   const engine = useDataEngine();
   const [path, setPath] = useState("Home");
   const [formData, setFormData] = useState();
@@ -120,6 +121,7 @@ const MyApp = () => {
 
   // save to datastore
   const saveGeneralInputValues = () => {
+    console.log('save input values')
     if (
       type == null ||
       type == undefined ||
@@ -153,6 +155,7 @@ const MyApp = () => {
             setSuccessMessage(true);
             setHidden(false);
             setMessage("Data saved in the datastore successfully.");
+            setKey(Math.random())
           }
         })
         .catch((e) => {
@@ -165,7 +168,7 @@ const MyApp = () => {
   };
   // a post request to the data echange resource
   const mutation = (data) => {
-    console.log(dataToIntegrate);
+    console.log('mutation')
     engine
       .mutate(data)
       .then((res) => {
@@ -222,6 +225,7 @@ const MyApp = () => {
   // constructing a data exchange api layout as defined in the url
   // https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/data-exchange.html
   const initializeIntegration = (data) => {
+    console.log('initialisation')
     if (formData?.type == type?.EXTERNAL) {
       if (dataToIntegrate?.value?.url == "") {
         setMessage("Please enter target DHIS2 instance url");
@@ -322,6 +326,7 @@ const MyApp = () => {
 
   // update the initialized entry in the datastore
   const updateGeneralInputValues = ({ data, values }) => {
+    console.log('general input values')
     if (
       values?.dexname == "" ||
       values?.dexname == null ||
@@ -398,6 +403,7 @@ const MyApp = () => {
   };
 
   const integrateEntry = (data) => {
+    console.log('intergrate entery')
     setDataToIntegrate(data);
   };
 
@@ -417,6 +423,7 @@ const MyApp = () => {
             setSuccessMessage(true);
             setHidden(false);
             setMessage("Data saved in the datastore successfully.");
+            setKey(Math.random())
           }
         })
         .catch((e) => {
@@ -435,6 +442,7 @@ const MyApp = () => {
         <div style={{ padding: "20px" }}>
           {path === "Home" ? (
             <HomePage
+              key={ke}
               data={data}
               setPath={setPath}
               setID={setID}

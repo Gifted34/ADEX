@@ -88,6 +88,7 @@ const MyApp = () => {
   const [dataToDelete, setDataToDelete] = useState();
   const [dataToUpdate, setDataToUpdate] = useState();
   const [dataToIntegrate, setDataToIntegrate] = useState();
+  const [ke, setKey] = useState(Math.random());
   const engine = useDataEngine();
   const [path, setPath] = useState("Home");
   const [formData, setFormData] = useState();
@@ -110,6 +111,7 @@ const MyApp = () => {
 
   // save to datastore
   const saveGeneralInputValues = () => {
+    console.log('save input values');
     if (type == null || type == undefined || type == "" || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname) == null || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname) == undefined || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname) == "" || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url) == null || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url) == undefined || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url) == "") {
       setSuccessMessage(true);
       setHidden(false);
@@ -131,6 +133,7 @@ const MyApp = () => {
           setSuccessMessage(true);
           setHidden(false);
           setMessage("Data saved in the datastore successfully.");
+          setKey(Math.random());
         }
       }).catch(e => {
         setHidden(false);
@@ -140,7 +143,7 @@ const MyApp = () => {
   };
   // a post request to the data echange resource
   const mutation = data => {
-    console.log(dataToIntegrate);
+    console.log('mutation');
     engine.mutate(data).then(res => {
       if (res.httpStatusCode == 201) {
         engine.mutate({
@@ -189,6 +192,7 @@ const MyApp = () => {
   // constructing a data exchange api layout as defined in the url
   // https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/data-exchange.html
   const initializeIntegration = data => {
+    console.log('initialisation');
     if ((formData === null || formData === void 0 ? void 0 : formData.type) == (type === null || type === void 0 ? void 0 : type.EXTERNAL)) {
       var _dataToIntegrate$valu6;
       if ((dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu6 = dataToIntegrate.value) === null || _dataToIntegrate$valu6 === void 0 ? void 0 : _dataToIntegrate$valu6.url) == "") {
@@ -291,6 +295,7 @@ const MyApp = () => {
       data,
       values
     } = _ref2;
+    console.log('general input values');
     if ((values === null || values === void 0 ? void 0 : values.dexname) == "" || (values === null || values === void 0 ? void 0 : values.dexname) == null || (values === null || values === void 0 ? void 0 : values.dexname) == undefined || (values === null || values === void 0 ? void 0 : values.url) == "" || (values === null || values === void 0 ? void 0 : values.url) == null || (values === null || values === void 0 ? void 0 : values.url) == undefined) {} else {
       var _dataToUpdate$value, _dataToUpdate$value2;
       if ((dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value = dataToUpdate.value) === null || _dataToUpdate$value === void 0 ? void 0 : _dataToUpdate$value.source) == undefined || (dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value2 = dataToUpdate.value) === null || _dataToUpdate$value2 === void 0 ? void 0 : _dataToUpdate$value2.source) == null) {
@@ -354,6 +359,7 @@ const MyApp = () => {
     setDataToDelete(data);
   };
   const integrateEntry = data => {
+    console.log('intergrate entery');
     setDataToIntegrate(data);
   };
   const deleteDataEntry = data => {
@@ -369,6 +375,7 @@ const MyApp = () => {
           setSuccessMessage(true);
           setHidden(false);
           setMessage("Data saved in the datastore successfully.");
+          setKey(Math.random());
         }
       }).catch(e => {
         setHidden(false);
@@ -381,6 +388,7 @@ const MyApp = () => {
       padding: "20px"
     }
   }, path === "Home" ? /*#__PURE__*/React.createElement(HomePage, {
+    key: ke,
     data: data,
     setPath: setPath,
     setID: setID,
