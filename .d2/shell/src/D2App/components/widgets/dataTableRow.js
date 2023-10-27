@@ -1,12 +1,15 @@
 import { Box, Button, ButtonStrip, DataTableCell, DataTableRow, Modal, ModalActions, ModalContent } from "@dhis2/ui";
 import React, { useEffect, useState } from "react";
+import ExpandContent from "./expandContent";
 function Datatablerow(props) {
+  var _filterOrgUnits, _filterOrgUnits2, _filterOrgUnits3, _dx, _dx2, _visualizations, _visualizations2, _visualisations, _filterOrgUnits4, _visualizations3, _dx3;
   const request = props === null || props === void 0 ? void 0 : props.requests;
   const indicators = props === null || props === void 0 ? void 0 : props.indicators;
   const dataElements = props === null || props === void 0 ? void 0 : props.dataElements;
   const orgUnits = props === null || props === void 0 ? void 0 : props.orgUnits;
   const visualisations = props === null || props === void 0 ? void 0 : props.visualisations;
   const [open, setOpen] = useState(false);
+  const [expndd, setExpanded] = useState(false);
   const filterOrgUnits = () => {
     var _request$ou;
     let arr = [];
@@ -117,13 +120,24 @@ function Datatablerow(props) {
       setOpen(false);
       props === null || props === void 0 ? void 0 : props.deleteRequest(request);
     }
-  }, "Yes")))), /*#__PURE__*/React.createElement(DataTableRow, null, /*#__PURE__*/React.createElement(DataTableCell, null, /*#__PURE__*/React.createElement("span", {
+  }, "Yes")))), /*#__PURE__*/React.createElement(DataTableRow, {
+    expanded: expndd,
+    expandableContent: /*#__PURE__*/React.createElement(ExpandContent, {
+      style: props === null || props === void 0 ? void 0 : props.styles,
+      orgUnits: orgUnits !== undefined && ((_filterOrgUnits = filterOrgUnits()) === null || _filterOrgUnits === void 0 ? void 0 : _filterOrgUnits.length) > 4 && ((_filterOrgUnits2 = filterOrgUnits()) === null || _filterOrgUnits2 === void 0 ? void 0 : _filterOrgUnits2.splice(4, ((_filterOrgUnits3 = filterOrgUnits()) === null || _filterOrgUnits3 === void 0 ? void 0 : _filterOrgUnits3.length) - 4)),
+      dx: dataElements !== undefined && ((_dx = dx()) === null || _dx === void 0 ? void 0 : _dx.length) > 4 && ((_dx2 = dx()) === null || _dx2 === void 0 ? void 0 : _dx2.splice(4, dx().length - 4)),
+      vis: visualisations !== undefined && ((_visualizations = visualizations()) === null || _visualizations === void 0 ? void 0 : _visualizations.length) > 4 && ((_visualizations2 = visualizations()) === null || _visualizations2 === void 0 ? void 0 : _visualizations2.splice(4, ((_visualisations = visualisations()) === null || _visualisations === void 0 ? void 0 : _visualisations.length) - 4))
+    }),
+    onExpandToggle: payload => {
+      setExpanded(!expndd);
+    }
+  }, /*#__PURE__*/React.createElement(DataTableCell, null, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: "sans-serif",
       fontWeight: "normal",
       fontSize: "15px"
     }
-  }, request === null || request === void 0 ? void 0 : request.name)), /*#__PURE__*/React.createElement(DataTableCell, null, orgUnits !== undefined && filterOrgUnits()), /*#__PURE__*/React.createElement(DataTableCell, null, visualisations !== undefined && visualizations()), /*#__PURE__*/React.createElement(DataTableCell, null, dataElements !== undefined && indicators !== undefined && dx()), /*#__PURE__*/React.createElement(DataTableCell, null, periods()), /*#__PURE__*/React.createElement(DataTableCell, null, /*#__PURE__*/React.createElement(Button, {
+  }, request === null || request === void 0 ? void 0 : request.name)), /*#__PURE__*/React.createElement(DataTableCell, null, orgUnits !== undefined && ((_filterOrgUnits4 = filterOrgUnits()) === null || _filterOrgUnits4 === void 0 ? void 0 : _filterOrgUnits4.splice(0, 4))), /*#__PURE__*/React.createElement(DataTableCell, null, visualisations !== undefined && ((_visualizations3 = visualizations()) === null || _visualizations3 === void 0 ? void 0 : _visualizations3.splice(0, 4))), /*#__PURE__*/React.createElement(DataTableCell, null, dataElements !== undefined && indicators !== undefined && ((_dx3 = dx()) === null || _dx3 === void 0 ? void 0 : _dx3.splice(0, 4))), /*#__PURE__*/React.createElement(DataTableCell, null, periods()), /*#__PURE__*/React.createElement(DataTableCell, null, /*#__PURE__*/React.createElement(Button, {
     destructive: true,
     onClick: () => setOpen(true)
   }, "Delete Request"))));
