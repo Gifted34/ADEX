@@ -86,3 +86,6 @@
 .newRequestBtn:hover{
     background: #318734;
 }
+.visibilityHidden {
+    visibility: hidden;
+}
