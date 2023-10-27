@@ -15,12 +15,14 @@ function RequestdataTable(props) {
   const dataElements = props?.dataElements;
   const visualisations = props?.visualisations;
   const request = dataExchange?.source?.requests;
+  
 
   return (
     <div style={{ padding: "30px" }}>
       <DataTable>
         <TableHead>
           <DataTableRow>
+            <DataTableColumnHeader></DataTableColumnHeader>
             <DataTableColumnHeader>Name</DataTableColumnHeader>
             <DataTableColumnHeader>Organisation units</DataTableColumnHeader>
             <DataTableColumnHeader>Visualisations</DataTableColumnHeader>
@@ -38,6 +40,8 @@ function RequestdataTable(props) {
                 <Datatablerow
                   key={key}
                   requests={req}
+                  styles={props?.styles}
+                  index={key}
                   dataExchange={dataExchange}
                   deleteRequest={props?.deleteRequest}
                   indicators={indicators}
