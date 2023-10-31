@@ -129,6 +129,7 @@ export default function ViewDataStoreById(props) {
   const engine = useDataEngine();
 
   const fetch = async () => {
+    setLoading(true)
     const res = await engine.query(query);
     setExchange(res?.dataStore);
     console.log(res)
@@ -136,6 +137,7 @@ export default function ViewDataStoreById(props) {
     setIndicators(res?.indicators?.indicators);
     setDataElements(res?.dataElements?.dataElements);
     setOrgUnits(res?.organisationUnits?.organisationUnits);
+    setLoading(false)
   };
   useEffect(() => {
     fetch();

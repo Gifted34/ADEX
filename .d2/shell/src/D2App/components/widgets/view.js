@@ -108,6 +108,7 @@ export default function ViewDataStoreById(props) {
   const engine = useDataEngine();
   const fetch = async () => {
     var _res$visualizations, _res$indicators, _res$dataElements, _res$organisationUnit;
+    setLoading(true);
     const res = await engine.query(query);
     setExchange(res === null || res === void 0 ? void 0 : res.dataStore);
     console.log(res);
@@ -115,6 +116,7 @@ export default function ViewDataStoreById(props) {
     setIndicators(res === null || res === void 0 ? void 0 : (_res$indicators = res.indicators) === null || _res$indicators === void 0 ? void 0 : _res$indicators.indicators);
     setDataElements(res === null || res === void 0 ? void 0 : (_res$dataElements = res.dataElements) === null || _res$dataElements === void 0 ? void 0 : _res$dataElements.dataElements);
     setOrgUnits(res === null || res === void 0 ? void 0 : (_res$organisationUnit = res.organisationUnits) === null || _res$organisationUnit === void 0 ? void 0 : _res$organisationUnit.organisationUnits);
+    setLoading(false);
   };
   useEffect(() => {
     fetch();
