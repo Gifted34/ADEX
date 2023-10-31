@@ -229,7 +229,7 @@ export default function AddNewRequests(props) {
               duration={2000}
               onHidden={() => {
                 setHidden(true);
-                setTimeout(() => props?.setPath("Home"), 2000);
+                setTimeout(() => props?.setPath("Home"), 1000);
               }}
             >
               Innitialisation saved succesifuly
