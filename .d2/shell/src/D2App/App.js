@@ -142,7 +142,6 @@ const MyApp = () => {
   const mutation = payload => {
     // console.log("mutation done");
     engine.mutate(payload).then(res => {
-      console.log(res);
       if (res.httpStatusCode == 201 || res.httpStatusCode == 200) {
         engine.mutate({
           resource: `dataStore/DEX_initializer_values/${dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : dataToIntegrate.key}`,
@@ -232,9 +231,8 @@ const MyApp = () => {
                 //   console.log(existingDEX);
                 //   console.log("adex 1");
                 // }
-                if ((existingDEX === null || existingDEX === void 0 ? void 0 : existingDEX.length) == 1) {
+                if ((existingDEX === null || existingDEX === void 0 ? void 0 : existingDEX.length) === 1) {
                   var _existingDEX$, _dataToIntegrate$valu15, _dataToIntegrate$valu16, _dataToIntegrate$valu17;
-                  console.log(aggregateDataExchanges);
                   let payload = {
                     resource: `aggregateDataExchanges/${(_existingDEX$ = existingDEX[0]) === null || _existingDEX$ === void 0 ? void 0 : _existingDEX$.id}`,
                     type: "update",
@@ -307,8 +305,6 @@ const MyApp = () => {
                 setMessage("Token is missing");
                 setHidden(false);
               } else {
-                console.log(existingDEX);
-                console.log("adex 2");
                 if ((existingDEX === null || existingDEX === void 0 ? void 0 : existingDEX.length) == 1) {
                   var _existingDEX$2, _dataToIntegrate$valu27, _dataToIntegrate$valu28, _dataToIntegrate$valu29;
                   let payload = {
@@ -388,8 +384,6 @@ const MyApp = () => {
           }
         };
         mutation(payload);
-        console.log(existingDEX);
-        console.log("adex 3");
       } else {
         var _dataToIntegrate$valu38, _dataToIntegrate$valu39, _dataToIntegrate$valu40, _dataToIntegrate$valu41, _dataToIntegrate$valu42;
         let payload = {

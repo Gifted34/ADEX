@@ -147,7 +147,7 @@ function Datatablerow(props) {
   }, /*#__PURE__*/React.createElement(Button, {
     primary: true,
     onClick: () => update()
-  }, "Update"), /*#__PURE__*/React.createElement(Button, {
+  }, "Edit"), /*#__PURE__*/React.createElement(Button, {
     destructive: true,
     onClick: () => setOpen(true)
   }, "Delete")))));
