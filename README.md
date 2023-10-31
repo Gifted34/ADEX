@@ -2,9 +2,9 @@
 
 ### Introduction
 
-The Data Exchange Initializer is a powerful software tool designed to facilitate the seamless data exchange initialization of data elements and indicators from one DHIS2 (District Health Information System 2) instance to another. It simplifies the process by extracting data values using codes and inializing the process in the host DHIS2 instance securely to the target DHIS2 instance. Based on the given period, organisation unit data values are prepared and made ready for initialization.
+The Data Exchange Initializer is a powerful software tool designed to facilitate the seamless data exchange initialization of data elements, visualizations and indicators from one DHIS2 (District Health Information System 2) instance to another. It simplifies the process by extracting data values using codes and inializing the process in the host DHIS2 instance securely to the target DHIS2 instance. Based on the given period, organisation unit data values are prepared and made ready for initialization.
 
-This software application utilizes both the d2 library and the DHIS2 UI library to enhance data exchange intialization capabilities within the DHIS2 platform. Designed as a custom app that runs inside DHIS2, it offers a seamless and efficient solution for initializing data elements and indicators data values.
+This software application utilizes both the d2 library and the DHIS2 UI library to enhance data exchange intialization capabilities within the DHIS2 platform. Designed as a custom app that runs inside DHIS2, it offers a seamless and efficient solution for initializing data elements, visualizations and indicators data values.
 
 # Request for the Proposed solution
 
@@ -65,18 +65,18 @@ These applications are accessed in the same DHIS2 instance.
 1. **d2 Library Integration**: The Data Exchange Initializer leverages the powerful d2 library within the DHIS2 platform. This integration enhances the software's compatibility with DHIS2, enabling smooth data exchange and synchronization.
 
 2. **DHIS2 UI Library Support**: The Data Exchange Initializer also utilizes the DHIS2 UI library, which provides a rich set of user interface components and design patterns. This integration enhances the custom app's user experience, ensuring an intuitive and visually appealing interface
-3. **Code-based Data Element and Indicator Mapping**: The Data Exchange Initializer uses unique codes to identify data elements and indicators in the source DHIS2 instance. These codes enable efficient mapping with their corresponding counterparts in the target DHIS2 instance.
+3. **Code-based Data Element, Visualization and Indicator Mapping**: The Data Exchange Initializer uses unique codes to identify data elements, visualizations and indicators in the source DHIS2 instance. These codes enable efficient mapping with their corresponding counterparts in the target DHIS2 instance.
 
-4. **Flexible Data Selection**: Users can easily select the specific data elements and indicators they want to transfer. The software provides a user-friendly interface to browse and choose the relevant organizational units, periods, and data values.
+4. **Flexible Data Selection**: Users can easily select the specific data elements, visualizations and indicators they want to transfer. The software provides a user-friendly interface to browse and choose the relevant organizational units, periods, and data values.
 
-5. **Data Exchange Initialization**: Once the data elements and indicators are selected, the Data Exchange Initializer is set to override the process of using POSTMAN for the data initialization utilizing secure APIs (Application Programming Interface) to establish a connection and initialize the data seamlessly.
+5. **Data Exchange Initialization**: Once the data elements, visualizations and indicators are selected, the Data Exchange Initializer is set to override the process of using POSTMAN for the data initialization utilizing secure APIs (Application Programming Interface) to establish a connection and initialize the data seamlessly.
 
 6. **Data Validation and Error Handling**: The software performs comprehensive data validation to ensure the accuracy and integrity of the initialized data. It identifies any errors or inconsistencies and provides detailed error notification for easy troubleshooting and resolution.
 7. **User-friendly Interface**: The Data Exchange Initializer offers an intuitive and user-friendly interface, making it easy for both technical and non-technical users to navigate and perform data exchange initialization phase.
 
 ### Fetching Metadata
 
-Inorder to do the initialisation there is a need for one to specify the data elements or indicator,and the organisation unit. These parameters are fetched in the source DHIS2 instance using the DHIS2 cli useDataQuery hooks with a query specified below
+Inorder to do the initialisation there is a need for one to specify the data elements,visualizations or indicator,and the organisation unit. These parameters are fetched in the source DHIS2 instance using the DHIS2 cli useDataQuery hooks with a query specified below
 
             const query = {
                     organisationUnits: {
