@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DataQuery, useDataEngine, useDataQuery } from "@dhis2/app-runtime";
 import classes from "./App.module.css";
 import HeaderComponent from "./components/widgets/headerComponent";
-import { AlertBar, Box, Button, Center, CircularLoader, Divider, I, Layer } from "@dhis2/ui";
+import { AlertBar, Box, Center, CircularLoader, Layer } from "@dhis2/ui";
 import HomePage from "./components/widgets/homePage";
 import NewDataInitialization from "./components/widgets/newDataInitialization";
 import NoPageFound from "./components/widgets/noPageFound";
@@ -109,7 +109,7 @@ const MyApp = () => {
 
   // save to datastore
   const saveGeneralInputValues = () => {
-    console.log('save input values');
+    console.log("save input values");
     if (type == null || type == undefined || type == "" || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname) == null || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname) == undefined || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname) == "" || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url) == null || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url) == undefined || (formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url) == "") {
       setSuccessMessage(true);
       setHidden(false);
