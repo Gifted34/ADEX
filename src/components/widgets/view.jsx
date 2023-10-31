@@ -187,8 +187,8 @@ export default function ViewDataStoreById(props) {
           </Center>
         </Layer>
       )}
-      <ButtonStrip end>
-        <Button primary onClick={() => props?.setPath("Home")}>
+      <ButtonStrip start>
+        <Button secondary onClick={() => props?.setPath("Home")}>
           Back
         </Button>
       </ButtonStrip>
