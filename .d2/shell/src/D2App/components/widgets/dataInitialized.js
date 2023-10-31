@@ -42,6 +42,7 @@ export default function DataInitialized(props) {
       className: props === null || props === void 0 ? void 0 : (_props$styles = props.styles) === null || _props$styles === void 0 ? void 0 : _props$styles.newRequestBtn,
       onClick: () => {
         props === null || props === void 0 ? void 0 : props.setPath("new request");
+        props === null || props === void 0 ? void 0 : props.setRequest();
         props.setID(aggregateDataExchange.key);
       }
     }, "New request"), /*#__PURE__*/React.createElement("button", {

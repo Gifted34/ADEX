@@ -16,7 +16,11 @@ function RequestdataTable(props) {
   }, /*#__PURE__*/React.createElement(DataTable, null, /*#__PURE__*/React.createElement(TableHead, null, /*#__PURE__*/React.createElement(DataTableRow, null, /*#__PURE__*/React.createElement(DataTableColumnHeader, null), /*#__PURE__*/React.createElement(DataTableColumnHeader, null, "Name"), /*#__PURE__*/React.createElement(DataTableColumnHeader, null, "Organisation units"), /*#__PURE__*/React.createElement(DataTableColumnHeader, null, "Visualisations"), /*#__PURE__*/React.createElement(DataTableColumnHeader, null, "Data elements / indicators"), /*#__PURE__*/React.createElement(DataTableColumnHeader, null, "Periods"), /*#__PURE__*/React.createElement(DataTableColumnHeader, null, "Actions"))), /*#__PURE__*/React.createElement(TableBody, null, request !== undefined && (request === null || request === void 0 ? void 0 : request.map((req, key) => {
     return /*#__PURE__*/React.createElement(Datatablerow, {
       key: key,
+      id: props === null || props === void 0 ? void 0 : props.id,
       requests: req,
+      setID: props === null || props === void 0 ? void 0 : props.setID,
+      setRequest: props === null || props === void 0 ? void 0 : props.setRequest,
+      setPath: props === null || props === void 0 ? void 0 : props.setPath,
       styles: props === null || props === void 0 ? void 0 : props.styles,
       index: key,
       dataExchange: dataExchange,

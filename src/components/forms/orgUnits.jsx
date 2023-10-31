@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import { OrganisationUnitTree, Field } from "@dhis2/ui";
 
 export default function OrgUnits(props) {
@@ -10,6 +10,19 @@ export default function OrgUnits(props) {
     });
     return orgsList;
   };
+  const filter = () =>{
+    let arr = selectedOrgUnit
+    props?.orgUnits.map(org =>{
+        if(props?.selected?.includes(org.code)){
+          arr.push(org.path)
+        }
+    })
+    setSelectedOrgUnit(_.uniq(arr))
+  }
+  useEffect(()=>{
+    filter()
+    
+  },[])
   return (
     <div className={props?.styles?.orgHeight}>
       <Field label="Organization units">
@@ -18,7 +31,6 @@ export default function OrgUnits(props) {
           onChange={(e) => {
             props?.setOrg(e.selected);
             setSelectedOrgUnit(e.selected);
-            console.log(e.selected);
           }}
           roots={orgUnitLevels(props?.orgUnits)}
           hideMemberCount={false}

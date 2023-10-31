@@ -39,7 +39,11 @@ function RequestdataTable(props) {
               return (
                 <Datatablerow
                   key={key}
+                  id={props?.id}
                   requests={req}
+                  setID={props?.setID}
+                  setRequest={props?.setRequest}              
+                  setPath={props?.setPath}
                   styles={props?.styles}
                   index={key}
                   dataExchange={dataExchange}

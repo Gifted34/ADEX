@@ -99,6 +99,7 @@ const MyApp = () => {
   const [message, setMessage] = useState("");
   const [isSuccessMessage, setSuccessMessage] = useState(false);
   const [authType, setAuthType] = useState("");
+  const [request, setRequest] = useState();
   const {
     loading,
     error,
@@ -435,6 +436,7 @@ const MyApp = () => {
     data: data,
     setPath: setPath,
     setID: setID,
+    setRequest: setRequest,
     styles: classes,
     open: open,
     setOpenUpdate: setOpenUpdate,
@@ -450,11 +452,14 @@ const MyApp = () => {
     // initializeIntegration={initializeIntegration}
   }) : /*#__PURE__*/React.createElement(React.Fragment, null, path === "View" ? /*#__PURE__*/React.createElement(ViewDataStoreById, {
     id: id,
+    setID: setID,
+    setRequest: setRequest,
     setPath: setPath,
     data: data,
     styles: classes
   }) : /*#__PURE__*/React.createElement(AddNewRequests, {
     id: id,
+    request: request,
     setPath: setPath,
     data: data,
     style: classes

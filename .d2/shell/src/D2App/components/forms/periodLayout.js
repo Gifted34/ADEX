@@ -25,7 +25,7 @@ const relativePeriodtypes = [{
 const periIod = new Period();
 export default function PeriodsWidget(props) {
   var _props$style;
-  const [selectedDimensions, setselectedDimensions] = useState([]);
+  const [selectedDimensions, setselectedDimensions] = useState(props === null || props === void 0 ? void 0 : props.selected);
   const [filterTerm, setFilter] = useState('');
   const [year, setValue] = useState(new Date().getFullYear());
   const [periodType, setPeriodType] = useState("Months");
@@ -51,9 +51,6 @@ export default function PeriodsWidget(props) {
       }
     }
   };
-  const useEffect = (() => {
-    console.log(props);
-  }, []);
   return /*#__PURE__*/React.createElement("div", {
     className: props === null || props === void 0 ? void 0 : (_props$style = props.style) === null || _props$style === void 0 ? void 0 : _props$style.marginLeft
   }, /*#__PURE__*/React.createElement(Field, {

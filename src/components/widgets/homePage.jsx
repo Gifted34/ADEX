@@ -41,6 +41,7 @@ export default function HomePage(props) {
         <DataInitialized
           setPath={props?.setPath}
           setID={props?.setID}
+          setRequest={props?.setRequest}
           setOpenDelete={props?.setOpenDelete}
           openDelete={props?.openDelete}
           setOpenUpdate={props?.setOpenUpdate}

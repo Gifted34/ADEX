@@ -20,6 +20,12 @@ function Datatablerow(props) {
   const [open, setOpen] = useState(false);
   const [expndd,setExpanded] = useState(false)
 
+  const update = () =>{
+    props?.setID(props?.id)
+    props?.setRequest(request)
+    props?.setPath('new request')
+  }
+
   const filterOrgUnits = () => {
     let arr = [];
     request?.ou?.map((ou) => {
@@ -168,9 +174,12 @@ function Datatablerow(props) {
         </DataTableCell>
         <DataTableCell>{periods()}</DataTableCell>
         <DataTableCell>
+          <div className={props?.styles?.actionBtns}>
+          <Button primary  onClick={()=>update()} >Update</Button> 
           <Button destructive onClick={() => setOpen(true)}>
-            Delete Request
+            Delete 
           </Button>
+          </div>
         </DataTableCell>
       </DataTableRow>
     </>

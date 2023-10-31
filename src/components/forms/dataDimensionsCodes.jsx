@@ -3,14 +3,11 @@ import { Button, Field, Transfer } from '@dhis2/ui'
 import Dxheader from '../widgets/dxHeader'
 
 export default function DataDimensionsCodes(props) {
-    const [selectedDimensions, setselectedDimensions] = useState([])
+    const [selectedDimensions, setselectedDimensions] = useState(props?.selected)
     const [dxType, setDx] = useState()
     const [filterText, setFilterText] = useState()
     const [filterTerm, setFilter] = useState()
 
-    useEffect(()=>{
-        
-    },[])
     //get selected items
     const getDataDimensions = (e) => {
         setselectedDimensions(

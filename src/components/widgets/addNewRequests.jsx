@@ -25,17 +25,17 @@ export default function AddNewRequests(props) {
   const indicators = props?.data?.indicators?.indicators;
   const path = location.pathname.split("/").slice(-1)[0];
   const dataStorePath = `dataStore/DEX_initializer_values/${props?.id}`;
-  const [selectVisualisations, setVisualisation] = useState();
-  const [dx, setDx] = useState();
-  const [name, setName] = useState();
-  const [periods, setPeriods] = useState();
-  const [orgS, setOrg] = useState();
+  const [selectVisualisations, setVisualisation] = useState(props?.request?.visualization);
+  const [dx, setDx] = useState(props?.request?.dx);
+  const [name, setName] = useState(props?.request?.name);
+  const [periods, setPeriods] = useState(props?.request?.pe);
+  const [orgS, setOrg] = useState(props?.request?.ou);
   const [hide, setHidden] = useState(true);
   const [errorHidden, setErrorHidden] = useState(true);
   const [errorMessage, setMessage] = useState();
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
-  const [Dx, setdx] = useState();
+  const [Dx, setdx] = useState(props?.request?.dx);
 
   const setData = (selected) => {
     setdx(selected);
@@ -141,7 +141,9 @@ export default function AddNewRequests(props) {
         };
         send(dStore);
       } else {
-        let arr = dataStore?.source?.requests;
+        let arr = dataStore?.source?.requests?.filter(req => req.name !== name)
+        console.log(arr)
+        console.log(dataStore?.source?.requests)
         arr.push({
           name: name,
           visualization: selectVisualisations,
@@ -164,6 +166,7 @@ export default function AddNewRequests(props) {
 
   useEffect(() => {
     fetchData();
+    console.log(props)
   }, []);
 
   return (
@@ -177,7 +180,7 @@ export default function AddNewRequests(props) {
       )}
       <Box className={props?.style?.display}>
         <Box className={props?.style?.padding}>
-          <OrgUnits orgUnits={orgUnits} setOrg={setOrgUnits} />
+          <OrgUnits orgUnits={orgUnits} setOrg={setOrgUnits} selected={props?.request?.ou} />
         </Box>
         <div>
           <Box className={`${props?.style?.width} ${props?.style?.padding}`}>
@@ -187,16 +190,18 @@ export default function AddNewRequests(props) {
                   setName(e.value);
                 }}
                 placeholder="Enter request name"
+                value={name}
               />
             </Field>
           </Box>
           <div className={props?.style?.display}>
             <Box className={props?.style?.padding}>
-              <PeriodsWidget setPeriods={setPeriods} />
+              <PeriodsWidget setPeriods={setPeriods} selected={props?.request?.pe} />
             </Box>
             <Box className={props?.style?.padding}>
               <DataDimensionsCodes
                 setData={setData}
+                selected={[...props?.request?.dx,...props?.request?.visualization]}
                 dataElements={dataElements}
                 indicators={indicators}
                 visualizations={Visualizations}

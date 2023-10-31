@@ -38,7 +38,7 @@ const relativePeriodtypes = [
 ];
 const periIod = new Period()
 export default function PeriodsWidget(props) {
-  const [selectedDimensions, setselectedDimensions] = useState([]);
+  const [selectedDimensions, setselectedDimensions] = useState(props?.selected);
   const [filterTerm,setFilter] = useState('')
   const [year, setValue] = useState(new Date().getFullYear());
   const [periodType, setPeriodType] = useState("Months");
@@ -68,10 +68,7 @@ export default function PeriodsWidget(props) {
         return opt.filter((object) => object.label.includes(year))
       }
       }
-    }
-    const useEffect =(()=>{
-        console.log(props)
-    },[])
+  }
    return (
     <div className={props?.style?.marginLeft}>
       <Field label= "Periods">

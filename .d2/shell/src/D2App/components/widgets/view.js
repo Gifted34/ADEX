@@ -110,6 +110,7 @@ export default function ViewDataStoreById(props) {
     var _res$visualizations, _res$indicators, _res$dataElements, _res$organisationUnit;
     const res = await engine.query(query);
     setExchange(res === null || res === void 0 ? void 0 : res.dataStore);
+    console.log(res);
     setVis(res === null || res === void 0 ? void 0 : (_res$visualizations = res.visualizations) === null || _res$visualizations === void 0 ? void 0 : _res$visualizations.visualizations);
     setIndicators(res === null || res === void 0 ? void 0 : (_res$indicators = res.indicators) === null || _res$indicators === void 0 ? void 0 : _res$indicators.indicators);
     setDataElements(res === null || res === void 0 ? void 0 : (_res$dataElements = res.dataElements) === null || _res$dataElements === void 0 ? void 0 : _res$dataElements.dataElements);
@@ -176,9 +177,13 @@ export default function ViewDataStoreById(props) {
       fontSize: "20px"
     }
   }, " ", "Requests", " "), /*#__PURE__*/React.createElement(RequestdataTable, {
+    id: props === null || props === void 0 ? void 0 : props.id,
     styles: props === null || props === void 0 ? void 0 : props.styles,
+    setID: props === null || props === void 0 ? void 0 : props.setID,
+    setRequest: props === null || props === void 0 ? void 0 : props.setRequest,
     key: dataExchange === null || dataExchange === void 0 ? void 0 : dataExchange.url,
     deleteRequest: deleteRequest,
+    setPath: props === null || props === void 0 ? void 0 : props.setPath,
     orgUnits: orgUnits,
     indicators: indicators,
     dataExchange: dataExchange,

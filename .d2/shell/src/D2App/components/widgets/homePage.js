@@ -36,6 +36,7 @@ export default function HomePage(props) {
   }, /*#__PURE__*/React.createElement(DataInitialized, {
     setPath: props === null || props === void 0 ? void 0 : props.setPath,
     setID: props === null || props === void 0 ? void 0 : props.setID,
+    setRequest: props === null || props === void 0 ? void 0 : props.setRequest,
     setOpenDelete: props === null || props === void 0 ? void 0 : props.setOpenDelete,
     openDelete: props === null || props === void 0 ? void 0 : props.openDelete,
     setOpenUpdate: props === null || props === void 0 ? void 0 : props.setOpenUpdate,

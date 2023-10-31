@@ -2,7 +2,7 @@ import { Box, Button, ButtonStrip, DataTableCell, DataTableRow, Modal, ModalActi
 import React, { useEffect, useState } from "react";
 import ExpandContent from "./expandContent";
 function Datatablerow(props) {
-  var _filterOrgUnits, _filterOrgUnits2, _filterOrgUnits3, _dx, _dx2, _visualizations, _visualizations2, _visualisations, _filterOrgUnits4, _visualizations3, _dx3;
+  var _filterOrgUnits, _filterOrgUnits2, _filterOrgUnits3, _dx, _dx2, _visualizations, _visualizations2, _visualisations, _filterOrgUnits4, _visualizations3, _dx3, _props$styles;
   const request = props === null || props === void 0 ? void 0 : props.requests;
   const indicators = props === null || props === void 0 ? void 0 : props.indicators;
   const dataElements = props === null || props === void 0 ? void 0 : props.dataElements;
@@ -10,6 +10,11 @@ function Datatablerow(props) {
   const visualisations = props === null || props === void 0 ? void 0 : props.visualisations;
   const [open, setOpen] = useState(false);
   const [expndd, setExpanded] = useState(false);
+  const update = () => {
+    props === null || props === void 0 ? void 0 : props.setID(props === null || props === void 0 ? void 0 : props.id);
+    props === null || props === void 0 ? void 0 : props.setRequest(request);
+    props === null || props === void 0 ? void 0 : props.setPath('new request');
+  };
   const filterOrgUnits = () => {
     var _request$ou;
     let arr = [];
@@ -137,9 +142,14 @@ function Datatablerow(props) {
       fontWeight: "normal",
       fontSize: "15px"
     }
-  }, request === null || request === void 0 ? void 0 : request.name)), /*#__PURE__*/React.createElement(DataTableCell, null, orgUnits !== undefined && ((_filterOrgUnits4 = filterOrgUnits()) === null || _filterOrgUnits4 === void 0 ? void 0 : _filterOrgUnits4.splice(0, 4))), /*#__PURE__*/React.createElement(DataTableCell, null, visualisations !== undefined && ((_visualizations3 = visualizations()) === null || _visualizations3 === void 0 ? void 0 : _visualizations3.splice(0, 4))), /*#__PURE__*/React.createElement(DataTableCell, null, dataElements !== undefined && indicators !== undefined && ((_dx3 = dx()) === null || _dx3 === void 0 ? void 0 : _dx3.splice(0, 4))), /*#__PURE__*/React.createElement(DataTableCell, null, periods()), /*#__PURE__*/React.createElement(DataTableCell, null, /*#__PURE__*/React.createElement(Button, {
+  }, request === null || request === void 0 ? void 0 : request.name)), /*#__PURE__*/React.createElement(DataTableCell, null, orgUnits !== undefined && ((_filterOrgUnits4 = filterOrgUnits()) === null || _filterOrgUnits4 === void 0 ? void 0 : _filterOrgUnits4.splice(0, 4))), /*#__PURE__*/React.createElement(DataTableCell, null, visualisations !== undefined && ((_visualizations3 = visualizations()) === null || _visualizations3 === void 0 ? void 0 : _visualizations3.splice(0, 4))), /*#__PURE__*/React.createElement(DataTableCell, null, dataElements !== undefined && indicators !== undefined && ((_dx3 = dx()) === null || _dx3 === void 0 ? void 0 : _dx3.splice(0, 4))), /*#__PURE__*/React.createElement(DataTableCell, null, periods()), /*#__PURE__*/React.createElement(DataTableCell, null, /*#__PURE__*/React.createElement("div", {
+    className: props === null || props === void 0 ? void 0 : (_props$styles = props.styles) === null || _props$styles === void 0 ? void 0 : _props$styles.actionBtns
+  }, /*#__PURE__*/React.createElement(Button, {
+    primary: true,
+    onClick: () => update()
+  }, "Update"), /*#__PURE__*/React.createElement(Button, {
     destructive: true,
     onClick: () => setOpen(true)
-  }, "Delete Request"))));
+  }, "Delete")))));
 }
 export default Datatablerow;

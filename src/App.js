@@ -113,7 +113,7 @@ const MyApp = () => {
 
   const [isSuccessMessage, setSuccessMessage] = useState(false);
   const [authType, setAuthType] = useState("");
-
+  const [request,setRequest] = useState()
   const { loading, error, data, refetch } = useDataQuery(query);
 
   // save to datastore
@@ -488,6 +488,7 @@ const MyApp = () => {
               data={data}
               setPath={setPath}
               setID={setID}
+              setRequest={setRequest}
               styles={classes}
               open={open}
               setOpenUpdate={setOpenUpdate}
@@ -507,6 +508,8 @@ const MyApp = () => {
               {path === "View" ? (
                 <ViewDataStoreById
                   id={id}
+                  setID={setID}
+                  setRequest={setRequest}
                   setPath={setPath}
                   data={data}
                   styles={classes}
@@ -514,6 +517,7 @@ const MyApp = () => {
               ) : (
                 <AddNewRequests
                   id={id}
+                  request={request}
                   setPath={setPath}
                   data={data}
                   style={classes}

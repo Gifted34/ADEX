@@ -131,6 +131,7 @@ export default function ViewDataStoreById(props) {
   const fetch = async () => {
     const res = await engine.query(query);
     setExchange(res?.dataStore);
+    console.log(res)
     setVis(res?.visualizations?.visualizations);
     setIndicators(res?.indicators?.indicators);
     setDataElements(res?.dataElements?.dataElements);
@@ -240,9 +241,13 @@ export default function ViewDataStoreById(props) {
               Requests{" "}
             </span>
             <RequestdataTable
+              id={props?.id}
               styles={props?.styles}
+              setID={props?.setID}
+              setRequest={props?.setRequest}
               key={dataExchange?.url}
               deleteRequest={deleteRequest}
+              setPath={props?.setPath}
               orgUnits={orgUnits}
               indicators={indicators}
               dataExchange={dataExchange}

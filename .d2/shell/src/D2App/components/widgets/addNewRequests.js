@@ -6,7 +6,7 @@ import DataDimensionsCodes from "../forms/dataDimensionsCodes";
 import OrgUnits from "../forms/orgUnits";
 import { useDataEngine, useDataMutation } from "@dhis2/app-runtime";
 export default function AddNewRequests(props) {
-  var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$style, _props$style2, _props$style3, _props$style4, _props$style5, _props$style6, _props$style7, _props$style8, _props$style9;
+  var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$request, _props$request2, _props$request3, _props$request4, _props$request5, _props$request6, _props$style, _props$style2, _props$style3, _props$request7, _props$style4, _props$style5, _props$style6, _props$style7, _props$request8, _props$style8, _props$request9, _props$request10, _props$style9;
   const engine = useDataEngine();
   const orgUnits = props === null || props === void 0 ? void 0 : (_props$data = props.data) === null || _props$data === void 0 ? void 0 : (_props$data$organisat = _props$data.organisationUnits) === null || _props$data$organisat === void 0 ? void 0 : _props$data$organisat.organisationUnits;
   const Visualizations = props === null || props === void 0 ? void 0 : (_props$data2 = props.data) === null || _props$data2 === void 0 ? void 0 : (_props$data2$visualiz = _props$data2.visualizations) === null || _props$data2$visualiz === void 0 ? void 0 : _props$data2$visualiz.visualizations;
@@ -14,17 +14,17 @@ export default function AddNewRequests(props) {
   const indicators = props === null || props === void 0 ? void 0 : (_props$data4 = props.data) === null || _props$data4 === void 0 ? void 0 : (_props$data4$indicato = _props$data4.indicators) === null || _props$data4$indicato === void 0 ? void 0 : _props$data4$indicato.indicators;
   const path = location.pathname.split("/").slice(-1)[0];
   const dataStorePath = `dataStore/DEX_initializer_values/${props === null || props === void 0 ? void 0 : props.id}`;
-  const [selectVisualisations, setVisualisation] = useState();
-  const [dx, setDx] = useState();
-  const [name, setName] = useState();
-  const [periods, setPeriods] = useState();
-  const [orgS, setOrg] = useState();
+  const [selectVisualisations, setVisualisation] = useState(props === null || props === void 0 ? void 0 : (_props$request = props.request) === null || _props$request === void 0 ? void 0 : _props$request.visualization);
+  const [dx, setDx] = useState(props === null || props === void 0 ? void 0 : (_props$request2 = props.request) === null || _props$request2 === void 0 ? void 0 : _props$request2.dx);
+  const [name, setName] = useState(props === null || props === void 0 ? void 0 : (_props$request3 = props.request) === null || _props$request3 === void 0 ? void 0 : _props$request3.name);
+  const [periods, setPeriods] = useState(props === null || props === void 0 ? void 0 : (_props$request4 = props.request) === null || _props$request4 === void 0 ? void 0 : _props$request4.pe);
+  const [orgS, setOrg] = useState(props === null || props === void 0 ? void 0 : (_props$request5 = props.request) === null || _props$request5 === void 0 ? void 0 : _props$request5.ou);
   const [hide, setHidden] = useState(true);
   const [errorHidden, setErrorHidden] = useState(true);
   const [errorMessage, setMessage] = useState();
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
-  const [Dx, setdx] = useState();
+  const [Dx, setdx] = useState(props === null || props === void 0 ? void 0 : (_props$request6 = props.request) === null || _props$request6 === void 0 ? void 0 : _props$request6.dx);
   const setData = selected => {
     setdx(selected);
     const visualisationId = [];
@@ -124,8 +124,10 @@ export default function AddNewRequests(props) {
         };
         send(dStore);
       } else {
-        var _dataStore$source2;
-        let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : _dataStore$source2.requests;
+        var _dataStore$source2, _dataStore$source2$re, _dataStore$source3;
+        let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : (_dataStore$source2$re = _dataStore$source2.requests) === null || _dataStore$source2$re === void 0 ? void 0 : _dataStore$source2$re.filter(req => req.name !== name);
+        console.log(arr);
+        console.log(dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source3 = dataStore.source) === null || _dataStore$source3 === void 0 ? void 0 : _dataStore$source3.requests);
         arr.push({
           name: name,
           visualization: selectVisualisations,
@@ -149,6 +151,7 @@ export default function AddNewRequests(props) {
   };
   useEffect(() => {
     fetchData();
+    console.log(props);
   }, []);
   return /*#__PURE__*/React.createElement("div", {
     className: props === null || props === void 0 ? void 0 : (_props$style = props.style) === null || _props$style === void 0 ? void 0 : _props$style.padding
@@ -162,7 +165,8 @@ export default function AddNewRequests(props) {
     className: props === null || props === void 0 ? void 0 : (_props$style3 = props.style) === null || _props$style3 === void 0 ? void 0 : _props$style3.padding
   }, /*#__PURE__*/React.createElement(OrgUnits, {
     orgUnits: orgUnits,
-    setOrg: setOrgUnits
+    setOrg: setOrgUnits,
+    selected: props === null || props === void 0 ? void 0 : (_props$request7 = props.request) === null || _props$request7 === void 0 ? void 0 : _props$request7.ou
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Box, {
     className: `${props === null || props === void 0 ? void 0 : (_props$style4 = props.style) === null || _props$style4 === void 0 ? void 0 : _props$style4.width} ${props === null || props === void 0 ? void 0 : (_props$style5 = props.style) === null || _props$style5 === void 0 ? void 0 : _props$style5.padding}`
   }, /*#__PURE__*/React.createElement(Field, {
@@ -171,17 +175,20 @@ export default function AddNewRequests(props) {
     onChange: e => {
       setName(e.value);
     },
-    placeholder: "Enter request name"
+    placeholder: "Enter request name",
+    value: name
   }))), /*#__PURE__*/React.createElement("div", {
     className: props === null || props === void 0 ? void 0 : (_props$style6 = props.style) === null || _props$style6 === void 0 ? void 0 : _props$style6.display
   }, /*#__PURE__*/React.createElement(Box, {
     className: props === null || props === void 0 ? void 0 : (_props$style7 = props.style) === null || _props$style7 === void 0 ? void 0 : _props$style7.padding
   }, /*#__PURE__*/React.createElement(PeriodsWidget, {
-    setPeriods: setPeriods
+    setPeriods: setPeriods,
+    selected: props === null || props === void 0 ? void 0 : (_props$request8 = props.request) === null || _props$request8 === void 0 ? void 0 : _props$request8.pe
   })), /*#__PURE__*/React.createElement(Box, {
     className: props === null || props === void 0 ? void 0 : (_props$style8 = props.style) === null || _props$style8 === void 0 ? void 0 : _props$style8.padding
   }, /*#__PURE__*/React.createElement(DataDimensionsCodes, {
     setData: setData,
+    selected: [...(props === null || props === void 0 ? void 0 : (_props$request9 = props.request) === null || _props$request9 === void 0 ? void 0 : _props$request9.dx), ...(props === null || props === void 0 ? void 0 : (_props$request10 = props.request) === null || _props$request10 === void 0 ? void 0 : _props$request10.visualization)],
     dataElements: dataElements,
     indicators: indicators,
     visualizations: Visualizations

@@ -22,6 +22,11 @@
 .padding {
     padding: 20px;
 }
+.actionBtns {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
 .width {
     width: 45%;
 }
