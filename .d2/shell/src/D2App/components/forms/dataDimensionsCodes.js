@@ -3,7 +3,7 @@ import { Button, Field, Transfer } from '@dhis2/ui';
 import Dxheader from '../widgets/dxHeader';
 export default function DataDimensionsCodes(props) {
   var _props$styles;
-  const [selectedDimensions, setselectedDimensions] = useState(props === null || props === void 0 ? void 0 : props.selected);
+  const [selectedDimensions, setselectedDimensions] = useState();
   const [dxType, setDx] = useState();
   const [filterText, setFilterText] = useState();
   const [filterTerm, setFilter] = useState();
@@ -13,6 +13,12 @@ export default function DataDimensionsCodes(props) {
     setselectedDimensions(e.selected);
     props === null || props === void 0 ? void 0 : props.setData(e.selected);
   };
+  useEffect(() => {
+    if ((props === null || props === void 0 ? void 0 : props.selectedDx) !== undefined && props !== null && props !== void 0 && props.selectedVis) {
+      setselectedDimensions([...(props === null || props === void 0 ? void 0 : props.selectedDx), ...(props === null || props === void 0 ? void 0 : props.selectedVis)]);
+      console.log(selectedDimensions);
+    }
+  }, []);
 
   //pushing data elements,indicators,and visualisation into transfer options
   const defaultRenderOption = () => {

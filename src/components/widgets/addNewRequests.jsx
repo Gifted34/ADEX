@@ -142,8 +142,6 @@ export default function AddNewRequests(props) {
         send(dStore);
       } else {
         let arr = dataStore?.source?.requests?.filter(req => req.name !== name)
-        console.log(arr)
-        console.log(dataStore?.source?.requests)
         arr.push({
           name: name,
           visualization: selectVisualisations,
@@ -166,7 +164,6 @@ export default function AddNewRequests(props) {
 
   useEffect(() => {
     fetchData();
-    console.log(props)
   }, []);
 
   return (
@@ -201,7 +198,8 @@ export default function AddNewRequests(props) {
             <Box className={props?.style?.padding}>
               <DataDimensionsCodes
                 setData={setData}
-                selected={[...props?.request?.dx,...props?.request?.visualization]}
+                selectedDx={props?.request?.dx}
+                selectedVis={props?.request?.visualization}
                 dataElements={dataElements}
                 indicators={indicators}
                 visualizations={Visualizations}

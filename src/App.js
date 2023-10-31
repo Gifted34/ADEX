@@ -209,6 +209,7 @@ const MyApp = () => {
       });
   };
 
+
   // check if token or password
   const checkIfTokenOrBasiAuth = (authTypeValue) => {
     if (authTypeValue === "BASICAUTH") {
@@ -514,14 +515,14 @@ const MyApp = () => {
                   data={data}
                   styles={classes}
                 />
-              ) : (
+              ) : (<>{path === "new request" ?
                 <AddNewRequests
                   id={id}
                   request={request}
                   setPath={setPath}
                   data={data}
                   style={classes}
-                />
+                />: <NoPageFound />}</>
               )}
             </>
           )}
