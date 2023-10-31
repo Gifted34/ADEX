@@ -186,6 +186,7 @@ const MyApp = () => {
               }
             })
             .catch((e) => {
+              setSuccessMessage(true);
               setHidden(false);
               setMessage(
                 "Error occured. Either server or the inputs causes this error."
@@ -194,6 +195,7 @@ const MyApp = () => {
         }
       })
       .catch((e) => {
+        setSuccessMessage(true);
         setHidden(false);
         setMessage(
           "Error occured. Either server or the inputs causes this error."
@@ -251,10 +253,6 @@ const MyApp = () => {
                 setMessage("Username or password is missing");
                 setHidden(false);
               } else {
-                // if (existingDEX?.length == 1) {
-                //   console.log(existingDEX);
-                //   console.log("adex 1");
-                // }
                 if (existingDEX?.length == 1) {
                   console.log(aggregateDataExchanges);
                   let payload = {
@@ -483,6 +481,7 @@ const MyApp = () => {
             }
           })
           .catch((e) => {
+            setSuccessMessage(false);
             setHidden(false);
             setMessage(
               "Error occured. Either server or the inputs causes this error."
@@ -548,6 +547,7 @@ const MyApp = () => {
           }
         })
         .catch((e) => {
+          setSuccessMessage(false);
           setHidden(false);
           setMessage(
             "Error occured. Either server or the inputs causes this error."
