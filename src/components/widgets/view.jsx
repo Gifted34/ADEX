@@ -81,6 +81,7 @@ export default function ViewDataStoreById(props) {
   const [loading, setLoading] = useState(false);
   const [hidden, setHidden] = useState(true);
   const [errorHide, setErrorHide] = useState(true);
+  const [isSuccessMessage, setSuccessMessage] = useState(false);
 
   const query = {
     organisationUnits: {
@@ -132,7 +133,6 @@ export default function ViewDataStoreById(props) {
     setLoading(true)
     const res = await engine.query(query);
     setExchange(res?.dataStore);
-    console.log(res)
     setVis(res?.visualizations?.visualizations);
     setIndicators(res?.indicators?.indicators);
     setDataElements(res?.dataElements?.dataElements);
@@ -166,11 +166,13 @@ export default function ViewDataStoreById(props) {
       .mutate(myMutation)
       .then((res) => {
         if (res.httpStatusCode === 200) {
+          setSuccessMessage(true);
           setLoading(false);
           setHidden(false);
         }
       })
       .catch((e) => {
+        setSuccessMessage(false);
         setLoading(false);
         setErrorHide(false);
       });
@@ -261,22 +263,25 @@ export default function ViewDataStoreById(props) {
       </div>
       <div style={{ alignContent: "center", justifyContent: "center" }}>
         <Center>
-          <AlertBar
-            success
-            hidden={hidden}
-            duration={2000}
-            onhidden={() => setHidden(true)}
-          >
-            Request deleted succesifuly
-          </AlertBar>
-          <AlertBar
-            warning
-            hidden={errorHide}
-            duration={2000}
-            onhidden={() => setErrorHide(true)}
-          >
-            Failled to delete request
-          </AlertBar>
+          {isSuccessMessage ? (
+            <AlertBar
+              success
+              hidden={hidden}
+              duration={2000}
+              onhidden={() => setHidden(true)}
+            >
+              Request deleted succesifuly
+            </AlertBar>
+          ) : (
+            <AlertBar
+              warning
+              hidden={errorHide}
+              duration={2000}
+              onhidden={() => setErrorHide(true)}
+            >
+              Failled to delete request
+            </AlertBar>
+          )}
         </Center>
       </div>
     </div>

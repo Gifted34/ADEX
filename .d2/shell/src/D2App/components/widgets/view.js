@@ -62,6 +62,7 @@ export default function ViewDataStoreById(props) {
   const [loading, setLoading] = useState(false);
   const [hidden, setHidden] = useState(true);
   const [errorHide, setErrorHide] = useState(true);
+  const [isSuccessMessage, setSuccessMessage] = useState(false);
   const query = {
     organisationUnits: {
       resource: "organisationUnits",
@@ -111,7 +112,6 @@ export default function ViewDataStoreById(props) {
     setLoading(true);
     const res = await engine.query(query);
     setExchange(res === null || res === void 0 ? void 0 : res.dataStore);
-    console.log(res);
     setVis(res === null || res === void 0 ? void 0 : (_res$visualizations = res.visualizations) === null || _res$visualizations === void 0 ? void 0 : _res$visualizations.visualizations);
     setIndicators(res === null || res === void 0 ? void 0 : (_res$indicators = res.indicators) === null || _res$indicators === void 0 ? void 0 : _res$indicators.indicators);
     setDataElements(res === null || res === void 0 ? void 0 : (_res$dataElements = res.dataElements) === null || _res$dataElements === void 0 ? void 0 : _res$dataElements.dataElements);
@@ -141,10 +141,12 @@ export default function ViewDataStoreById(props) {
     setExchange(myMutation === null || myMutation === void 0 ? void 0 : myMutation.data);
     await engine.mutate(myMutation).then(res => {
       if (res.httpStatusCode === 200) {
+        setSuccessMessage(true);
         setLoading(false);
         setHidden(false);
       }
     }).catch(e => {
+      setSuccessMessage(false);
       setLoading(false);
       setErrorHide(false);
     });
@@ -196,12 +198,12 @@ export default function ViewDataStoreById(props) {
       alignContent: "center",
       justifyContent: "center"
     }
-  }, /*#__PURE__*/React.createElement(Center, null, /*#__PURE__*/React.createElement(AlertBar, {
+  }, /*#__PURE__*/React.createElement(Center, null, isSuccessMessage ? /*#__PURE__*/React.createElement(AlertBar, {
     success: true,
     hidden: hidden,
     duration: 2000,
     onhidden: () => setHidden(true)
-  }, "Request deleted succesifuly"), /*#__PURE__*/React.createElement(AlertBar, {
+  }, "Request deleted succesifuly") : /*#__PURE__*/React.createElement(AlertBar, {
     warning: true,
     hidden: errorHide,
     duration: 2000,

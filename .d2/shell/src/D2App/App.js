@@ -167,11 +167,13 @@ const MyApp = () => {
             setMessage("Data exchange initialization is successfull\nPlease use the Data Exchange app to submit the Data.");
           }
         }).catch(e => {
+          setSuccessMessage(true);
           setHidden(false);
           setMessage("Error occured. Either server or the inputs causes this error.");
         });
       }
     }).catch(e => {
+      setSuccessMessage(true);
       setHidden(false);
       setMessage("Error occured. Either server or the inputs causes this error.");
     });
@@ -227,12 +229,9 @@ const MyApp = () => {
                 setMessage("Username or password is missing");
                 setHidden(false);
               } else {
-                // if (existingDEX?.length == 1) {
-                //   console.log(existingDEX);
-                //   console.log("adex 1");
-                // }
-                if ((existingDEX === null || existingDEX === void 0 ? void 0 : existingDEX.length) === 1) {
+                if ((existingDEX === null || existingDEX === void 0 ? void 0 : existingDEX.length) == 1) {
                   var _existingDEX$, _dataToIntegrate$valu15, _dataToIntegrate$valu16, _dataToIntegrate$valu17;
+                  console.log(aggregateDataExchanges);
                   let payload = {
                     resource: `aggregateDataExchanges/${(_existingDEX$ = existingDEX[0]) === null || _existingDEX$ === void 0 ? void 0 : _existingDEX$.id}`,
                     type: "update",
@@ -453,6 +452,7 @@ const MyApp = () => {
             setMessage("Data saved in the datastore successfully.");
           }
         }).catch(e => {
+          setSuccessMessage(false);
           setHidden(false);
           setMessage("Error occured. Either server or the inputs causes this error.");
         });
@@ -509,6 +509,7 @@ const MyApp = () => {
           setKey(Math.random());
         }
       }).catch(e => {
+        setSuccessMessage(false);
         setHidden(false);
         setMessage("Error occured. Either server or the inputs causes this error.");
       });
