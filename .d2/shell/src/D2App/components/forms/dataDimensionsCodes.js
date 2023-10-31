@@ -16,7 +16,6 @@ export default function DataDimensionsCodes(props) {
   useEffect(() => {
     if ((props === null || props === void 0 ? void 0 : props.selectedDx) !== undefined && props !== null && props !== void 0 && props.selectedVis) {
       setselectedDimensions([...(props === null || props === void 0 ? void 0 : props.selectedDx), ...(props === null || props === void 0 ? void 0 : props.selectedVis)]);
-      console.log(selectedDimensions);
     }
   }, []);
 
