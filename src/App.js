@@ -109,7 +109,6 @@ const MyApp = () => {
 
   // save to datastore
   const saveGeneralInputValues = () => {
-    console.log("save input values");
     if (
       type == null ||
       type == undefined ||
@@ -155,11 +154,13 @@ const MyApp = () => {
     }
   };
   // a post request to the data echange resource
-  const mutation = (data) => {
+  const mutation = (payload) => {
+    // console.log("mutation done");
     engine
-      .mutate(data)
+      .mutate(payload)
       .then((res) => {
-        if (res.httpStatusCode == 201) {
+        console.log(res);
+        if (res.httpStatusCode == 201 || res.httpStatusCode == 200) {
           engine
             .mutate({
               resource: `dataStore/DEX_initializer_values/${dataToIntegrate?.key}`,
@@ -175,7 +176,7 @@ const MyApp = () => {
               }),
             })
             .then((res) => {
-              if (res.httpStatusCode == 200) {
+              if (res.httpStatusCode == 200 || res.httpStatusCode == 201) {
                 setOpenIntegration(false);
                 setSuccessMessage(true);
                 setHidden(false);
@@ -211,7 +212,13 @@ const MyApp = () => {
 
   // constructing a data exchange api layout as defined in the url
   // https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-240/data-exchange.html
-  const initializeIntegration = (data) => {
+  const initializeIntegration = (dataValues) => {
+    let aggregateDataExchanges =
+      data?.aggregateDataExchanges?.aggregateDataExchanges;
+    let existingDEX = aggregateDataExchanges?.filter(
+      (allDEX) => allDEX?.name === dataToIntegrate?.value?.dexname
+    );
+    // console.log(dataToIntegrate, existingDEX, aggregateDataExchanges);
     if (formData?.type == type?.EXTERNAL) {
       if (dataToIntegrate?.value?.url == "") {
         setMessage("Please enter target DHIS2 instance url");
@@ -244,28 +251,58 @@ const MyApp = () => {
                 setMessage("Username or password is missing");
                 setHidden(false);
               } else {
-                let payload = {
-                  resource: "aggregateDataExchanges",
-                  type: "create",
-                  data: {
-                    name: dataToIntegrate?.value?.dexname,
-                    source: {
-                      requests: holder,
-                    },
-                    target: {
-                      type: dataToIntegrate?.value?.type,
-                      api: {
-                        url: dataToIntegrate?.value?.url,
-                        username: authValues?.username,
-                        password: authValues?.password,
+                // if (existingDEX?.length == 1) {
+                //   console.log(existingDEX);
+                //   console.log("adex 1");
+                // }
+                if (existingDEX?.length == 1) {
+                  console.log(aggregateDataExchanges);
+                  let payload = {
+                    resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
+                    type: "update",
+                    data: {
+                      name: dataToIntegrate?.value?.dexname,
+                      source: {
+                        requests: holder,
                       },
-                      request: {
-                        idScheme: "code",
+                      target: {
+                        type: dataToIntegrate?.value?.type,
+                        api: {
+                          url: dataToIntegrate?.value?.url,
+                          username: authValues?.username,
+                          password: authValues?.password,
+                        },
+                        request: {
+                          idScheme: "code",
+                        },
                       },
                     },
-                  },
-                };
-                mutation(payload);
+                  };
+                  mutation(payload);
+                } else {
+                  let payload = {
+                    resource: "aggregateDataExchanges",
+                    type: "create",
+                    data: {
+                      name: dataToIntegrate?.value?.dexname,
+                      source: {
+                        requests: holder,
+                      },
+                      target: {
+                        type: dataToIntegrate?.value?.type,
+                        api: {
+                          url: dataToIntegrate?.value?.url,
+                          username: authValues?.username,
+                          password: authValues?.password,
+                        },
+                        request: {
+                          idScheme: "code",
+                        },
+                      },
+                    },
+                  };
+                  mutation(payload);
+                }
               }
             } else {
               setMessage("No requests attached");
@@ -293,27 +330,54 @@ const MyApp = () => {
                 setMessage("Token is missing");
                 setHidden(false);
               } else {
-                let payload = {
-                  resource: "aggregateDataExchanges",
-                  type: "create",
-                  data: {
-                    name: dataToIntegrate?.value?.dexname,
-                    source: {
-                      requests: holder,
-                    },
-                    target: {
-                      type: dataToIntegrate?.value?.type,
-                      api: {
-                        url: dataToIntegrate?.value?.url,
-                        accessToken: authValues?.token,
+                console.log(existingDEX);
+                console.log("adex 2");
+
+                if (existingDEX?.length == 1) {
+                  let payload = {
+                    resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
+                    type: "update",
+                    data: {
+                      name: dataToIntegrate?.value?.dexname,
+                      source: {
+                        requests: holder,
                       },
-                      request: {
-                        idScheme: "code",
+                      target: {
+                        type: dataToIntegrate?.value?.type,
+                        api: {
+                          url: dataToIntegrate?.value?.url,
+                          accessToken: authValues?.token,
+                        },
+                        request: {
+                          idScheme: "code",
+                        },
                       },
                     },
-                  },
-                };
-                mutation(payload);
+                  };
+                  mutation(payload);
+                } else {
+                  let payload = {
+                    resource: `aggregateDataExchanges/`,
+                    type: "create",
+                    data: {
+                      name: dataToIntegrate?.value?.dexname,
+                      source: {
+                        requests: holder,
+                      },
+                      target: {
+                        type: dataToIntegrate?.value?.type,
+                        api: {
+                          url: dataToIntegrate?.value?.url,
+                          accessToken: authValues?.token,
+                        },
+                        request: {
+                          idScheme: "code",
+                        },
+                      },
+                    },
+                  };
+                  mutation(payload);
+                }
               }
             } else {
               setMessage("No requests attached");
@@ -323,25 +387,49 @@ const MyApp = () => {
         }
       }
     } else {
-      let payload = {
-        resource: "aggregateDataExchanges",
-        type: "create",
-        data: {
-          name: dataToIntegrate?.value?.dexname,
-          source: { requests: dataToIntegrate?.value?.source?.request },
-          target: {
-            type: dataToIntegrate?.value?.type,
-            api: {
-              url: dataToIntegrate?.value?.url,
-              accessToken: authValues?.token,
-            },
-            request: {
-              idScheme: "code",
+      if (existingDEX?.length == 1) {
+        let payload = {
+          resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
+          type: "update",
+          data: {
+            name: dataToIntegrate?.value?.dexname,
+            source: { requests: dataToIntegrate?.value?.source?.request },
+            target: {
+              type: dataToIntegrate?.value?.type,
+              api: {
+                url: dataToIntegrate?.value?.url,
+                accessToken: authValues?.token,
+              },
+              request: {
+                idScheme: "code",
+              },
             },
           },
-        },
-      };
-      mutation(payload);
+        };
+        mutation(payload);
+        console.log(existingDEX);
+        console.log("adex 3");
+      } else {
+        let payload = {
+          resource: "aggregateDataExchanges",
+          type: "create",
+          data: {
+            name: dataToIntegrate?.value?.dexname,
+            source: { requests: dataToIntegrate?.value?.source?.request },
+            target: {
+              type: dataToIntegrate?.value?.type,
+              api: {
+                url: dataToIntegrate?.value?.url,
+                accessToken: authValues?.token,
+              },
+              request: {
+                idScheme: "code",
+              },
+            },
+          },
+        };
+        mutation(payload);
+      }
     }
   };
 
@@ -492,7 +580,6 @@ const MyApp = () => {
               deleteEntry={deleteEntry}
               updateEntry={updateEntry}
               integrateEntry={integrateEntry}
-              // initializeIntegration={initializeIntegration}
             />
           ) : (
             <>
