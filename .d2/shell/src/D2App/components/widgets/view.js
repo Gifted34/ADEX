@@ -156,9 +156,9 @@ export default function ViewDataStoreById(props) {
   }, /*#__PURE__*/React.createElement(Center, null, /*#__PURE__*/React.createElement(CircularLoader, {
     large: true
   }))), /*#__PURE__*/React.createElement(ButtonStrip, {
-    end: true
+    start: true
   }, /*#__PURE__*/React.createElement(Button, {
-    primary: true,
+    secondary: true,
     onClick: () => props === null || props === void 0 ? void 0 : props.setPath("Home")
   }, "Back")), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
     className: `${props === null || props === void 0 ? void 0 : props.styles.padding}`

@@ -175,7 +175,7 @@ function Datatablerow(props) {
         <DataTableCell>{periods()}</DataTableCell>
         <DataTableCell>
           <div className={props?.styles?.actionBtns}>
-          <Button primary  onClick={()=>update()} >Update</Button> 
+          <Button primary  onClick={()=>update()} >Edit</Button> 
           <Button destructive onClick={() => setOpen(true)}>
             Delete 
           </Button>

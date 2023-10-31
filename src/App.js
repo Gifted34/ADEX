@@ -159,7 +159,6 @@ const MyApp = () => {
     engine
       .mutate(payload)
       .then((res) => {
-        console.log(res);
         if (res.httpStatusCode == 201 || res.httpStatusCode == 200) {
           engine
             .mutate({
@@ -328,9 +327,6 @@ const MyApp = () => {
                 setMessage("Token is missing");
                 setHidden(false);
               } else {
-                console.log(existingDEX);
-                console.log("adex 2");
-
                 if (existingDEX?.length == 1) {
                   let payload = {
                     resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
@@ -405,8 +401,6 @@ const MyApp = () => {
           },
         };
         mutation(payload);
-        console.log(existingDEX);
-        console.log("adex 3");
       } else {
         let payload = {
           resource: "aggregateDataExchanges",
