@@ -2,16 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DataQuery, useDataEngine, useDataQuery } from "@dhis2/app-runtime";
 import classes from "./App.module.css";
 import HeaderComponent from "./components/widgets/headerComponent";
-import {
-  AlertBar,
-  Box,
-  Button,
-  Center,
-  CircularLoader,
-  Divider,
-  I,
-  Layer,
-} from "@dhis2/ui";
+import { AlertBar, Box, Center, CircularLoader, Layer } from "@dhis2/ui";
 import HomePage from "./components/widgets/homePage";
 import NewDataInitialization from "./components/widgets/newDataInitialization";
 import NoPageFound from "./components/widgets/noPageFound";
@@ -100,7 +91,7 @@ const MyApp = () => {
   const [dataToDelete, setDataToDelete] = useState();
   const [dataToUpdate, setDataToUpdate] = useState();
   const [dataToIntegrate, setDataToIntegrate] = useState();
-  const [ke,setKey] = useState(Math.random())
+  const [ke, setKey] = useState(Math.random());
   const engine = useDataEngine();
   const [path, setPath] = useState("Home");
   const [formData, setFormData] = useState();
@@ -113,12 +104,12 @@ const MyApp = () => {
 
   const [isSuccessMessage, setSuccessMessage] = useState(false);
   const [authType, setAuthType] = useState("");
-  const [request,setRequest] = useState()
+  const [request, setRequest] = useState();
   const { loading, error, data, refetch } = useDataQuery(query);
 
   // save to datastore
   const saveGeneralInputValues = () => {
-    console.log('save input values')
+    console.log("save input values");
     if (
       type == null ||
       type == undefined ||
@@ -148,7 +139,7 @@ const MyApp = () => {
         .mutate(payload)
         .then((res) => {
           if (res.httpStatusCode == 201) {
-            setKey(Math.random())
+            setKey(Math.random());
             setOpen(!open);
             setSuccessMessage(true);
             setHidden(false);
@@ -465,7 +456,7 @@ const MyApp = () => {
             setSuccessMessage(true);
             setHidden(false);
             setMessage("Data saved in the datastore successfully.");
-            setKey(Math.random())
+            setKey(Math.random());
           }
         })
         .catch((e) => {
@@ -515,13 +506,19 @@ const MyApp = () => {
                   styles={classes}
                 />
               ) : (
-                <AddNewRequests
-                  id={id}
-                  request={request}
-                  setPath={setPath}
-                  data={data}
-                  style={classes}
-                />
+                <>
+                  {path === "new request" ? (
+                    <AddNewRequests
+                      id={id}
+                      request={request}
+                      setPath={setPath}
+                      data={data}
+                      style={classes}
+                    />
+                  ) : (
+                    <NoPageFound />
+                  )}
+                </>
               )}
             </>
           )}

@@ -41,9 +41,9 @@ export default function DataInitialized(props) {
     }, "View"), /*#__PURE__*/React.createElement("button", {
       className: props === null || props === void 0 ? void 0 : (_props$styles = props.styles) === null || _props$styles === void 0 ? void 0 : _props$styles.newRequestBtn,
       onClick: () => {
-        props === null || props === void 0 ? void 0 : props.setPath("new request");
-        props === null || props === void 0 ? void 0 : props.setRequest();
+        props === null || props === void 0 ? void 0 : props.setRequest(undefined);
         props.setID(aggregateDataExchange.key);
+        props === null || props === void 0 ? void 0 : props.setPath("new request");
       }
     }, "New request"), /*#__PURE__*/React.createElement("button", {
       className: props === null || props === void 0 ? void 0 : (_props$styles2 = props.styles) === null || _props$styles2 === void 0 ? void 0 : _props$styles2.updateBtn,

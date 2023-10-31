@@ -81,10 +81,10 @@ export default function DataInitialized(props) {
 
                           <button
                             className={props?.styles?.newRequestBtn}
-                            onClick={() => {
-                              props?.setPath("new request");
-                              props?.setRequest()
+                            onClick={() => {                              
+                              props?.setRequest(undefined)
                               props.setID(aggregateDataExchange.key);
+                              props?.setPath("new request");
                             }}
                           >
                             New request

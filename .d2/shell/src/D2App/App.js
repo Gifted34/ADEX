@@ -457,13 +457,13 @@ const MyApp = () => {
     setPath: setPath,
     data: data,
     styles: classes
-  }) : /*#__PURE__*/React.createElement(AddNewRequests, {
+  }) : /*#__PURE__*/React.createElement(React.Fragment, null, path === "new request" ? /*#__PURE__*/React.createElement(AddNewRequests, {
     id: id,
     request: request,
     setPath: setPath,
     data: data,
     style: classes
-  }))), !hide && /*#__PURE__*/React.createElement(Layer, {
+  }) : /*#__PURE__*/React.createElement(NoPageFound, null)))), !hide && /*#__PURE__*/React.createElement(Layer, {
     translucent: true
   }, /*#__PURE__*/React.createElement("div", {
     style: {

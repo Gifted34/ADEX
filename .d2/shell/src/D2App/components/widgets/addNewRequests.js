@@ -124,10 +124,8 @@ export default function AddNewRequests(props) {
         };
         send(dStore);
       } else {
-        var _dataStore$source2, _dataStore$source2$re, _dataStore$source3;
+        var _dataStore$source2, _dataStore$source2$re;
         let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : (_dataStore$source2$re = _dataStore$source2.requests) === null || _dataStore$source2$re === void 0 ? void 0 : _dataStore$source2$re.filter(req => req.name !== name);
-        console.log(arr);
-        console.log(dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source3 = dataStore.source) === null || _dataStore$source3 === void 0 ? void 0 : _dataStore$source3.requests);
         arr.push({
           name: name,
           visualization: selectVisualisations,
@@ -151,7 +149,6 @@ export default function AddNewRequests(props) {
   };
   useEffect(() => {
     fetchData();
-    console.log(props);
   }, []);
   return /*#__PURE__*/React.createElement("div", {
     className: props === null || props === void 0 ? void 0 : (_props$style = props.style) === null || _props$style === void 0 ? void 0 : _props$style.padding
@@ -188,7 +185,8 @@ export default function AddNewRequests(props) {
     className: props === null || props === void 0 ? void 0 : (_props$style8 = props.style) === null || _props$style8 === void 0 ? void 0 : _props$style8.padding
   }, /*#__PURE__*/React.createElement(DataDimensionsCodes, {
     setData: setData,
-    selected: [...(props === null || props === void 0 ? void 0 : (_props$request9 = props.request) === null || _props$request9 === void 0 ? void 0 : _props$request9.dx), ...(props === null || props === void 0 ? void 0 : (_props$request10 = props.request) === null || _props$request10 === void 0 ? void 0 : _props$request10.visualization)],
+    selectedDx: props === null || props === void 0 ? void 0 : (_props$request9 = props.request) === null || _props$request9 === void 0 ? void 0 : _props$request9.dx,
+    selectedVis: props === null || props === void 0 ? void 0 : (_props$request10 = props.request) === null || _props$request10 === void 0 ? void 0 : _props$request10.visualization,
     dataElements: dataElements,
     indicators: indicators,
     visualizations: Visualizations
