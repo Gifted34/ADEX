@@ -25,6 +25,19 @@ export default function DataInitialized(props) {
       });
   };
 
+  const checkIfInitialised = (exchange)=>{
+    let arr = []
+    props?.aggregateDataExchanges?.map(exch =>{
+      if(exch.name === exchange){
+        arr.push(exch)
+      }
+    })
+    if(arr.length > 0){
+      return 'Update initialisation'
+    }
+    return 'Initialize integration'
+  }
+
   const deleteEntry = (data) => {
     props?.deleteEntry(data);
   };
@@ -124,7 +137,7 @@ export default function DataInitialized(props) {
                                 integrateEntry(aggregateDataExchange);
                               }}
                             >
-                              Initialize integration
+                              {checkIfInitialised(aggregateDataExchange?.value?.dexname)}
                             </Button>
                           )}
                         </ButtonStrip>
