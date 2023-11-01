@@ -42,7 +42,7 @@ const query = {
     resource: "dataElements",
     params: {
       paging: false,
-      fields: ["id", "name", "formName", "displayName", "code"],
+      fields: ["id", "name", "formName", "displayName", "code","aggregationType","domainType"],
     },
   },
   periodTypes: {
