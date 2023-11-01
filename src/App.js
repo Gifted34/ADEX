@@ -155,7 +155,6 @@ const MyApp = () => {
   };
   // a post request to the data echange resource
   const mutation = (payload) => {
-    // console.log("mutation done");
     engine
       .mutate(payload)
       .then((res) => {
@@ -253,7 +252,6 @@ const MyApp = () => {
                 setHidden(false);
               } else {
                 if (existingDEX?.length == 1) {
-                  console.log(aggregateDataExchanges);
                   let payload = {
                     resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
                     type: "update",
@@ -561,6 +559,7 @@ const MyApp = () => {
               data={data}
               setPath={setPath}
               setID={setID}
+              aggregateDataExchanges={data?.aggregateDataExchanges?.aggregateDataExchanges}
               setRequest={setRequest}
               styles={classes}
               open={open}

@@ -65,6 +65,7 @@ const query = {
 
 // const validater = new UrlValidator();
 const MyApp = () => {
+  var _data$aggregateDataEx2;
   const [formInputValues, setFormInputValues] = useState({
     dexname: "",
     url: ""
@@ -140,7 +141,6 @@ const MyApp = () => {
   };
   // a post request to the data echange resource
   const mutation = payload => {
-    // console.log("mutation done");
     engine.mutate(payload).then(res => {
       if (res.httpStatusCode == 201 || res.httpStatusCode == 200) {
         engine.mutate({
@@ -231,7 +231,6 @@ const MyApp = () => {
               } else {
                 if ((existingDEX === null || existingDEX === void 0 ? void 0 : existingDEX.length) == 1) {
                   var _existingDEX$, _dataToIntegrate$valu15, _dataToIntegrate$valu16, _dataToIntegrate$valu17;
-                  console.log(aggregateDataExchanges);
                   let payload = {
                     resource: `aggregateDataExchanges/${(_existingDEX$ = existingDEX[0]) === null || _existingDEX$ === void 0 ? void 0 : _existingDEX$.id}`,
                     type: "update",
@@ -524,6 +523,7 @@ const MyApp = () => {
     data: data,
     setPath: setPath,
     setID: setID,
+    aggregateDataExchanges: data === null || data === void 0 ? void 0 : (_data$aggregateDataEx2 = data.aggregateDataExchanges) === null || _data$aggregateDataEx2 === void 0 ? void 0 : _data$aggregateDataEx2.aggregateDataExchanges,
     setRequest: setRequest,
     styles: classes,
     open: open,
