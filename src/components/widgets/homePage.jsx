@@ -40,6 +40,7 @@ export default function HomePage(props) {
       <div className="" style={{ marginTop: "10px" }}>
         <DataInitialized
           setPath={props?.setPath}
+          aggregateDataExchanges={props?.aggregateDataExchanges}
           setID={props?.setID}
           setRequest={props?.setRequest}
           setOpenDelete={props?.setOpenDelete}
