@@ -32,7 +32,7 @@ export default function DataDimensionsCodes(props) {
                 type: 'Indicators'
             })
         })
-        props?.dataElements?.filter((dataElement) => dataElement.code !== undefined)?.map(dataElementWithCode => {
+        props?.dataElements?.filter((dataElement) => dataElement.code !== undefined && dataElement.domainType === "AGGREGATE")?.map(dataElementWithCode => {
         
             codes.push({
                 label: dataElementWithCode?.name,

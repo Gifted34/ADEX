@@ -30,7 +30,7 @@ export default function DataDimensionsCodes(props) {
         type: 'Indicators'
       });
     });
-    props === null || props === void 0 ? void 0 : (_props$dataElements = props.dataElements) === null || _props$dataElements === void 0 ? void 0 : (_props$dataElements$f = _props$dataElements.filter(dataElement => dataElement.code !== undefined)) === null || _props$dataElements$f === void 0 ? void 0 : _props$dataElements$f.map(dataElementWithCode => {
+    props === null || props === void 0 ? void 0 : (_props$dataElements = props.dataElements) === null || _props$dataElements === void 0 ? void 0 : (_props$dataElements$f = _props$dataElements.filter(dataElement => dataElement.code !== undefined && dataElement.domainType === "AGGREGATE")) === null || _props$dataElements$f === void 0 ? void 0 : _props$dataElements$f.map(dataElementWithCode => {
       codes.push({
         label: dataElementWithCode === null || dataElementWithCode === void 0 ? void 0 : dataElementWithCode.name,
         value: dataElementWithCode === null || dataElementWithCode === void 0 ? void 0 : dataElementWithCode.code,
