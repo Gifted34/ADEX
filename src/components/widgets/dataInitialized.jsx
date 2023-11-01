@@ -33,7 +33,7 @@ export default function DataInitialized(props) {
       }
     })
     if(arr.length > 0){
-      return 'Update initialisation'
+      return 'Update integration'
     }
     return 'Initialize integration'
   }
