@@ -64,8 +64,8 @@ These applications are accessed in the same DHIS2 instance.
 
 1. **d2 Library Integration**: The Data Exchange Initializer leverages the powerful d2 library within the DHIS2 platform. This integration enhances the software's compatibility with DHIS2, enabling smooth data exchange and synchronization.
 
-2. **DHIS2 UI Library Support**: The Data Exchange Initializer also utilizes the DHIS2 UI library, which provides a rich set of user interface components and design patterns. This integration enhances the custom app's user experience, ensuring an intuitive and visually appealing interface
-3. **Code-based Data Element, Visualization and Indicator Mapping**: The Data Exchange Initializer uses unique codes to identify data elements, visualizations and indicators in the source DHIS2 instance. These codes enable efficient mapping with their corresponding counterparts in the target DHIS2 instance.
+2. **DHIS2 UI Library Support**: The Data Exchange Initializer also utilizes the DHIS2 UI library, which provides a rich set of user interface components and design patterns. This integration enhances the custom app's user experience, ensuring an intuitive and visually appealing interface.
+3. **Code-based Data Element, Visualization and Indicator Mapping**: The Data Exchange Initializer uses unique codes to identify data elements, visualizations and indicators in the source DHIS2 instance. These codes enable efficient mapping with their corresponding counterparts in the target DHIS2 instance.The assumption of using codes is based on the fact that instances might define their data elements, indicators with different UID, this will affect the mapping. In context where visualizations are needed, then use of UID instead of CODES is recommended for visualizations does not have a code field in their creation.
 
 4. **Flexible Data Selection**: Users can easily select the specific data elements, visualizations and indicators they want to transfer. The software provides a user-friendly interface to browse and choose the relevant organizational units, periods, and data values.
 
