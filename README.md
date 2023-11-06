@@ -48,7 +48,7 @@ Initially, data echange using the primary workflow, requires one to have knowled
             }
 **Issue**
 
-This workflow is viable when the data dimensions are not in large volumes and require manual typing of the data dimension codes, which is prone to errors and can impact data quality.
+This workflow is viable when the data dimensions are not in large volumes and require manual typing of the data dimension codes or UIDs, which is prone to errors and can affect data quality.
 
 **Solution**
 
