@@ -76,7 +76,7 @@ These applications are accessed in the same DHIS2 instance.
 
 ### Fetching Metadata
 
-Inorder to do the initialisation there is a need for one to specify the data elements,visualizations or indicator,and the organisation unit. These parameters are fetched in the source DHIS2 instance using the DHIS2 cli useDataQuery hooks with a query specified below
+Inorder to do the initialisation there is a need for one to specify the data elements,visualizations or indicator,and the organisation unit. These parameters are fetched in the source DHIS2 instance using the DHIS2 cli useDataQuery or useDataEngine hooks with a query specified below
 
             const query = {
                     organisationUnits: {
@@ -223,5 +223,5 @@ you can access more documentation on the initialisation by navigating to the fol
 
   ### DHIS2 Data exchange submit
 
-After initializing the in the Dex initialization application, users can go to the Data exchange application in DHIS2. In this application, users can select an initialization option and view a table with data values and their corresponding data element or indicator names. Users then need to click the submit button to transfer these values to the desired DHIS2 instance.
+After initializing in the Dex Initialization application, users can go to the Data exchange application in the same DHIS2 instance. In this application, users can select an initialization option from the dropdown list and view a table with data values and their corresponding data element or indicator names. Users then need to click the submit button to transfer these values to the desired DHIS2 instance. In cases where no values are shown from the selected initialization, it might be that data analytics are not ready, then the personnel assigned to run analytics is responsible to run the analytics so that data is made available for viewing.
 # ADEX-Version-2
