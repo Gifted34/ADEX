@@ -72,7 +72,7 @@ These applications are accessed in the same DHIS2 instance.
 5. **Data Exchange Initialization**: Once the data elements, visualizations and,or indicators are selected, the Data Exchange Initializer is set to override the process of using POSTMAN for the data initialization utilizing secure APIs (Application Programming Interface) to establish a connection and initialize the data seamlessly in the host instance.
 
 6. **Data Validation and Error Handling**: The software performs comprehensive data validation to ensure the accuracy and integrity of the initialized data. It identifies any errors or inconsistencies and provides detailed error notification for easy troubleshooting and resolution. In this case, the system refrain from having a required field left out during initialization process.
-7. **User-friendly Interface**: The Data Exchange Initializer offers an intuitive and user-friendly interface, making it easy for both technical and non-technical users to navigate and perform data exchange initialization phase.
+7. **User-friendly Interface**: The Data Exchange Initializer offers an intuitive and user-friendly interface, making it easy for both technical and non-technical users to navigate and perform data exchange initialization phase. It is designed with the use-centric mind. The interface is flexible to be used by the data officers with basic electronic device data collection tool knowledge.
 
 ### Fetching Metadata
 
