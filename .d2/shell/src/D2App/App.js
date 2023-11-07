@@ -95,6 +95,7 @@ const MyApp = () => {
   const [formData, setFormData] = useState();
   const [id, setID] = useState();
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
+  const [update, setUpdate] = useState(false);
   const [selectedDataDimensionsCodes, setSelectedDataDimensionsCodes] = useState([]);
   const [hide, setHidden] = useState(true);
   const [message, setMessage] = useState("");
@@ -164,7 +165,12 @@ const MyApp = () => {
             setOpenIntegration(false);
             setSuccessMessage(true);
             setHidden(false);
-            setMessage("Data exchange initialization is successfull\nPlease use the Data Exchange app to submit the Data.");
+            if (update) {
+              setMessage("Data exchange initialization updated successifully\nPlease use the Data Exchange app to submit the Data.");
+              setUpdate(false);
+            } else {
+              setMessage("Data exchange initialization is successfull\nPlease use the Data Exchange app to submit the Data.");
+            }
           }
         }).catch(e => {
           setSuccessMessage(true);
@@ -231,6 +237,7 @@ const MyApp = () => {
               } else {
                 if ((existingDEX === null || existingDEX === void 0 ? void 0 : existingDEX.length) == 1) {
                   var _existingDEX$, _dataToIntegrate$valu15, _dataToIntegrate$valu16, _dataToIntegrate$valu17;
+                  setUpdate(true);
                   let payload = {
                     resource: `aggregateDataExchanges/${(_existingDEX$ = existingDEX[0]) === null || _existingDEX$ === void 0 ? void 0 : _existingDEX$.id}`,
                     type: "update",
