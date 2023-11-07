@@ -48,7 +48,7 @@ Initially, data echange using the primary workflow, requires one to have knowled
             }
 **Issue**
 
-This workflow is viable when the data dimensions are not in large volumes and require manual typing of the data dimension codes, which is prone to errors and can impact data quality.
+This workflow is viable when the data dimensions are not in large volumes and require manual typing of the data dimension codes or UIDs, which is prone to errors and can affect data quality.
 
 **Solution**
 
@@ -64,19 +64,19 @@ These applications are accessed in the same DHIS2 instance.
 
 1. **d2 Library Integration**: The Data Exchange Initializer leverages the powerful d2 library within the DHIS2 platform. This integration enhances the software's compatibility with DHIS2, enabling smooth data exchange and synchronization.
 
-2. **DHIS2 UI Library Support**: The Data Exchange Initializer also utilizes the DHIS2 UI library, which provides a rich set of user interface components and design patterns. This integration enhances the custom app's user experience, ensuring an intuitive and visually appealing interface
-3. **Code-based Data Element, Visualization and Indicator Mapping**: The Data Exchange Initializer uses unique codes to identify data elements, visualizations and indicators in the source DHIS2 instance. These codes enable efficient mapping with their corresponding counterparts in the target DHIS2 instance.
+2. **DHIS2 UI Library Support**: The Data Exchange Initializer also utilizes the DHIS2 UI library, which provides a rich set of user interface components and design patterns. This integration enhances the custom app's user experience, ensuring an intuitive and visually appealing interface.
+3. **Code-based Data Element, Visualization and Indicator Mapping**: The Data Exchange Initializer uses unique codes to identify data elements, visualizations and indicators in the source DHIS2 instance. These codes enable efficient mapping with their corresponding counterparts in the target DHIS2 instance.The assumption of using codes is based on the fact that instances might define their data elements, indicators with different UID, this will affect the mapping. In context where visualizations are needed, then use of UID instead of CODES is recommended for visualizations does not have a code field in their creation.
 
 4. **Flexible Data Selection**: Users can easily select the specific data elements, visualizations and indicators they want to transfer. The software provides a user-friendly interface to browse and choose the relevant organizational units, periods, and data values.
 
-5. **Data Exchange Initialization**: Once the data elements, visualizations and indicators are selected, the Data Exchange Initializer is set to override the process of using POSTMAN for the data initialization utilizing secure APIs (Application Programming Interface) to establish a connection and initialize the data seamlessly.
+5. **Data Exchange Initialization**: Once the data elements, visualizations and,or indicators are selected, the Data Exchange Initializer is set to override the process of using POSTMAN for the data initialization utilizing secure APIs (Application Programming Interface) to establish a connection and initialize the data seamlessly in the host instance.
 
-6. **Data Validation and Error Handling**: The software performs comprehensive data validation to ensure the accuracy and integrity of the initialized data. It identifies any errors or inconsistencies and provides detailed error notification for easy troubleshooting and resolution.
-7. **User-friendly Interface**: The Data Exchange Initializer offers an intuitive and user-friendly interface, making it easy for both technical and non-technical users to navigate and perform data exchange initialization phase.
+6. **Data Validation and Error Handling**: The software performs comprehensive data validation to ensure the accuracy and integrity of the initialized data. It identifies any errors or inconsistencies and provides detailed error notification for easy troubleshooting and resolution. In this case, the system refrain from having a required field left out during initialization process.
+7. **User-friendly Interface**: The Data Exchange Initializer offers an intuitive and user-friendly interface, making it easy for both technical and non-technical users to navigate and perform data exchange initialization phase. It is designed with the use-centric mind. The interface is flexible to be used by the data officers with basic electronic device data collection tool knowledge.
 
 ### Fetching Metadata
 
-Inorder to do the initialisation there is a need for one to specify the data elements,visualizations or indicator,and the organisation unit. These parameters are fetched in the source DHIS2 instance using the DHIS2 cli useDataQuery hooks with a query specified below
+Inorder to do the initialisation there is a need for one to specify the data elements,visualizations or indicator,and the organisation unit. These parameters are fetched in the source DHIS2 instance using the DHIS2 cli useDataQuery or useDataEngine hooks with a query specified below
 
             const query = {
                     organisationUnits: {
@@ -223,5 +223,5 @@ you can access more documentation on the initialisation by navigating to the fol
 
   ### DHIS2 Data exchange submit
 
-After initializing the in the Dex initialization application, users can go to the Data exchange application in DHIS2. In this application, users can select an initialization option and view a table with data values and their corresponding data element or indicator names. Users then need to click the submit button to transfer these values to the desired DHIS2 instance.
+After initializing in the Dex Initialization application, users can go to the Data exchange application in the same DHIS2 instance. In this application, users can select an initialization option from the dropdown list and view a table with data values and their corresponding data element or indicator names. Users then need to click the submit button to transfer these values to the desired DHIS2 instance. In cases where no values are shown from the selected initialization, it might be that data analytics are not ready, then the personnel assigned to run analytics is responsible to run the analytics so that data is made available for viewing.
 # ADEX-Version-2
