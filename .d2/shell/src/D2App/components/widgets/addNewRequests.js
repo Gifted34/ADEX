@@ -178,7 +178,7 @@ export default function AddNewRequests(props) {
     },
     placeholder: "Enter request name",
     value: name
-  })), /*#__PURE__*/React.createElement(Field, {
+  })), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Field, {
     label: "Input IDScheme"
   }, /*#__PURE__*/React.createElement(SingleSelect, {
     className: "select",
@@ -190,7 +190,7 @@ export default function AddNewRequests(props) {
   }), /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "CODE",
     value: "CODE"
-  }))), /*#__PURE__*/React.createElement(Field, {
+  }))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Field, {
     label: "Output IDScheme"
   }, /*#__PURE__*/React.createElement(SingleSelect, {
     className: "select",
