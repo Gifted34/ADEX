@@ -196,7 +196,6 @@ export default function AddNewRequests(props) {
                 value={name}
               />
             </Field>
-            <br/>
             <Field label = "Input IDScheme">
               <SingleSelect className='select' onChange={
                 (e)=> setInputIDScheme(e.selected)
@@ -206,7 +205,6 @@ export default function AddNewRequests(props) {
               </SingleSelect>
 
             </Field>
-            <br/>
             <Field label="Output IDScheme">
             <SingleSelect className='select' onChange={
                 (e)=> setOutputIDScheme(e.selected)
@@ -216,8 +214,7 @@ export default function AddNewRequests(props) {
               </SingleSelect>
             </Field>
             <div className={`${props?.style?.padding}`}>
-               <CustomScheme style={props?.style} attributes={attributes}/> 
-               
+              <CustomScheme style={props?.style} attributes={attributes}/>
             </div>
           </Box>
           <div className={props?.style?.display}>
