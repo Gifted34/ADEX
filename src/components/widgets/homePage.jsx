@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import DataInitialized from "./dataInitialized";
 import { useDataEngine } from "@dhis2/app-runtime";
 
-
 export default function HomePage(props) {
   const engine = useDataEngine();
   let dataStorePath = "dataStore/DEX_initializer_values";
@@ -24,7 +23,6 @@ export default function HomePage(props) {
     } catch (e) {}
   };
 
-
   return (
     <div
       style={{
@@ -34,6 +32,14 @@ export default function HomePage(props) {
       <ButtonStrip end>
         <Button primary onClick={() => props?.setOpen(!props?.open)}>
           Create new
+        </Button>
+        <Button
+          destructive
+          onClick={() =>
+            props?.setOpenDeleteIntegrations(!props?.openDeleteIntegrations)
+          }
+        >
+          Delete
         </Button>
       </ButtonStrip>
       <Divider />

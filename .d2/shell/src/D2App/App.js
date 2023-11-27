@@ -12,6 +12,7 @@ import DeleteEntry from "./components/forms/deleteEntry";
 import UpdateDataInitialization from "./components/widgets/update.dataStore.dexEntry";
 import IntegrateDataStoreInitializationToDEX from "./components/widgets/integrate.dataStore.dexEntry";
 import UrlValidator from "./services/urlValidator";
+import DeleteIntegration from "./components/forms/deleteEntryIntegrations";
 const query = {
   organisationUnits: {
     resource: "organisationUnits",
@@ -65,7 +66,7 @@ const query = {
 
 // const validater = new UrlValidator();
 const MyApp = () => {
-  var _data$aggregateDataEx2;
+  var _data$aggregateDataEx2, _data$aggregateDataEx3;
   const [formInputValues, setFormInputValues] = useState({
     dexname: "",
     url: ""
@@ -83,6 +84,7 @@ const MyApp = () => {
   // updateFormInputValues
   const [type, setType] = useState("EXTERNAL");
   const [open, setOpen] = useState(false);
+  const [openDeleteIntegrations, setOpenDeleteIntegrations] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openIntegration, setOpenIntegration] = useState(false);
@@ -507,6 +509,7 @@ const MyApp = () => {
         type: "delete"
       };
       engine.mutate(payload).then(res => {
+        refetch();
         if (res.httpStatusCode == 200) {
           setOpenDelete(!openDelete);
           setSuccessMessage(true);
@@ -518,6 +521,29 @@ const MyApp = () => {
         setSuccessMessage(false);
         setHidden(false);
         setMessage("Error occured. Either server or the inputs causes this error.");
+      });
+    }
+  };
+  const deleteDexIntegrations = id => {
+    if (id == null || id == undefined || id == "") {} else {
+      let payload = {
+        resource: `aggregateDataExchanges`,
+        id: id,
+        type: "delete"
+      };
+      engine.mutate(payload).then(res => {
+        if (res.httpStatusCode == 200) {
+          setOpenDeleteIntegrations(!openDeleteIntegrations);
+          setSuccessMessage(true);
+          setHidden(false);
+          setMessage("Data deleted in dhis2 successfully.");
+          setKey(Math.random());
+          // window.location.reload();
+        }
+      }).catch(e => {
+        setSuccessMessage(false);
+        setHidden(false);
+        setMessage("Error occured. Either server or the id causes this error.");
       });
     }
   };
@@ -543,7 +569,9 @@ const MyApp = () => {
     openDelete: openDelete,
     deleteEntry: deleteEntry,
     updateEntry: updateEntry,
-    integrateEntry: integrateEntry
+    integrateEntry: integrateEntry,
+    setOpenDeleteIntegrations: setOpenDeleteIntegrations,
+    openDeleteIntegrations: openDeleteIntegrations
   }) : /*#__PURE__*/React.createElement(React.Fragment, null, path === "View" ? /*#__PURE__*/React.createElement(ViewDataStoreById, {
     id: id,
     setID: setID,
@@ -616,6 +644,11 @@ const MyApp = () => {
     openDelete: openDelete,
     deleteDataEntry: deleteDataEntry,
     data: dataToDelete
+  }), /*#__PURE__*/React.createElement(DeleteIntegration, {
+    deleteDexIntegrations: deleteDexIntegrations,
+    openDeleteIntegrations: openDeleteIntegrations,
+    setOpenDeleteIntegrations: setOpenDeleteIntegrations,
+    aggregateDataExchanges: data === null || data === void 0 ? void 0 : (_data$aggregateDataEx3 = data.aggregateDataExchanges) === null || _data$aggregateDataEx3 === void 0 ? void 0 : _data$aggregateDataEx3.aggregateDataExchanges
   }));
 };
 export default MyApp;

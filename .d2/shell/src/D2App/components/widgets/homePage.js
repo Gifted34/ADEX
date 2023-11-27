@@ -28,7 +28,10 @@ export default function HomePage(props) {
   }, /*#__PURE__*/React.createElement(Button, {
     primary: true,
     onClick: () => props === null || props === void 0 ? void 0 : props.setOpen(!(props !== null && props !== void 0 && props.open))
-  }, "Create new")), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
+  }, "Create new"), /*#__PURE__*/React.createElement(Button, {
+    destructive: true,
+    onClick: () => props === null || props === void 0 ? void 0 : props.setOpenDeleteIntegrations(!(props !== null && props !== void 0 && props.openDeleteIntegrations))
+  }, "Delete")), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
     className: "",
     style: {
       marginTop: "10px"

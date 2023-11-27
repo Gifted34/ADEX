@@ -12,6 +12,7 @@ import DeleteEntry from "./components/forms/deleteEntry";
 import UpdateDataInitialization from "./components/widgets/update.dataStore.dexEntry";
 import IntegrateDataStoreInitializationToDEX from "./components/widgets/integrate.dataStore.dexEntry";
 import UrlValidator from "./services/urlValidator";
+import DeleteIntegration from "./components/forms/deleteEntryIntegrations";
 
 const query = {
   organisationUnits: {
@@ -42,7 +43,15 @@ const query = {
     resource: "dataElements",
     params: {
       paging: false,
-      fields: ["id", "name", "formName", "displayName", "code","aggregationType","domainType"],
+      fields: [
+        "id",
+        "name",
+        "formName",
+        "displayName",
+        "code",
+        "aggregationType",
+        "domainType",
+      ],
     },
   },
   periodTypes: {
@@ -85,6 +94,8 @@ const MyApp = () => {
   // updateFormInputValues
   const [type, setType] = useState("EXTERNAL");
   const [open, setOpen] = useState(false);
+  const [openDeleteIntegrations, setOpenDeleteIntegrations] = useState(false);
+
   const [openDelete, setOpenDelete] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openIntegration, setOpenIntegration] = useState(false);
@@ -97,7 +108,7 @@ const MyApp = () => {
   const [formData, setFormData] = useState();
   const [id, setID] = useState();
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
-  const [update,setUpdate] = useState(false)
+  const [update, setUpdate] = useState(false);
   const [selectedDataDimensionsCodes, setSelectedDataDimensionsCodes] =
     useState([]);
   const [hide, setHidden] = useState(true);
@@ -179,12 +190,12 @@ const MyApp = () => {
                 setOpenIntegration(false);
                 setSuccessMessage(true);
                 setHidden(false);
-                if(update){
+                if (update) {
                   setMessage(
                     "Data exchange initialization updated successifully\nPlease use the Data Exchange app to submit the Data."
                   );
-                  setUpdate(false)    
-                }else{
+                  setUpdate(false);
+                } else {
                   setMessage(
                     "Data exchange initialization is successfull\nPlease use the Data Exchange app to submit the Data."
                   );
@@ -260,7 +271,7 @@ const MyApp = () => {
                 setHidden(false);
               } else {
                 if (existingDEX?.length == 1) {
-                  setUpdate(true)
+                  setUpdate(true);
                   let payload = {
                     resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
                     type: "update",
@@ -539,6 +550,7 @@ const MyApp = () => {
       engine
         .mutate(payload)
         .then((res) => {
+          refetch();
           if (res.httpStatusCode == 200) {
             setOpenDelete(!openDelete);
             setSuccessMessage(true);
@@ -556,6 +568,36 @@ const MyApp = () => {
         });
     }
   };
+
+  const deleteDexIntegrations = (id) => {
+    if (id == null || id == undefined || id == "") {
+    } else {
+      let payload = {
+        resource: `aggregateDataExchanges`,
+        id: id,
+        type: "delete",
+      };
+      engine
+        .mutate(payload)
+        .then((res) => {
+          if (res.httpStatusCode == 200) {
+            setOpenDeleteIntegrations(!openDeleteIntegrations);
+            setSuccessMessage(true);
+            setHidden(false);
+            setMessage("Data deleted in dhis2 successfully.");
+            setKey(Math.random());
+            // window.location.reload();
+          }
+        })
+        .catch((e) => {
+          setSuccessMessage(false);
+          setHidden(false);
+          setMessage(
+            "Error occured. Either server or the id causes this error."
+          );
+        });
+    }
+  };
   return (
     <div>
       <div>
@@ -568,7 +610,9 @@ const MyApp = () => {
               data={data}
               setPath={setPath}
               setID={setID}
-              aggregateDataExchanges={data?.aggregateDataExchanges?.aggregateDataExchanges}
+              aggregateDataExchanges={
+                data?.aggregateDataExchanges?.aggregateDataExchanges
+              }
               setRequest={setRequest}
               styles={classes}
               open={open}
@@ -582,6 +626,8 @@ const MyApp = () => {
               deleteEntry={deleteEntry}
               updateEntry={updateEntry}
               integrateEntry={integrateEntry}
+              setOpenDeleteIntegrations={setOpenDeleteIntegrations}
+              openDeleteIntegrations={openDeleteIntegrations}
             />
           ) : (
             <>
@@ -692,6 +738,14 @@ const MyApp = () => {
         openDelete={openDelete}
         deleteDataEntry={deleteDataEntry}
         data={dataToDelete}
+      />
+      <DeleteIntegration
+        deleteDexIntegrations={deleteDexIntegrations}
+        openDeleteIntegrations={openDeleteIntegrations}
+        setOpenDeleteIntegrations={setOpenDeleteIntegrations}
+        aggregateDataExchanges={
+          data?.aggregateDataExchanges?.aggregateDataExchanges
+        }
       />
     </div>
   );
