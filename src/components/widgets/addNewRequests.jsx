@@ -6,6 +6,8 @@ import {
   Input,
   AlertBar,
   Layer,
+  SingleSelect,
+  SingleSelectOption,
   Center,
   CircularLoader,
 } from "@dhis2/ui";
@@ -36,6 +38,8 @@ export default function AddNewRequests(props) {
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
   const [Dx, setdx] = useState(props?.request?.dx);
+  const [inputIDScheme, setInputIDScheme] = useState()
+  const [outputIDScheme, setOutputIDScheme] = useState()
 
   const setData = (selected) => {
     setdx(selected);
@@ -189,6 +193,23 @@ export default function AddNewRequests(props) {
                 placeholder="Enter request name"
                 value={name}
               />
+            </Field>
+            <Field label = "Input IDScheme">
+              <SingleSelect className='select' onChange={
+                (e)=> setInputIDScheme(e.selected)
+              } prefix="Select input Id scheme">
+                <SingleSelectOption label="UID" value="UID"/>
+                <SingleSelectOption label="CODE" value="CODE"/>
+              </SingleSelect>
+
+            </Field>
+            <Field label="Output IDScheme">
+            <SingleSelect className='select' onChange={
+                (e)=> setOutputIDScheme(e.selected)
+              } prefix="Select output Id scheme">
+                <SingleSelectOption label="UID" value="UID"/>
+                <SingleSelectOption label="CODE" value="CODE"/>
+              </SingleSelect>
             </Field>
           </Box>
           <div className={props?.style?.display}>

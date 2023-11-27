@@ -1,4 +1,4 @@
-import { Button, ButtonStrip, Box, Field, Input, AlertBar, Layer, Center, CircularLoader } from "@dhis2/ui";
+import { Button, ButtonStrip, Box, Field, Input, AlertBar, Layer, SingleSelect, SingleSelectOption, Center, CircularLoader } from "@dhis2/ui";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import PeriodsWidget from "../forms/periodLayout";
@@ -25,6 +25,8 @@ export default function AddNewRequests(props) {
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
   const [Dx, setdx] = useState(props === null || props === void 0 ? void 0 : (_props$request6 = props.request) === null || _props$request6 === void 0 ? void 0 : _props$request6.dx);
+  const [inputIDScheme, setInputIDScheme] = useState();
+  const [outputIDScheme, setOutputIDScheme] = useState();
   const setData = selected => {
     setdx(selected);
     const visualisationId = [];
@@ -174,7 +176,31 @@ export default function AddNewRequests(props) {
     },
     placeholder: "Enter request name",
     value: name
-  }))), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement(Field, {
+    label: "Input IDScheme"
+  }, /*#__PURE__*/React.createElement(SingleSelect, {
+    className: "select",
+    onChange: e => setInputIDScheme(e.selected),
+    prefix: "Select input Id scheme"
+  }, /*#__PURE__*/React.createElement(SingleSelectOption, {
+    label: "UID",
+    value: "UID"
+  }), /*#__PURE__*/React.createElement(SingleSelectOption, {
+    label: "CODE",
+    value: "CODE"
+  }))), /*#__PURE__*/React.createElement(Field, {
+    label: "Output IDScheme"
+  }, /*#__PURE__*/React.createElement(SingleSelect, {
+    className: "select",
+    onChange: e => setOutputIDScheme(e.selected),
+    prefix: "Select output Id scheme"
+  }, /*#__PURE__*/React.createElement(SingleSelectOption, {
+    label: "UID",
+    value: "UID"
+  }), /*#__PURE__*/React.createElement(SingleSelectOption, {
+    label: "CODE",
+    value: "CODE"
+  })))), /*#__PURE__*/React.createElement("div", {
     className: props === null || props === void 0 ? void 0 : (_props$style6 = props.style) === null || _props$style6 === void 0 ? void 0 : _props$style6.display
   }, /*#__PURE__*/React.createElement(Box, {
     className: props === null || props === void 0 ? void 0 : (_props$style7 = props.style) === null || _props$style7 === void 0 ? void 0 : _props$style7.padding
