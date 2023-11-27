@@ -1,4 +1,4 @@
-import { Button, ButtonStrip, Box, Field, Input, AlertBar, Layer, Center, CircularLoader } from "@dhis2/ui";
+import { Button, ButtonStrip, Box, Field, Input, AlertBar, Layer, SingleSelect, SingleSelectOption, Center, CircularLoader } from "@dhis2/ui";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import PeriodsWidget from "../forms/periodLayout";
@@ -174,7 +174,31 @@ export default function AddNewRequests(props) {
     },
     placeholder: "Enter request name",
     value: name
-  }))), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement(Field, {
+    label: "Input IDScheme"
+  }, /*#__PURE__*/React.createElement(SingleSelect, {
+    className: "select",
+    onChange: e => console.log(e),
+    prefix: "Select input Id scheme"
+  }, /*#__PURE__*/React.createElement(SingleSelectOption, {
+    label: "UID",
+    value: "UID"
+  }), /*#__PURE__*/React.createElement(SingleSelectOption, {
+    label: "CODE",
+    value: "CODE"
+  }))), /*#__PURE__*/React.createElement(Field, {
+    label: "Output IDScheme"
+  }, /*#__PURE__*/React.createElement(SingleSelect, {
+    className: "select",
+    onChange: e => console.log(e),
+    prefix: "Select output Id scheme"
+  }, /*#__PURE__*/React.createElement(SingleSelectOption, {
+    label: "UID",
+    value: "UID"
+  }), /*#__PURE__*/React.createElement(SingleSelectOption, {
+    label: "CODE",
+    value: "CODE"
+  })))), /*#__PURE__*/React.createElement("div", {
     className: props === null || props === void 0 ? void 0 : (_props$style6 = props.style) === null || _props$style6 === void 0 ? void 0 : _props$style6.display
   }, /*#__PURE__*/React.createElement(Box, {
     className: props === null || props === void 0 ? void 0 : (_props$style7 = props.style) === null || _props$style7 === void 0 ? void 0 : _props$style7.padding

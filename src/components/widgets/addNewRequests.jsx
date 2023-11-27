@@ -6,6 +6,8 @@ import {
   Input,
   AlertBar,
   Layer,
+  SingleSelect,
+  SingleSelectOption,
   Center,
   CircularLoader,
 } from "@dhis2/ui";
@@ -189,6 +191,23 @@ export default function AddNewRequests(props) {
                 placeholder="Enter request name"
                 value={name}
               />
+            </Field>
+            <Field label = "Input IDScheme">
+              <SingleSelect className='select' onChange={
+                (e)=> console.log(e)
+              } prefix="Select input Id scheme">
+                <SingleSelectOption label="UID" value="UID"/>
+                <SingleSelectOption label="CODE" value="CODE"/>
+              </SingleSelect>
+
+            </Field>
+            <Field label="Output IDScheme">
+            <SingleSelect className='select' onChange={
+                (e)=> console.log(e)
+              } prefix="Select output Id scheme">
+                <SingleSelectOption label="UID" value="UID"/>
+                <SingleSelectOption label="CODE" value="CODE"/>
+              </SingleSelect>
             </Field>
           </Box>
           <div className={props?.style?.display}>
