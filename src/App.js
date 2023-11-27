@@ -19,26 +19,24 @@ const query = {
     resource: "organisationUnits",
     params: {
       paging: false,
-      fields: [
-        "id,name,level,path,displayName,code,children,ancestors,created,href,user,users,userAccesses",
-      ],
+      fields: ["id,name,level,path,displayName,code"],
       order: "level",
     },
   },
   attribute: {
-    resource : "attributes",
-    params : {
-      paging : false,
-      fields : ['displayName','id','objectTypes']
-    }
-  },
-  visualizations: {
-    resource: "visualizations",
+    resource: "attributes",
     params: {
       paging: false,
-      field: ["id", "displayName"],
+      fields: ["displayName", "id", "objectTypes"],
     },
   },
+  // visualizations: {
+  //   resource: "visualizations",
+  //   params: {
+  //     paging: false,
+  //     field: ["id", "displayName"],
+  //   },
+  // },
   indicators: {
     resource: "indicators",
     params: {
@@ -260,7 +258,7 @@ const MyApp = () => {
               dataToIntegrate?.value?.source?.requests?.map((dd) => {
                 holder.push({
                   name: dd?.name,
-                  visualization: dd?.visualizations,
+                  // visualization: dd?.visualizations,
                   dx: dd?.dx,
                   pe: dd?.pe,
                   ou: dd?.ou,
@@ -336,7 +334,7 @@ const MyApp = () => {
               dataToIntegrate?.value?.source?.requests?.map((dd) => {
                 holder.push({
                   name: dd?.name,
-                  visualization: dd?.visualizations,
+                  // visualization: dd?.visualizations,
                   dx: dd?.dx,
                   pe: dd?.pe,
                   ou: dd?.ou,

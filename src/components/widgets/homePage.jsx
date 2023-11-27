@@ -39,7 +39,7 @@ export default function HomePage(props) {
             props?.setOpenDeleteIntegrations(!props?.openDeleteIntegrations)
           }
         >
-          Delete
+          Delete Initialisation
         </Button>
       </ButtonStrip>
       <Divider />
