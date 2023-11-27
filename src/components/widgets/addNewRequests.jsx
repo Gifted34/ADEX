@@ -38,6 +38,8 @@ export default function AddNewRequests(props) {
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
   const [Dx, setdx] = useState(props?.request?.dx);
+  const [inputIDScheme, setInputIDScheme] = useState()
+  const [outputIDScheme, setOutputIDScheme] = useState()
 
   const setData = (selected) => {
     setdx(selected);
@@ -194,7 +196,7 @@ export default function AddNewRequests(props) {
             </Field>
             <Field label = "Input IDScheme">
               <SingleSelect className='select' onChange={
-                (e)=> console.log(e)
+                (e)=> setInputIDScheme(e.selected)
               } prefix="Select input Id scheme">
                 <SingleSelectOption label="UID" value="UID"/>
                 <SingleSelectOption label="CODE" value="CODE"/>
@@ -203,7 +205,7 @@ export default function AddNewRequests(props) {
             </Field>
             <Field label="Output IDScheme">
             <SingleSelect className='select' onChange={
-                (e)=> console.log(e)
+                (e)=> setOutputIDScheme(e.selected)
               } prefix="Select output Id scheme">
                 <SingleSelectOption label="UID" value="UID"/>
                 <SingleSelectOption label="CODE" value="CODE"/>

@@ -25,6 +25,8 @@ export default function AddNewRequests(props) {
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
   const [Dx, setdx] = useState(props === null || props === void 0 ? void 0 : (_props$request6 = props.request) === null || _props$request6 === void 0 ? void 0 : _props$request6.dx);
+  const [inputIDScheme, setInputIDScheme] = useState();
+  const [outputIDScheme, setOutputIDScheme] = useState();
   const setData = selected => {
     setdx(selected);
     const visualisationId = [];
@@ -178,7 +180,7 @@ export default function AddNewRequests(props) {
     label: "Input IDScheme"
   }, /*#__PURE__*/React.createElement(SingleSelect, {
     className: "select",
-    onChange: e => console.log(e),
+    onChange: e => setInputIDScheme(e.selected),
     prefix: "Select input Id scheme"
   }, /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "UID",
@@ -190,7 +192,7 @@ export default function AddNewRequests(props) {
     label: "Output IDScheme"
   }, /*#__PURE__*/React.createElement(SingleSelect, {
     className: "select",
-    onChange: e => console.log(e),
+    onChange: e => setOutputIDScheme(e.selected),
     prefix: "Select output Id scheme"
   }, /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "UID",
