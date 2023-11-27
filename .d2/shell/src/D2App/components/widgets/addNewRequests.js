@@ -5,13 +5,15 @@ import PeriodsWidget from "../forms/periodLayout";
 import DataDimensionsCodes from "../forms/dataDimensionsCodes";
 import OrgUnits from "../forms/orgUnits";
 import { useDataEngine, useDataMutation } from "@dhis2/app-runtime";
+import CustomScheme from "./customScheme";
 export default function AddNewRequests(props) {
-  var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$request, _props$request2, _props$request3, _props$request4, _props$request5, _props$request6, _props$style, _props$style2, _props$style3, _props$request7, _props$style4, _props$style5, _props$style6, _props$style7, _props$request8, _props$style8, _props$request9, _props$request10, _props$style9;
+  var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$data5, _props$data5$attribut, _props$request, _props$request2, _props$request3, _props$request4, _props$request5, _props$request6, _props$style, _props$style2, _props$style3, _props$request7, _props$style4, _props$style5, _props$style6, _props$style7, _props$style8, _props$request8, _props$style9, _props$request9, _props$request10, _props$style10;
   const engine = useDataEngine();
   const orgUnits = props === null || props === void 0 ? void 0 : (_props$data = props.data) === null || _props$data === void 0 ? void 0 : (_props$data$organisat = _props$data.organisationUnits) === null || _props$data$organisat === void 0 ? void 0 : _props$data$organisat.organisationUnits;
   const Visualizations = props === null || props === void 0 ? void 0 : (_props$data2 = props.data) === null || _props$data2 === void 0 ? void 0 : (_props$data2$visualiz = _props$data2.visualizations) === null || _props$data2$visualiz === void 0 ? void 0 : _props$data2$visualiz.visualizations;
   const dataElements = props === null || props === void 0 ? void 0 : (_props$data3 = props.data) === null || _props$data3 === void 0 ? void 0 : (_props$data3$dataElem = _props$data3.dataElements) === null || _props$data3$dataElem === void 0 ? void 0 : _props$data3$dataElem.dataElements;
   const indicators = props === null || props === void 0 ? void 0 : (_props$data4 = props.data) === null || _props$data4 === void 0 ? void 0 : (_props$data4$indicato = _props$data4.indicators) === null || _props$data4$indicato === void 0 ? void 0 : _props$data4$indicato.indicators;
+  const attributes = props === null || props === void 0 ? void 0 : (_props$data5 = props.data) === null || _props$data5 === void 0 ? void 0 : (_props$data5$attribut = _props$data5.attribute) === null || _props$data5$attribut === void 0 ? void 0 : _props$data5$attribut.attributes;
   const path = location.pathname.split("/").slice(-1)[0];
   const dataStorePath = `dataStore/DEX_initializer_values/${props === null || props === void 0 ? void 0 : props.id}`;
   const [selectVisualisations, setVisualisation] = useState(props === null || props === void 0 ? void 0 : (_props$request = props.request) === null || _props$request === void 0 ? void 0 : _props$request.visualization);
@@ -200,15 +202,20 @@ export default function AddNewRequests(props) {
   }), /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "CODE",
     value: "CODE"
-  })))), /*#__PURE__*/React.createElement("div", {
-    className: props === null || props === void 0 ? void 0 : (_props$style6 = props.style) === null || _props$style6 === void 0 ? void 0 : _props$style6.display
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: `${props === null || props === void 0 ? void 0 : (_props$style6 = props.style) === null || _props$style6 === void 0 ? void 0 : _props$style6.padding}`
+  }, /*#__PURE__*/React.createElement(CustomScheme, {
+    style: props === null || props === void 0 ? void 0 : props.style,
+    attributes: attributes
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: props === null || props === void 0 ? void 0 : (_props$style7 = props.style) === null || _props$style7 === void 0 ? void 0 : _props$style7.display
   }, /*#__PURE__*/React.createElement(Box, {
-    className: props === null || props === void 0 ? void 0 : (_props$style7 = props.style) === null || _props$style7 === void 0 ? void 0 : _props$style7.padding
+    className: props === null || props === void 0 ? void 0 : (_props$style8 = props.style) === null || _props$style8 === void 0 ? void 0 : _props$style8.padding
   }, /*#__PURE__*/React.createElement(PeriodsWidget, {
     setPeriods: setPeriods,
     selected: props === null || props === void 0 ? void 0 : (_props$request8 = props.request) === null || _props$request8 === void 0 ? void 0 : _props$request8.pe
   })), /*#__PURE__*/React.createElement(Box, {
-    className: props === null || props === void 0 ? void 0 : (_props$style8 = props.style) === null || _props$style8 === void 0 ? void 0 : _props$style8.padding
+    className: props === null || props === void 0 ? void 0 : (_props$style9 = props.style) === null || _props$style9 === void 0 ? void 0 : _props$style9.padding
   }, /*#__PURE__*/React.createElement(DataDimensionsCodes, {
     setData: setData,
     selectedDx: props === null || props === void 0 ? void 0 : (_props$request9 = props.request) === null || _props$request9 === void 0 ? void 0 : _props$request9.dx,
@@ -217,10 +224,11 @@ export default function AddNewRequests(props) {
     indicators: indicators,
     visualizations: Visualizations
   }))), /*#__PURE__*/React.createElement("div", {
-    className: props === null || props === void 0 ? void 0 : (_props$style9 = props.style) === null || _props$style9 === void 0 ? void 0 : _props$style9.padding
+    className: props === null || props === void 0 ? void 0 : (_props$style10 = props.style) === null || _props$style10 === void 0 ? void 0 : _props$style10.padding
   }, /*#__PURE__*/React.createElement(ButtonStrip, {
     end: true
   }, /*#__PURE__*/React.createElement(Button, {
+    destructive: true,
     large: true,
     onClick: () => props === null || props === void 0 ? void 0 : props.setPath("Home")
   }, "Cancel"), /*#__PURE__*/React.createElement(Button, {
