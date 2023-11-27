@@ -1,8 +1,7 @@
 import { Box, Button, ButtonStrip, Modal, ModalActions, ModalContent, ModalTitle, TabBar,Tab,Box, Field, SingleSelect, SingleSelectOption } from '@dhis2/ui';
-import { set } from 'lodash';
 import React,{useState} from 'react';
 
-function CustomScheme(props) {
+export default function CustomScheme() {
     const [open, setOpen] = useState(false)
     const [tabSelected,setTab] = useState(1)
 
@@ -69,5 +68,3 @@ function CustomScheme(props) {
         </>
     );
 }
-
-export default CustomScheme;
