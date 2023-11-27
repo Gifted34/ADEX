@@ -21,6 +21,13 @@ const query = {
       order: "level"
     }
   },
+  attribute: {
+    resource: "attributes",
+    params: {
+      paging: false,
+      fields: ['displayName', 'id', 'objectTypes']
+    }
+  },
   visualizations: {
     resource: "visualizations",
     params: {
