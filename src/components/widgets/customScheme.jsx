@@ -14,6 +14,7 @@ export default function CustomScheme(props) {
     const [orgAttribute, setOrgAt] = useState()
     const [dxAttribute, setDx] = useState()
 
+    
     useEffect(()=>{
         setOrgAttr(props?.attributes?.filter(attr => attr?.objectTypes?.includes('ORGANISATION_UNIT')))
         setDxAttr(props?.attributes?.filter(attr => attr?.objectTypes?.includes('DATA_ELEMENT') || attr?.objectTypes?.includes('INDICATOR') ))
