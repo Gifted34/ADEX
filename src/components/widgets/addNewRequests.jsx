@@ -17,6 +17,7 @@ import PeriodsWidget from "../forms/periodLayout";
 import DataDimensionsCodes from "../forms/dataDimensionsCodes";
 import OrgUnits from "../forms/orgUnits";
 import { useDataEngine, useDataMutation } from "@dhis2/app-runtime";
+import CustomScheme from "./customScheme";
 
 export default function AddNewRequests(props) {
   const engine = useDataEngine();
@@ -25,6 +26,7 @@ export default function AddNewRequests(props) {
   const Visualizations = props?.data?.visualizations?.visualizations;
   const dataElements = props?.data?.dataElements?.dataElements;
   const indicators = props?.data?.indicators?.indicators;
+  const attributes = props?.data?.attribute?.attributes
   const path = location.pathname.split("/").slice(-1)[0];
   const dataStorePath = `dataStore/DEX_initializer_values/${props?.id}`;
   const [selectVisualisations, setVisualisation] = useState(props?.request?.visualization);
@@ -211,6 +213,9 @@ export default function AddNewRequests(props) {
                 <SingleSelectOption label="CODE" value="CODE"/>
               </SingleSelect>
             </Field>
+            <div className={`${props?.style?.padding}`}>
+              <CustomScheme style={props?.style} attributes={attributes}/>
+            </div>
           </Box>
           <div className={props?.style?.display}>
             <Box className={props?.style?.padding}>
@@ -229,7 +234,7 @@ export default function AddNewRequests(props) {
           </div>
           <div className={props?.style?.padding}>
             <ButtonStrip end>
-              <Button large onClick={() => props?.setPath("Home")}>
+              <Button destructive large onClick={() => props?.setPath("Home")}>
                 Cancel
               </Button>
               <Button primary large onClick={() => saveData()}>
