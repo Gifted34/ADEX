@@ -43,8 +43,11 @@ export default function AddNewRequests(props) {
   const [inputIDScheme, setInputIDScheme] = useState()
   const [outputIDScheme, setOutputIDScheme] = useState()
 
-  const [orgInputSchema,setOrgInputSchema] = useState()
-  const [dxInputSchema, setDxInput] = useState()
+  const [orgInputScheme,setOrgInputSchema] = useState()
+  const [dxInputScheme, setDxInput] = useState()
+
+  const [orgOutputScheme, setOrgOutputScheme] = useState()
+  const [dxOutputScheme, setDxOutputScheme] = useState()
 
   const setData = (selected) => {
     setdx(selected);
@@ -219,7 +222,13 @@ export default function AddNewRequests(props) {
             </Field>
             <br/>
             <div className={`${props?.style?.padding}`}>
-              <CustomScheme style={props?.style} attributes={attributes} setOrgInputSchema={setOrgInputSchema} setDxInput={setDxInput}/>
+              <CustomScheme style={props?.style} 
+                attributes={attributes}
+                setOrgInputSchema={setOrgInputSchema} 
+                setDxInput={setDxInput}
+                setOrgOutputScheme={d}
+                setDxOutputScheme={setDxOutputScheme}
+                />
             </div>
           </Box>
           <div className={props?.style?.display}>
