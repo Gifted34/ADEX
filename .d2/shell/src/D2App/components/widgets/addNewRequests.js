@@ -29,6 +29,10 @@ export default function AddNewRequests(props) {
   const [Dx, setdx] = useState(props === null || props === void 0 ? void 0 : (_props$request6 = props.request) === null || _props$request6 === void 0 ? void 0 : _props$request6.dx);
   const [inputIDScheme, setInputIDScheme] = useState();
   const [outputIDScheme, setOutputIDScheme] = useState();
+  const [orgInputScheme, setOrgInputSchema] = useState();
+  const [dxInputScheme, setDxInput] = useState();
+  const [orgOutputScheme, setOrgOutputScheme] = useState();
+  const [dxOutputScheme, setDxOutputScheme] = useState();
   const setData = selected => {
     setdx(selected);
     const visualisationId = [];
@@ -181,32 +185,38 @@ export default function AddNewRequests(props) {
   })), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Field, {
     label: "Input IDScheme"
   }, /*#__PURE__*/React.createElement(SingleSelect, {
+    selected: inputIDScheme,
     className: "select",
     onChange: e => setInputIDScheme(e.selected),
-    prefix: "Select input Id scheme"
+    placeholder: "Select input Id scheme"
   }, /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "UID",
     value: "UID"
   }), /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "CODE",
     value: "CODE"
-  }))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Field, {
+  })), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement(Field, {
     label: "Output IDScheme"
   }, /*#__PURE__*/React.createElement(SingleSelect, {
+    selected: outputIDScheme,
     className: "select",
     onChange: e => setOutputIDScheme(e.selected),
-    prefix: "Select output Id scheme"
+    placeholder: "Select output Id scheme"
   }, /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "UID",
     value: "UID"
   }), /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "CODE",
     value: "CODE"
-  }))), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
     className: `${props === null || props === void 0 ? void 0 : (_props$style6 = props.style) === null || _props$style6 === void 0 ? void 0 : _props$style6.padding}`
   }, /*#__PURE__*/React.createElement(CustomScheme, {
     style: props === null || props === void 0 ? void 0 : props.style,
-    attributes: attributes
+    attributes: attributes,
+    setOrgInputSchema: setOrgInputSchema,
+    setDxInput: setDxInput,
+    setOrgOutputScheme: setOrgOutputScheme,
+    setDxOutputScheme: setDxOutputScheme
   }))), /*#__PURE__*/React.createElement("div", {
     className: props === null || props === void 0 ? void 0 : (_props$style7 = props.style) === null || _props$style7 === void 0 ? void 0 : _props$style7.display
   }, /*#__PURE__*/React.createElement(Box, {
