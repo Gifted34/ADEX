@@ -226,7 +226,7 @@ export default function AddNewRequests(props) {
                 attributes={attributes}
                 setOrgInputSchema={setOrgInputSchema} 
                 setDxInput={setDxInput}
-                setOrgOutputScheme={d}
+                setOrgOutputScheme={setOrgOutputScheme}
                 setDxOutputScheme={setDxOutputScheme}
                 />
             </div>
