@@ -206,7 +206,7 @@ export default function AddNewRequests(props) {
             <Field label = "Input IDScheme">
               <SingleSelect selected={inputIDScheme} className='select' onChange={
                 (e)=> setInputIDScheme(e.selected)
-              } prefix="Select input Id scheme">
+              } placeholder="Select input Id scheme">
                 <SingleSelectOption label="UID" value="UID"/>
                 <SingleSelectOption label="CODE" value="CODE"/>
               </SingleSelect>
@@ -215,7 +215,7 @@ export default function AddNewRequests(props) {
             <Field label="Output IDScheme">
             <SingleSelect selected={outputIDScheme} className='select' onChange={
                 (e)=> setOutputIDScheme(e.selected)
-              } prefix="Select output Id scheme">
+              } placeholder="Select output Id scheme">
                 <SingleSelectOption label="UID" value="UID"/>
                 <SingleSelectOption label="CODE" value="CODE"/>
               </SingleSelect>
