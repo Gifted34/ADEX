@@ -26,10 +26,12 @@ export default function AddNewRequests(props) {
   const Visualizations = props?.data?.visualizations?.visualizations;
   const dataElements = props?.data?.dataElements?.dataElements;
   const indicators = props?.data?.indicators?.indicators;
-  const attributes = props?.data?.attribute?.attributes
+  const attributes = props?.data?.attribute?.attributes;
   const path = location.pathname.split("/").slice(-1)[0];
   const dataStorePath = `dataStore/DEX_initializer_values/${props?.id}`;
-  const [selectVisualisations, setVisualisation] = useState(props?.request?.visualization);
+  const [selectVisualisations, setVisualisation] = useState(
+    props?.request?.visualization
+  );
   const [dx, setDx] = useState(props?.request?.dx);
   const [name, setName] = useState(props?.request?.name);
   const [periods, setPeriods] = useState(props?.request?.pe);
@@ -40,8 +42,8 @@ export default function AddNewRequests(props) {
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
   const [Dx, setdx] = useState(props?.request?.dx);
-  const [inputIDScheme, setInputIDScheme] = useState()
-  const [outputIDScheme, setOutputIDScheme] = useState()
+  const [inputIDScheme, setInputIDScheme] = useState();
+  const [outputIDScheme, setOutputIDScheme] = useState();
 
   const [orgInputScheme,setOrgInputSchema] = useState()
   const [dxInputScheme, setDxInput] = useState()
@@ -51,10 +53,10 @@ export default function AddNewRequests(props) {
 
   const setData = (selected) => {
     setdx(selected);
-    const visualisationId = [];
-    Visualizations.map((Viz) => visualisationId.push(Viz.id));
-    setVisualisation(_.intersection(selected, visualisationId));
-    setDx(_.difference(selected, _.intersection(selected, visualisationId)));
+    // const visualisationId = [];
+    // Visualizations.map((Viz) => visualisationId.push(Viz.id));
+    // setVisualisation(_.intersection(selected, visualisationId));
+    // setDx(_.difference(selected, _.intersection(selected, visualisationId)));
   };
 
   const setOrgUnits = (orgs) => {
@@ -141,7 +143,7 @@ export default function AddNewRequests(props) {
             requests: [
               {
                 name: name,
-                visualization: selectVisualisations,
+                // visualization: selectVisualisations,
                 dx: dx,
                 pe: periods,
                 ou: orgS,
@@ -153,10 +155,12 @@ export default function AddNewRequests(props) {
         };
         send(dStore);
       } else {
-        let arr = dataStore?.source?.requests?.filter(req => req.name !== name)
+        let arr = dataStore?.source?.requests?.filter(
+          (req) => req.name !== name
+        );
         arr.push({
           name: name,
-          visualization: selectVisualisations,
+          // visualization: selectVisualisations,
           dx: dx,
           pe: periods,
           ou: orgS,
@@ -189,7 +193,11 @@ export default function AddNewRequests(props) {
       )}
       <Box className={props?.style?.display}>
         <Box className={props?.style?.padding}>
-          <OrgUnits orgUnits={orgUnits} setOrg={setOrgUnits} selected={props?.request?.ou} />
+          <OrgUnits
+            orgUnits={orgUnits}
+            setOrg={setOrgUnits}
+            selected={props?.request?.ou}
+          />
         </Box>
         <div>
           <Box className={`${props?.style?.width} ${props?.style?.padding}`}>
@@ -233,7 +241,10 @@ export default function AddNewRequests(props) {
           </Box>
           <div className={props?.style?.display}>
             <Box className={props?.style?.padding}>
-              <PeriodsWidget setPeriods={setPeriods} selected={props?.request?.pe} />
+              <PeriodsWidget
+                setPeriods={setPeriods}
+                selected={props?.request?.pe}
+              />
             </Box>
             <Box className={props?.style?.padding}>
               <DataDimensionsCodes
@@ -242,7 +253,7 @@ export default function AddNewRequests(props) {
                 selectedVis={props?.request?.visualization}
                 dataElements={dataElements}
                 indicators={indicators}
-                visualizations={Visualizations}
+                // visualizations={Visualizations}
               />
             </Box>
           </div>
@@ -272,7 +283,7 @@ export default function AddNewRequests(props) {
                 setTimeout(() => props?.setPath("Home"), 1000);
               }}
             >
-              Innitialisation saved succesifuly
+              Initialisation saved succesifuly
             </AlertBar>
           </div>
         </div>

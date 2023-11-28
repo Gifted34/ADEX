@@ -18,7 +18,7 @@ const query = {
     resource: "organisationUnits",
     params: {
       paging: false,
-      fields: ["id,name,level,path,displayName,code,children,ancestors,created,href,user,users,userAccesses"],
+      fields: ["id,name,level,path,displayName,code"],
       order: "level"
     }
   },
@@ -225,7 +225,7 @@ const MyApp = () => {
               dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu12 = dataToIntegrate.value) === null || _dataToIntegrate$valu12 === void 0 ? void 0 : (_dataToIntegrate$valu13 = _dataToIntegrate$valu12.source) === null || _dataToIntegrate$valu13 === void 0 ? void 0 : (_dataToIntegrate$valu14 = _dataToIntegrate$valu13.requests) === null || _dataToIntegrate$valu14 === void 0 ? void 0 : _dataToIntegrate$valu14.map(dd => {
                 holder.push({
                   name: dd === null || dd === void 0 ? void 0 : dd.name,
-                  visualization: dd === null || dd === void 0 ? void 0 : dd.visualizations,
+                  // visualization: dd?.visualizations,
                   dx: dd === null || dd === void 0 ? void 0 : dd.dx,
                   pe: dd === null || dd === void 0 ? void 0 : dd.pe,
                   ou: dd === null || dd === void 0 ? void 0 : dd.ou,
@@ -300,7 +300,7 @@ const MyApp = () => {
               dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu24 = dataToIntegrate.value) === null || _dataToIntegrate$valu24 === void 0 ? void 0 : (_dataToIntegrate$valu25 = _dataToIntegrate$valu24.source) === null || _dataToIntegrate$valu25 === void 0 ? void 0 : (_dataToIntegrate$valu26 = _dataToIntegrate$valu25.requests) === null || _dataToIntegrate$valu26 === void 0 ? void 0 : _dataToIntegrate$valu26.map(dd => {
                 holder.push({
                   name: dd === null || dd === void 0 ? void 0 : dd.name,
-                  visualization: dd === null || dd === void 0 ? void 0 : dd.visualizations,
+                  // visualization: dd?.visualizations,
                   dx: dd === null || dd === void 0 ? void 0 : dd.dx,
                   pe: dd === null || dd === void 0 ? void 0 : dd.pe,
                   ou: dd === null || dd === void 0 ? void 0 : dd.ou,

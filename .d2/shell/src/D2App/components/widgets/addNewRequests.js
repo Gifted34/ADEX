@@ -35,11 +35,12 @@ export default function AddNewRequests(props) {
   const [dxOutputScheme, setDxOutputScheme] = useState();
   const setData = selected => {
     setdx(selected);
-    const visualisationId = [];
-    Visualizations.map(Viz => visualisationId.push(Viz.id));
-    setVisualisation(_.intersection(selected, visualisationId));
-    setDx(_.difference(selected, _.intersection(selected, visualisationId)));
+    // const visualisationId = [];
+    // Visualizations.map((Viz) => visualisationId.push(Viz.id));
+    // setVisualisation(_.intersection(selected, visualisationId));
+    // setDx(_.difference(selected, _.intersection(selected, visualisationId)));
   };
+
   const setOrgUnits = orgs => {
     let array = [];
     orgs === null || orgs === void 0 ? void 0 : orgs.map(object => {
@@ -121,7 +122,7 @@ export default function AddNewRequests(props) {
           source: {
             requests: [{
               name: name,
-              visualization: selectVisualisations,
+              // visualization: selectVisualisations,
               dx: dx,
               pe: periods,
               ou: orgS,
@@ -136,7 +137,7 @@ export default function AddNewRequests(props) {
         let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : (_dataStore$source2$re = _dataStore$source2.requests) === null || _dataStore$source2$re === void 0 ? void 0 : _dataStore$source2$re.filter(req => req.name !== name);
         arr.push({
           name: name,
-          visualization: selectVisualisations,
+          // visualization: selectVisualisations,
           dx: dx,
           pe: periods,
           ou: orgS,
@@ -231,8 +232,8 @@ export default function AddNewRequests(props) {
     selectedDx: props === null || props === void 0 ? void 0 : (_props$request9 = props.request) === null || _props$request9 === void 0 ? void 0 : _props$request9.dx,
     selectedVis: props === null || props === void 0 ? void 0 : (_props$request10 = props.request) === null || _props$request10 === void 0 ? void 0 : _props$request10.visualization,
     dataElements: dataElements,
-    indicators: indicators,
-    visualizations: Visualizations
+    indicators: indicators
+    // visualizations={Visualizations}
   }))), /*#__PURE__*/React.createElement("div", {
     className: props === null || props === void 0 ? void 0 : (_props$style10 = props.style) === null || _props$style10 === void 0 ? void 0 : _props$style10.padding
   }, /*#__PURE__*/React.createElement(ButtonStrip, {
@@ -258,5 +259,5 @@ export default function AddNewRequests(props) {
       setHidden(true);
       setTimeout(() => props === null || props === void 0 ? void 0 : props.setPath("Home"), 1000);
     }
-  }, "Innitialisation saved succesifuly")))));
+  }, "Initialisation saved succesifuly")))));
 }
