@@ -43,6 +43,9 @@ export default function AddNewRequests(props) {
   const [inputIDScheme, setInputIDScheme] = useState()
   const [outputIDScheme, setOutputIDScheme] = useState()
 
+  const [orgInputSchema,setOrgInputSchema] = useState()
+  const [dxInputSchema, setDxInput] = useState()
+
   const setData = (selected) => {
     setdx(selected);
     const visualisationId = [];
@@ -196,25 +199,27 @@ export default function AddNewRequests(props) {
                 value={name}
               />
             </Field>
+            <br/>
             <Field label = "Input IDScheme">
-              <SingleSelect className='select' onChange={
+              <SingleSelect selected={inputIDScheme} className='select' onChange={
                 (e)=> setInputIDScheme(e.selected)
               } prefix="Select input Id scheme">
                 <SingleSelectOption label="UID" value="UID"/>
                 <SingleSelectOption label="CODE" value="CODE"/>
               </SingleSelect>
-
+              <br/>
             </Field>
             <Field label="Output IDScheme">
-            <SingleSelect className='select' onChange={
+            <SingleSelect selected={outputIDScheme} className='select' onChange={
                 (e)=> setOutputIDScheme(e.selected)
               } prefix="Select output Id scheme">
                 <SingleSelectOption label="UID" value="UID"/>
                 <SingleSelectOption label="CODE" value="CODE"/>
               </SingleSelect>
             </Field>
+            <br/>
             <div className={`${props?.style?.padding}`}>
-              <CustomScheme style={props?.style} attributes={attributes}/>
+              <CustomScheme style={props?.style} attributes={attributes} setOrgInputSchema={setOrgInputSchema} setDxInput={setDxInput}/>
             </div>
           </Box>
           <div className={props?.style?.display}>
