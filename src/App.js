@@ -32,13 +32,7 @@ const query = {
       fields : ['displayName','id','objectTypes']
     }
   },
-  visualizations: {
-    resource: "visualizations",
-    params: {
-      paging: false,
-      field: ["id", "displayName"],
-    },
-  },
+  
   indicators: {
     resource: "indicators",
     params: {
