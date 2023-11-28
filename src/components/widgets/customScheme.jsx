@@ -43,16 +43,26 @@ export default function CustomScheme(props) {
             setLayer(true)
         }else{
             if(dxinIDScheme === 'attribute'){
-                props?.setDxInput()
+                props?.setDxInput(`attribute:${dxAttribute}`)
             }else{
-
+                props?.setDxInput(dxinIDScheme)
             }
             if(orginIDScheme === 'attribute'){
                 props?.setOrgInputSchema(`attribute:${orgAttribute}`)
             }else{
                 props?.setOrgInputSchema(orginIDScheme)
             }
-
+            if(dxoutIDScheme === 'attribute'){
+                props?.setDxOutputScheme(`attribute:${dxOutAttr}`)
+            }else{
+                props?.setDxOutputScheme(dxoutIDScheme)
+            }
+            if(orgoutIDScheme === 'attribute'){
+                props?.setOrgOutputScheme(`attribute:${orgOutAtr}`)
+            }else{
+                props?.setOrgOutputScheme(orgoutIDScheme)
+            }
+            setOpen(false)
         }
     }
 
