@@ -1,24 +1,60 @@
-import { ButtonStrip,Button, Modal, ModalTitle, ModalActions, ModalContent, Box, TabBar, Tab, Field, SingleSelect, SingleSelectOption } from '@dhis2/ui';
+import { ButtonStrip,Button, Modal, ModalTitle, ModalActions, ModalContent, Box, TabBar, Tab, Field, SingleSelect, SingleSelectOption, AlertBar, Layer } from '@dhis2/ui';
 import React,{useState,useEffect} from 'react';
 
 export default function CustomScheme(props) {
     const [open, setOpen] = useState(false)
+    const [layerOpen, setLayer] = useState(false)
+
     const [tabSelected,setTab] = useState(1)
+    //input schemee
     const [dxinIDScheme, setDxInScheme] = useState()
     const [orginIDScheme,setOrgIn] = useState()
+
+    // output data element and org scheme
     const [dxoutIDScheme, setDxoutScheme] = useState()
     const [orgoutIDScheme,setOrgOut] = useState()
-    
-    const [orgAttr,setOrgAttr] = useState()
-    const [dxAttr, setDxAttr] = useState()
+
+    //Input org and data element attribute
     const [orgAttribute, setOrgAt] = useState()
     const [dxAttribute, setDx] = useState()
 
+    //output org and data element attributes
+    const [dxOutAttr, setDxOutAt] = useState()
+    const [orgOutAtr, setOrgOutAt] = useState()
+    
+    //attributes from DHIS2 instance
+    const [orgAttr,setOrgAttr] = useState()
+    const [dxAttr, setDxAttr] = useState()
+
+
+    const [message,setMessage] = useState()
     
     useEffect(()=>{
         setOrgAttr(props?.attributes?.filter(attr => attr?.objectTypes?.includes('ORGANISATION_UNIT')))
         setDxAttr(props?.attributes?.filter(attr => attr?.objectTypes?.includes('DATA_ELEMENT') || attr?.objectTypes?.includes('INDICATOR') ))
     },[])
+
+    const saveScheme = () => {
+        if((dxinIDScheme === 'attribute' && dxAttribute === undefined) || (dxoutIDScheme === 'attribute' && dxOutAttr === undefined)){
+            setMessage("Data element attribute is missing")
+            setLayer(true)
+        }else if((orginIDScheme === 'attribute' && orgAttribute === undefined) || (orgoutIDScheme === 'attribute' && orgOutAtr === undefined)){
+            setMessage("Organisation unit attribut is missing")
+            setLayer(true)
+        }else{
+            if(dxinIDScheme === 'attribute'){
+                props?.setDxInput()
+            }else{
+
+            }
+            if(orginIDScheme === 'attribute'){
+                props?.setOrgInputSchema(`attribute:${orgAttribute}`)
+            }else{
+                props?.setOrgInputSchema(orginIDScheme)
+            }
+
+        }
+    }
 
     return (
         <>
@@ -82,7 +118,7 @@ export default function CustomScheme(props) {
                              </Field>
                              <br/>
                              {dxoutIDScheme === 'attribute' && <Field label='data element attribute'>
-                                <SingleSelect className='select' selected={dxAttribute} onChange={e => setDx(e.selected)} empty="No data element attributes at present" >
+                                <SingleSelect className='select' selected={dxOutAttr} onChange={e => setDxOutAt(e.selected)} empty="No data element attributes at present" >
                                   {dxAttr.map(dx => <SingleSelectOption label={dx.displayName} value={dx.id} />)}  
                                 </SingleSelect>
                              </Field>}
@@ -96,7 +132,7 @@ export default function CustomScheme(props) {
                              </Field>
                              <br/>
                              {orgoutIDScheme === 'attribute' && <Field label='Organisation unit Input attribute scheme'>
-                             <SingleSelect className='select' selected={orgAttribute} onChange={e => setOrgAt(e.selected)} empty="No org unit attributes at present"     >
+                             <SingleSelect className='select' selected={orgOutAtr} onChange={e => setOrgOutAt(e.selected)} empty="No org unit attributes at present"     >
                              {orgAttr.map(org => <SingleSelectOption label={org.displayName} value={org.id} />)}
                                 </SingleSelect>   
                              </Field>}
@@ -109,7 +145,7 @@ export default function CustomScheme(props) {
                         <Button destructive onClick={(e)=> setOpen(false)}>
                             Close
                         </Button>
-                        <Button primary onClick={(e) =>setOpen(false)}>
+                        <Button primary onClick={() =>saveScheme()}>
                             Save
                         </Button>
                     </ButtonStrip>
@@ -122,6 +158,15 @@ export default function CustomScheme(props) {
                 Custom Scheme
             </Button>
         </ButtonStrip>
+        {layerOpen && <Layer>
+        <div className={`${props.style.alertBtm}`}>
+            <AlertBar warning duration={2000} onHidden={()=>{
+                setLayer(false)
+            }}>
+                {message}
+            </AlertBar>
+        </div>
+        </Layer>}
         </>
     );
 }
