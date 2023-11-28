@@ -94,3 +94,9 @@
 .visibilityHidden {
     visibility: hidden;
 }
+.alertBtm{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -470px;
+}
