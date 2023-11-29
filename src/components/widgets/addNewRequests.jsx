@@ -45,11 +45,11 @@ export default function AddNewRequests(props) {
   const [inputIDScheme, setInputIDScheme] = useState(props?.request?.inputIdScheme);
   const [outputIDScheme, setOutputIDScheme] = useState(props?.request?.outputIdScheme);
 
-  const [orgInputScheme,setOrgInputSchema] = useState()
-  const [dxInputScheme, setDxInput] = useState()
+  const [orgInputScheme,setOrgInputSchema] = useState(props?.orgUnitIdScheme)
+  const [dxInputScheme, setDxInput] = useState(props?.dataElementIdScheme)
 
-  const [orgOutputScheme, setOrgOutputScheme] = useState()
-  const [dxOutputScheme, setDxOutputScheme] = useState()
+  const [orgOutputScheme, setOrgOutputScheme] = useState(props?.outputOrgUnitIdScheme)
+  const [dxOutputScheme, setDxOutputScheme] = useState(props?.outputDataElementIdScheme)
 
   const setData = (selected) => {
     setdx(selected);
