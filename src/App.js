@@ -19,7 +19,7 @@ const query = {
     resource: "organisationUnits",
     params: {
       paging: false,
-      fields: ["id,name,level,path,displayName,code"],
+      fields: ["id,name,level,path,displayName,code,attributeValues"],
       order: "level",
     },
   },
@@ -256,8 +256,12 @@ const MyApp = () => {
                   dx: dd?.dx,
                   pe: dd?.pe,
                   ou: dd?.ou,
-                  inputIdScheme: "code",
-                  outputIdScheme: "code",
+                  inputIdScheme: dd.inputIdScheme,
+                  outputIdScheme: dd.outputIdScheme,
+                  orgUnitIdScheme : dd.orgUnitIdScheme,
+                  dataElementIdScheme : dd.dataElementIdScheme,
+                  outputDataElementIdScheme : dd.outputDataElementIdScheme,
+                  outputOrgUnitIdScheme : dd.outputOrgUnitIdScheme                  
                 });
               });
               if (
@@ -332,8 +336,12 @@ const MyApp = () => {
                   dx: dd?.dx,
                   pe: dd?.pe,
                   ou: dd?.ou,
-                  inputIdScheme: "code",
-                  outputIdScheme: "code",
+                  inputIdScheme: dd.inputIdScheme,
+                  outputIdScheme: dd.outputIdScheme,
+                  orgUnitIdScheme : dd.orgUnitIdScheme,
+                  dataElementIdScheme : dd.dataElementIdScheme,
+                  outputDataElementIdScheme : dd.outputDataElementIdScheme,
+                  outputOrgUnitIdScheme : dd.outputOrgUnitIdScheme
                 });
               });
               if (

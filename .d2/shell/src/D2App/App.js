@@ -18,7 +18,7 @@ const query = {
     resource: "organisationUnits",
     params: {
       paging: false,
-      fields: ["id,name,level,path,displayName,code"],
+      fields: ["id,name,level,path,displayName,code,attributeValues"],
       order: "level"
     }
   },
@@ -229,8 +229,12 @@ const MyApp = () => {
                   dx: dd === null || dd === void 0 ? void 0 : dd.dx,
                   pe: dd === null || dd === void 0 ? void 0 : dd.pe,
                   ou: dd === null || dd === void 0 ? void 0 : dd.ou,
-                  inputIdScheme: "code",
-                  outputIdScheme: "code"
+                  inputIdScheme: dd.inputIdScheme,
+                  outputIdScheme: dd.outputIdScheme,
+                  orgUnitIdScheme: dd.orgUnitIdScheme,
+                  dataElementIdScheme: dd.dataElementIdScheme,
+                  outputDataElementIdScheme: dd.outputDataElementIdScheme,
+                  outputOrgUnitIdScheme: dd.outputOrgUnitIdScheme
                 });
               });
               if ((authValues === null || authValues === void 0 ? void 0 : authValues.username) == undefined || (authValues === null || authValues === void 0 ? void 0 : authValues.username) == "" || (authValues === null || authValues === void 0 ? void 0 : authValues.password) == undefined || (authValues === null || authValues === void 0 ? void 0 : authValues.password) == "") {
@@ -304,8 +308,12 @@ const MyApp = () => {
                   dx: dd === null || dd === void 0 ? void 0 : dd.dx,
                   pe: dd === null || dd === void 0 ? void 0 : dd.pe,
                   ou: dd === null || dd === void 0 ? void 0 : dd.ou,
-                  inputIdScheme: "code",
-                  outputIdScheme: "code"
+                  inputIdScheme: dd.inputIdScheme,
+                  outputIdScheme: dd.outputIdScheme,
+                  orgUnitIdScheme: dd.orgUnitIdScheme,
+                  dataElementIdScheme: dd.dataElementIdScheme,
+                  outputDataElementIdScheme: dd.outputDataElementIdScheme,
+                  outputOrgUnitIdScheme: dd.outputOrgUnitIdScheme
                 });
               });
               if ((authValues === null || authValues === void 0 ? void 0 : authValues.token) == undefined || (authValues === null || authValues === void 0 ? void 0 : authValues.token) == "" || (authValues === null || authValues === void 0 ? void 0 : authValues.token) == null) {
