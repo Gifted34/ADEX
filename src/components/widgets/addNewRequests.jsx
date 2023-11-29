@@ -55,10 +55,6 @@ export default function AddNewRequests(props) {
     setdx(selected);
       };
 
-      useEffect(()=>{
-        console.log(props)
-      },[])
-
   const orgPath = () => {
     const path = []
     const orgss = orgUnits?.filter(org => orgS?.includes(org.id) || orgS?.includes(org.code))
