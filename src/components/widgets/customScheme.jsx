@@ -51,12 +51,12 @@ export default function CustomScheme(props) {
         }else{
             setDxoutScheme(props?.outputDataElementIdScheme) 
         }
-        if(props?.outputDataElementIdScheme !== 'CODE' || props?.outputDataElementIdScheme        !== 'UID'){
-            const arr = props?.outputDataElementIdScheme?.split(":")
-            setDxoutScheme(arr[0])
-            setDxOutAt(arr[1])
+        if(props?.outputOrgUnitIdScheme !== 'CODE' || props?.outputOrgUnitIdScheme        !== 'UID'){
+            const arr = props?.outputOrgUnitIdScheme?.split(":")
+            setOrgOut(arr[0])
+            setOrgOutAt(arr[1])
         }else{
-            setDxoutScheme(props?.outputDataElementIdScheme) 
+            setOrgOut(props?.outputOrgUnitIdScheme) 
         }
     }
 
