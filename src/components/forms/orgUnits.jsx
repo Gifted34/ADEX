@@ -2,7 +2,7 @@ import React, {useEffect, useState } from "react";
 import { OrganisationUnitTree, Field } from "@dhis2/ui";
 
 export default function OrgUnits(props) {
-  const [selectedOrgUnit, setSelectedOrgUnit] = useState([]);
+  const [selectedOrgUnit, setSelectedOrgUnit] = useState(props?.selected);
   const orgUnitLevels = (orgs) => {
     let orgsList = [];
     orgs?.map((org) => {
