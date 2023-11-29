@@ -30,6 +30,7 @@ export default function CustomScheme(props) {
     const [message,setMessage] = useState()
 
     const preSetValues = () =>{
+        if(props?.dataElementIdScheme !== undefined){
         if(props?.dataElementIdScheme !== 'CODE' || props?.dataElementIdScheme !== 'UID'){
             const arr = props?.dataElementIdScheme?.split(":")
             setDxInScheme(arr[0])
@@ -37,6 +38,8 @@ export default function CustomScheme(props) {
         }else{
             setDxInScheme(props?.dataElementIdScheme) 
         }
+        }
+        if(props?.orgUnitIdScheme !== undefined){
         if(props?.orgUnitIdScheme !== 'CODE' || props?.orgUnitIdScheme !== 'UID'){
             const arr = props?.orgUnitIdScheme?.split(":")
             setOrgIn(arr[0])
@@ -44,6 +47,8 @@ export default function CustomScheme(props) {
         }else{
             setOrgIn(props?.orgUnitIdScheme) 
         }
+        }
+        if(props?.outputDataElementIdScheme !== undefined){           
         if(props?.outputDataElementIdScheme !== 'CODE' || props?.outputDataElementIdScheme        !== 'UID'){
             const arr = props?.outputDataElementIdScheme?.split(":")
             setDxoutScheme(arr[0])
@@ -51,6 +56,8 @@ export default function CustomScheme(props) {
         }else{
             setDxoutScheme(props?.outputDataElementIdScheme) 
         }
+        }
+        if(props?.outputOrgUnitIdScheme !== undefined){        
         if(props?.outputOrgUnitIdScheme !== 'CODE' || props?.outputOrgUnitIdScheme        !== 'UID'){
             const arr = props?.outputOrgUnitIdScheme?.split(":")
             setOrgOut(arr[0])
@@ -58,6 +65,7 @@ export default function CustomScheme(props) {
         }else{
             setOrgOut(props?.outputOrgUnitIdScheme) 
         }
+    }
     }
 
     
