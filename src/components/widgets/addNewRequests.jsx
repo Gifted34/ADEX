@@ -53,26 +53,44 @@ export default function AddNewRequests(props) {
 
   const setData = (selected) => {
     setdx(selected);
-    // const visualisationId = [];
-    // Visualizations.map((Viz) => visualisationId.push(Viz.id));
-    // setVisualisation(_.intersection(selected, visualisationId));
-    // setDx(_.difference(selected, _.intersection(selected, visualisationId)));
-  };
+      };
 
   const setOrgUnits = (orgs) => {
     let array = [];
     orgs?.map((object) => {
       const arr = object.split("/");
       array.push(...arr.slice(-1));
-    });
-    let orgCode = [];
-    orgUnits.map((org) => {
-      if (array.includes(org.id)) {
-        orgCode.push(org.code);
-      }
-    });
-    setOrg(orgCode);
+    });    
+    setOrg(array);
   };
+
+  //set Data elements and indicators based on input scheme whether UID or Code
+  const returnDx = () => {
+    if(inputIDScheme === "CODE" || dxInputScheme === "CODE"){
+      const indicator = indicators?.filter(indicator => Dx.includes(indicator.id))
+      const dataElement = dataElements?.filter(dataElement => Dx.includes(dataElement.id))
+      const arr = [...indicator,...dataElement]
+      const newArr = []
+      arr.map(ele => newArr.push(ele.code))
+      return newArr
+            
+    }else{
+      return (Dx) 
+    }    
+  }
+
+  //set Orgunits based on input scheme whether UID or Code
+  const Orgs = () => {
+    if(orgInputScheme === "CODE" || inputIDScheme === "CODE"){
+      const orgUn = orgUnits?.filter(orgUnit => orgS.includes(orgUnit.id))    
+      const newArr = []
+      orgUn.map(org => newArr.push(org.code))
+      return newArr
+      }else{
+        return orgS
+      }      
+    }
+  
 
   // //fetchig data store values using the datastore key passed in the locations path
   const fetchData = async () => {
@@ -91,6 +109,7 @@ export default function AddNewRequests(props) {
       } catch (e) {}
     } catch (e) {}
   };
+
   //pushing data to dataStore
   const send = async (data) => {
     const myMutation = {
@@ -120,7 +139,12 @@ export default function AddNewRequests(props) {
       setLoading(false);
       setMessage("Request name is required");
       setErrorHidden(false);
-    } else if (Dx === undefined || Dx?.length < 1) {
+    }else if(inputIDScheme === undefined || outputIDScheme === undefined){
+      setLoading(false);
+      setMessage("Specify input or output scheme");
+      setErrorHidden(false);
+    } 
+    else if (Dx === undefined || Dx?.length < 1) {
       setLoading(false);
       setMessage("No data elements,indicators,or visualisations selected");
       setErrorHidden(false);
@@ -133,6 +157,16 @@ export default function AddNewRequests(props) {
       setMessage("No periods selected");
       setErrorHidden(false);
     } else {
+      console.log(Orgs().length)
+      if(returnDx().length === 0){
+        setLoading(false);
+        setMessage("Selected data elements and indicators do not have codes");
+        setErrorHidden(false);
+      }else if(Orgs().length === 0){
+        setLoading(false);
+        setMessage("Selected Organization units do not have codes");
+        setErrorHidden(false);
+      }else{
       if (dataStore?.source?.requests === undefined) {
         var dStore = {
           createdAt: dataStore.createdAt,
@@ -143,12 +177,15 @@ export default function AddNewRequests(props) {
             requests: [
               {
                 name: name,
-                // visualization: selectVisualisations,
-                dx: dx,
+                dx: returnDx(),
                 pe: periods,
-                ou: orgS,
-                inputIdScheme: "code",
-                outputIdScheme: "code",
+                ou: Orgs(),
+                inputIdScheme: inputIDScheme,
+                outputIdScheme: outputIDScheme,
+                orgUnitIdScheme : orgInputScheme,
+                dataElementIdScheme :dxInputScheme,
+                outputDataElementIdScheme : dxOutputScheme,
+                outputOrgUnitIdScheme : orgOutputScheme
               },
             ],
           },
@@ -160,12 +197,15 @@ export default function AddNewRequests(props) {
         );
         arr.push({
           name: name,
-          // visualization: selectVisualisations,
-          dx: dx,
+          dx: returnDx(),
           pe: periods,
-          ou: orgS,
-          inputIdScheme: "code",
-          outputIdScheme: "code",
+          ou: Orgs(),
+          inputIdScheme: inputIDScheme,
+          outputIdScheme: outputIDScheme,
+          orgUnitIdScheme : orgInputScheme,
+          dataElementIdScheme :dxInputScheme,
+          outputDataElementIdScheme : dxOutputScheme,
+          outputOrgUnitIdScheme : orgOutputScheme
         });
         send({
           createdAt: dataStore.createdAt,
@@ -175,6 +215,7 @@ export default function AddNewRequests(props) {
           source: { requests: arr },
         });
       }
+    }
     }
   };
 
