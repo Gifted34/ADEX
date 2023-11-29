@@ -17,8 +17,8 @@ export default function DataDimensionsCodes(props) {
     }
 
     useEffect(()=>{
-        if(props?.selectedDx !== undefined && props?.selectedVis){
-            setselectedDimensions([...props?.selectedDx,...props?.selectedVis])
+        if(props?.selectedDx !== undefined){
+            setselectedDimensions([...props?.selectedDx])
         }
     },[])
 
