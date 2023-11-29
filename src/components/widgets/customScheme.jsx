@@ -28,10 +28,44 @@ export default function CustomScheme(props) {
 
 
     const [message,setMessage] = useState()
+
+    const preSetValues = () =>{
+        if(props?.dataElementIdScheme !== 'CODE' || props?.dataElementIdScheme !== 'UID'){
+            const arr = props?.dataElementIdScheme?.split(":")
+            setDxInScheme(arr[0])
+            setDx(arr[1])
+        }else{
+            setDxInScheme(props?.dataElementIdScheme) 
+        }
+        if(props?.orgUnitIdScheme !== 'CODE' || props?.orgUnitIdScheme !== 'UID'){
+            const arr = props?.orgUnitIdScheme?.split(":")
+            setOrgIn(arr[0])
+            setOrgAt(arr[1])
+        }else{
+            setOrgIn(props?.orgUnitIdScheme) 
+        }
+        if(props?.outputDataElementIdScheme !== 'CODE' || props?.outputDataElementIdScheme        !== 'UID'){
+            const arr = props?.outputDataElementIdScheme?.split(":")
+            setDxoutScheme(arr[0])
+            setDxOutAt(arr[1])
+        }else{
+            setDxoutScheme(props?.outputDataElementIdScheme) 
+        }
+        if(props?.outputDataElementIdScheme !== 'CODE' || props?.outputDataElementIdScheme        !== 'UID'){
+            const arr = props?.outputDataElementIdScheme?.split(":")
+            setDxoutScheme(arr[0])
+            setDxOutAt(arr[1])
+        }else{
+            setDxoutScheme(props?.outputDataElementIdScheme) 
+        }
+    }
+
     
     useEffect(()=>{
         setOrgAttr(props?.attributes?.filter(attr => attr?.objectTypes?.includes('ORGANISATION_UNIT')))
         setDxAttr(props?.attributes?.filter(attr => attr?.objectTypes?.includes('DATA_ELEMENT') || attr?.objectTypes?.includes('INDICATOR') ))
+        console.log(props)
+        preSetValues()
     },[])
 
     const saveScheme = () => {
