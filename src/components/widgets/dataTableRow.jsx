@@ -30,7 +30,7 @@ function Datatablerow(props) {
     let arr = [];
     request?.ou?.map((ou) => {
       const orgs = orgUnits?.filter((org) => org.code === ou);
-      const name = orgs[0].name;
+      const name = orgs[0]?.name;
       arr?.push(name);
     });
     return arr?.map((ou) => (
