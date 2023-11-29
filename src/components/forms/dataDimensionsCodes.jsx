@@ -28,7 +28,7 @@ export default function DataDimensionsCodes(props) {
         props?.indicators?.filter((indicator) => indicator.code !== undefined)?.map(indicatorWithCode => {
             codes.push({
                 label: indicatorWithCode?.name,
-                value: indicatorWithCode?.code,
+                value: indicatorWithCode?.id,
                 type: 'Indicators'
             })
         })
@@ -36,7 +36,7 @@ export default function DataDimensionsCodes(props) {
         
             codes.push({
                 label: dataElementWithCode?.name,
-                value: dataElementWithCode?.code,
+                value: dataElementWithCode?.id,
                 type: 'Data elements'
             })
         })
