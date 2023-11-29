@@ -10,19 +10,7 @@ export default function OrgUnits(props) {
     });
     return orgsList;
   };
-  const filter = () =>{
-    let arr = selectedOrgUnit
-    props?.orgUnits.map(org =>{
-        if(props?.selected?.includes(org.code)){
-          arr.push(org.path)
-        }
-    })
-    setSelectedOrgUnit(_.uniq(arr))
-  }
-  useEffect(()=>{
-    filter()
-    
-  },[])
+
   return (
     <div className={props?.styles?.orgHeight}>
       <Field label="Organization units">
