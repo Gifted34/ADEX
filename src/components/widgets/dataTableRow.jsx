@@ -29,7 +29,7 @@ function Datatablerow(props) {
   const filterOrgUnits = () => {
     let arr = [];
     request?.ou?.map((ou) => {
-      const orgs = orgUnits?.filter((org) => org.code === ou);
+      const orgs = orgUnits?.filter((org) => org.code === ou || org.id === ou);
       const name = orgs[0]?.name;
       arr?.push(name);
     });
@@ -71,9 +71,9 @@ function Datatablerow(props) {
 
   const dx = () => {
     return request?.dx?.map((dE) => {
-      const dataElement = dataElements?.filter((de) => de.code === dE);
+      const dataElement = dataElements?.filter((de) => de.code === dE || de.id === dE);
       if (dataElement?.length < 1) {
-        const ind = indicators?.filter((ind) => ind.code === dE);
+        const ind = indicators?.filter((ind) => ind.code === dE || ind.id === dE);
         return (
           <div key={ind[0]?.displayName} style={{ padding: "5px" }}>
             <span
