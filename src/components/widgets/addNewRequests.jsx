@@ -42,8 +42,8 @@ export default function AddNewRequests(props) {
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
   const [Dx, setdx] = useState(props?.request?.dx);
-  const [inputIDScheme, setInputIDScheme] = useState();
-  const [outputIDScheme, setOutputIDScheme] = useState();
+  const [inputIDScheme, setInputIDScheme] = useState(props?.request?.inputIdScheme);
+  const [outputIDScheme, setOutputIDScheme] = useState(props?.request?.outputIdScheme);
 
   const [orgInputScheme,setOrgInputSchema] = useState()
   const [dxInputScheme, setDxInput] = useState()
@@ -54,6 +54,17 @@ export default function AddNewRequests(props) {
   const setData = (selected) => {
     setdx(selected);
       };
+
+      useEffect(()=>{
+        console.log(props)
+      },[])
+
+  const orgPath = () => {
+    const path = []
+    const orgss = orgUnits?.filter(org => orgS?.includes(org.id) || orgS?.includes(org.code))
+    orgss.map(or => path.push(or.path))
+    return path
+  }
 
   const setOrgUnits = (orgs) => {
     let array = [];
@@ -91,6 +102,14 @@ export default function AddNewRequests(props) {
       }      
     }
   
+  //get dx from codes or ids for editing
+  const getDX = () => {
+    const dx = [...dataElements,...indicators]
+    const sele =  dx?.filter(dx =>  props?.request?.dx?.includes(dx.id) || props?.request?.dx?.includes(dx.code))
+    const arr = []
+    sele.map(sel => arr.push(sel.id))
+    return arr
+  }
 
   // //fetchig data store values using the datastore key passed in the locations path
   const fetchData = async () => {
@@ -237,7 +256,7 @@ export default function AddNewRequests(props) {
           <OrgUnits
             orgUnits={orgUnits}
             setOrg={setOrgUnits}
-            selected={props?.request?.ou}
+            selected={orgPath()}
           />
         </Box>
         <div>
@@ -273,6 +292,10 @@ export default function AddNewRequests(props) {
             <div className={`${props?.style?.padding}`}>
               <CustomScheme style={props?.style} 
                 attributes={attributes}
+                dataElementIdScheme={props?.request?.dataElementIdScheme}
+                orgUnitIdScheme = {props?.request?.orgUnitIdScheme}
+                outputDataElementIdScheme={props?.request?.outputDataElementIdScheme}
+                outputOrgUnitIdScheme={props?.request?.outputOrgUnitIdScheme}
                 setOrgInputSchema={setOrgInputSchema} 
                 setDxInput={setDxInput}
                 setOrgOutputScheme={setOrgOutputScheme}
@@ -290,7 +313,7 @@ export default function AddNewRequests(props) {
             <Box className={props?.style?.padding}>
               <DataDimensionsCodes
                 setData={setData}
-                selectedDx={props?.request?.dx}
+                selectedDx={getDX()}
                 selectedVis={props?.request?.visualization}
                 dataElements={dataElements}
                 indicators={indicators}
