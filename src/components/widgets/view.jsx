@@ -19,58 +19,6 @@ import {
 import React, { useEffect, useState } from "react";
 import RequestdataTable from "./dataTable";
 
-const query = {
-  organisationUnits: {
-    resource: "organisationUnits",
-    params: {
-      paging: false,
-      fields: [
-        "id,name,level,path,displayName,code,children,ancestors,created,href,user,users,userAccesses",
-      ],
-      order: "level",
-    },
-  },
-  visualizations: {
-    resource: "visualizations",
-    params: {
-      paging: false,
-      field: ["id", "displayName"],
-    },
-  },
-  indicators: {
-    resource: "indicators",
-    params: {
-      paging: false,
-      fields: ["id", "name", "displayName", "code"],
-    },
-  },
-  dataElements: {
-    resource: "dataElements",
-    params: {
-      paging: false,
-      fields: ["id", "name", "formName", "displayName", "code"],
-    },
-  },
-  periodTypes: {
-    resource: "periodTypes",
-    params: {
-      fields: ["*"],
-    },
-  },
-  aggregateDataExchanges: {
-    resource: "aggregateDataExchanges",
-    params: {
-      fields: ["*"],
-    },
-  },
-  dataStore: {
-    resource: "dataStore",
-    params: {
-      paging: false,
-      fields: ["*"],
-    },
-  },
-};
 export default function ViewDataStoreById(props) {
   const dataStorePath = `dataStore/DEX_initializer_values/${props?.id}`;
   const [dataExchange, setExchange] = useState();
@@ -89,13 +37,6 @@ export default function ViewDataStoreById(props) {
       params: {
         paging: false,
         fields: ["id,name,displayName,code"],
-      },
-    },
-    visualizations: {
-      resource: "visualizations",
-      params: {
-        paging: false,
-        field: ["id", "displayName"],
       },
     },
     indicators: {
