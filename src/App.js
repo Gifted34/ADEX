@@ -290,9 +290,6 @@ const MyApp = () => {
                           username: authValues?.username,
                           password: authValues?.password,
                         },
-                        request: {
-                          idScheme: "code",
-                        },
                       },
                     },
                   };
@@ -312,9 +309,6 @@ const MyApp = () => {
                           url: dataToIntegrate?.value?.url,
                           username: authValues?.username,
                           password: authValues?.password,
-                        },
-                        request: {
-                          idScheme: "code",
                         },
                       },
                     },
@@ -367,9 +361,6 @@ const MyApp = () => {
                           url: dataToIntegrate?.value?.url,
                           accessToken: authValues?.token,
                         },
-                        request: {
-                          idScheme: "code",
-                        },
                       },
                     },
                   };
@@ -388,9 +379,6 @@ const MyApp = () => {
                         api: {
                           url: dataToIntegrate?.value?.url,
                           accessToken: authValues?.token,
-                        },
-                        request: {
-                          idScheme: "code",
                         },
                       },
                     },
@@ -419,9 +407,6 @@ const MyApp = () => {
                 url: dataToIntegrate?.value?.url,
                 accessToken: authValues?.token,
               },
-              request: {
-                idScheme: "code",
-              },
             },
           },
         };
@@ -438,9 +423,6 @@ const MyApp = () => {
               api: {
                 url: dataToIntegrate?.value?.url,
                 accessToken: authValues?.token,
-              },
-              request: {
-                idScheme: "code",
               },
             },
           },
