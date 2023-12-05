@@ -39,11 +39,13 @@ export default function AddNewRequests(props) {
   const [hide, setHidden] = useState(true);
   const [errorHidden, setErrorHidden] = useState(true);
   const [errorMessage, setMessage] = useState();
+  const [dxattributes,setAttributes] = useState()
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
   const [Dx, setdx] = useState(props?.request?.dx);
+  const [selectedAttr,setSelected] = useState()
   const [inputIDScheme, setInputIDScheme] = useState(props?.request?.inputIdScheme);
-  const [outputIDScheme, setOutputIDScheme] = useState(props?.request?.outputIdScheme);
+  const [outputIDScheme, setOutputIDScheme] = useState();
 
   const [orgInputScheme,setOrgInputSchema] = useState(props?.orgUnitIdScheme)
   const [dxInputScheme, setDxInput] = useState(props?.dataElementIdScheme)
@@ -183,6 +185,7 @@ export default function AddNewRequests(props) {
         setErrorHidden(false);
       }else{
       if (dataStore?.source?.requests === undefined) {
+        let outp = selectedAttr !== undefined ? `${outputIDScheme}:${selectedAttr}` : outputIDScheme
         var dStore = {
           createdAt: dataStore.createdAt,
           dexname: dataStore.dexname,
@@ -196,7 +199,7 @@ export default function AddNewRequests(props) {
                 pe: periods,
                 ou: Orgs(),
                 inputIdScheme: inputIDScheme,
-                outputIdScheme: outputIDScheme,
+                outputIdScheme: outp,
                 orgUnitIdScheme : orgInputScheme,
                 dataElementIdScheme :dxInputScheme,
                 outputDataElementIdScheme : dxOutputScheme,
@@ -207,6 +210,7 @@ export default function AddNewRequests(props) {
         };
         send(dStore);
       } else {
+        let outp = selectedAttr !== undefined ? `${outputIDScheme}:${selectedAttr}` : outputIDScheme
         let arr = dataStore?.source?.requests?.filter(
           (req) => req.name !== name
         );
@@ -216,7 +220,7 @@ export default function AddNewRequests(props) {
           pe: periods,
           ou: Orgs(),
           inputIdScheme: inputIDScheme,
-          outputIdScheme: outputIDScheme,
+          outputIdScheme: outp,
           orgUnitIdScheme : orgInputScheme,
           dataElementIdScheme :dxInputScheme,
           outputDataElementIdScheme : dxOutputScheme,
@@ -236,6 +240,14 @@ export default function AddNewRequests(props) {
 
   useEffect(() => {
     fetchData();
+    setAttributes(attributes?.filter( attr => attr?.objectTypes?.includes('DATA_ELEMENT') || attr?.objectTypes?.includes('INDICATOR')))
+    if(props?.request?.outputIdScheme?.includes('attribute')){
+      const strings = props?.request?.outputIdScheme?.split(':')
+      setOutputIDScheme(strings[0])
+      setSelected(strings[1])
+    }else{
+      setOutputIDScheme(props?.request?.outputIdScheme)
+    }
   }, []);
 
   return (
@@ -277,14 +289,25 @@ export default function AddNewRequests(props) {
               <br/>
             </Field>
             <Field label="Output IDScheme">
-            <SingleSelect selected={outputIDScheme} className='select' onChange={
+            <SingleSelect selected={outputIDScheme === 'attribute'? outputIDScheme.split(':')[0] : outputIDScheme } className='select' onChange={
                 (e)=> setOutputIDScheme(e.selected)
               } placeholder="Select output Id scheme">
                 <SingleSelectOption label="UID" value="UID"/>
                 <SingleSelectOption label="CODE" value="CODE"/>
+                <SingleSelectOption label="attribute" value="attribute"/>
               </SingleSelect>
             </Field>
             <br/>
+            {outputIDScheme?.includes('attribute') && 
+            <Field label="Output IDScheme">
+            <SingleSelect selected={selectedAttr}  className='select' onChange={
+                (e)=>{ 
+                  setSelected(e.selected)
+                }
+              } placeholder="Select output Id scheme">
+                {dxattributes?.map(attr => <SingleSelectOption label={attr.displayName} value={attr.id}/>)}
+              </SingleSelect>
+            </Field>}
             <div className={`${props?.style?.padding}`}>
               <CustomScheme style={props?.style} 
                 attributes={attributes}
