@@ -32,6 +32,19 @@ export default function GeneralInputs(props) {
           <Box className={props?.styles?.marginBottom}>
             <SingleSelect
               className="select"
+              placeholder="Select request id scheme"
+              onChange={(e) => {
+                props?.setRequestScheme(e.selected);
+              }}
+              selected={props?.idScheme}
+            >
+              <SingleSelectOption label="UID" value="UID" />
+              <SingleSelectOption label="Code" value="code" />
+            </SingleSelect>
+          </Box>
+          <Box className={props?.styles?.marginBottom}>
+            <SingleSelect
+              className="select"
               onChange={(e) => {
                 props?.setType(e.selected);
               }}
@@ -40,7 +53,7 @@ export default function GeneralInputs(props) {
               <SingleSelectOption label="Internal" value="INTERNAL" />
               <SingleSelectOption label="External" value="EXTERNAL" />
             </SingleSelect>
-          </Box>
+          </Box>          
           {props?.type == "EXTERNAL" && (
             <Input
               name="url"
@@ -50,6 +63,32 @@ export default function GeneralInputs(props) {
               placeholder="Base URL of target DHIS 2 instance, do not include the /api part."
             />
           )}
+          <Box className={props?.styles?.marginBottom}>
+            <SingleSelect
+              className="select"
+              placeholder="Select request dataElementIdScheme"
+              onChange={(e) => {
+                console.log(e)
+              }}
+            >
+              <SingleSelectOption label="UID" value="UID" />
+              <SingleSelectOption label="Code" value="code" />
+              <SingleSelectOption label="Attribute" value="attribute" />
+            </SingleSelect>
+          </Box>
+          <Box className={props?.styles?.marginBottom}>
+            <SingleSelect
+              className="select"
+              placeholder="Select request orgUnitIdScheme"
+              onChange={(e) => {
+                console.log(e)
+              }}
+            >
+              <SingleSelectOption label="UID" value="UID" />
+              <SingleSelectOption label="Code" value="code" />
+              <SingleSelectOption label="Attribute" value="attribute" />
+            </SingleSelect>
+          </Box>
         </div>
       </Field>
     </div>
