@@ -9,12 +9,16 @@ import {
 import React, { useState, useEffect } from "react";
 
 export default function GeneralInputs(props) {
+  const [orgUnitIdScheme,setorgUnitIdScheme] = useState()
+  const [dataElementIdScheme,setdataElementIdScheme] = useState()
   const inputsHandler = (e) => {
     props?.setFormInputValues({
       ...props?.formInputValues,
       [e?.name]: e?.value,
     });
   };
+
+
 
   return (
     <div
@@ -66,10 +70,16 @@ export default function GeneralInputs(props) {
           <Box className={props?.styles?.marginBottom}>
             <SingleSelect
               className="select"
+              name='dataElementIdScheme'
               placeholder="Select request dataElementIdScheme"
               onChange={(e) => {
-                console.log(e)
+                setdataElementIdScheme(e.selected)
+                if(e.selected !== 'attribute'){
+                  console.log(e)
+                  inputsHandler({name :'dataElementIdScheme',value : e.selected})
+                }
               }}
+              selected={dataElementIdScheme}
             >
               <SingleSelectOption label="UID" value="UID" />
               <SingleSelectOption label="Code" value="code" />
@@ -81,8 +91,12 @@ export default function GeneralInputs(props) {
               className="select"
               placeholder="Select request orgUnitIdScheme"
               onChange={(e) => {
-                console.log(e)
+                setorgUnitIdScheme(e.selected)
+                if(e.selected !== 'attribute'){
+                  inputsHandler({name:'orgUnitIdScheme',value : e.selected})
+                }
               }}
+              selected={orgUnitIdScheme}
             >
               <SingleSelectOption label="UID" value="UID" />
               <SingleSelectOption label="Code" value="code" />
