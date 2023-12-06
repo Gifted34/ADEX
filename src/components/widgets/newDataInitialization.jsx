@@ -26,8 +26,10 @@ export default function NewDataInitialization(props) {
                 styles={props?.styles}
                 formInputValues={props?.formInputValues}
                 formData={props?.formData}
+                setRequestScheme={props?.setRequestScheme}
                 setType={props?.setType}
                 type={props?.type}
+                idScheme={props?.idScheme}
                 setFormInputValues={props?.setFormInputValues}
               />
             </ModalContent>
