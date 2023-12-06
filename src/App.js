@@ -146,28 +146,30 @@ const MyApp = () => {
           url: formInputValues?.url,
           type: type,
           request : {
-            idScheme : idScheme
+            idScheme : formInputValues?.idScheme,
+            orgUnitIdScheme : formInputValues?.orgUnitIdScheme,
+            dataElementIdScheme : formInputValues?.dataElementIdScheme
           }
         },
       };
-      console.log(formInputValues)
-      // engine
-      //   .mutate(payload)
-      //   .then((res) => {
-      //     if (res.httpStatusCode == 201) {
-      //       setKey(Math.random());
-      //       setOpen(!open);
-      //       setSuccessMessage(true);
-      //       setHidden(false);
-      //       setMessage("Data saved in the datastore successfully.");
-      //     }
-      //   })
-      //   .catch((e) => {
-      //     setHidden(false);
-      //     setMessage(
-      //       "Error occured. Either server or the inputs causes this error."
-      //     );
-      //   });
+      console.log(payload)
+      engine
+        .mutate(payload)
+        .then((res) => {
+          if (res.httpStatusCode == 201) {
+            setKey(Math.random());
+            setOpen(!open);
+            setSuccessMessage(true);
+            setHidden(false);
+            setMessage("Data saved in the datastore successfully.");
+          }
+        })
+        .catch((e) => {
+          setHidden(false);
+          setMessage(
+            "Error occured. Either server or the inputs causes this error."
+          );
+        });
     }
   };
   // a post request to the data echange resource
