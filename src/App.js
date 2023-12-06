@@ -755,6 +755,7 @@ const MyApp = () => {
         updateFormInputValues={updateFormInputValues}
         updateGeneralInputValues={updateGeneralInputValues}
         data={dataToUpdate}
+        attributes={data?.attribute?.attributes}
       />
       <IntegrateDataStoreInitializationToDEX
         setAuthType={setAuthType}
