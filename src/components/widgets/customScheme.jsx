@@ -121,11 +121,9 @@ export default function CustomScheme(props) {
                         <Tab onClick={()=> setTab(1)} selected={tabSelected === 1}>
                             Input Scheme
                         </Tab>
-                        <Tab onClick={()=> setTab(2)} selected={tabSelected === 2}>
-                            Output Scheme
-                        </Tab>
+                        
                     </TabBar>
-                    {tabSelected === 1 ?
+                        
                              <div className={`${props?.style?.padding}`}>
                              <Box> 
                                  
@@ -158,38 +156,7 @@ export default function CustomScheme(props) {
                                  </Field>}
                              </Box>
                          </div>    
-                         : <div className={`${props?.style?.padding}`}>
-                         <Box> 
-                             
-                             <Field label='outputDataElementIdScheme'>
-                                 <SingleSelect className='select' selected={dxoutIDScheme} onChange={(e) => setDxoutScheme(e.selected)}> 
-                                     <SingleSelectOption label="UID" value="UID"/>
-                                     <SingleSelectOption label="CODE" value="CODE"/>
-                                     <SingleSelectOption label="attribute" value="attribute"/>
-                                 </SingleSelect>
-                             </Field>
-                             <br/>
-                             {dxoutIDScheme === 'attribute' && <Field label='data element attribute'>
-                                <SingleSelect className='select' selected={dxOutAttr} onChange={e => setDxOutAt(e.selected)} empty="No data element attributes at present" >
-                                  {dxAttr.map(dx => <SingleSelectOption label={dx.displayName} value={dx.id} />)}  
-                                </SingleSelect>
-                             </Field>}
-                             <br/>
-                             <Field label='outputOrgUnitIdScheme'>
-                             <SingleSelect className='select' selected={orgoutIDScheme}  onChange={(e) => setOrgOut(e.selected)}>
-                                     <SingleSelectOption label="UID" value="UID"/>
-                                     <SingleSelectOption label="CODE" value="CODE"/>
-                                     <SingleSelectOption label="attribute" value="attribute"/>
-                                 </SingleSelect>
-                             </Field>
-                             <br/>
-                             {orgoutIDScheme === 'attribute' && <Field label='Organisation unit Input attribute scheme'>
-                             <SingleSelect className='select' selected={orgOutAtr} onChange={e => setOrgOutAt(e.selected)} empty="No org unit attributes at present"     >
-                             {orgAttr.map(org => <SingleSelectOption label={org.displayName} value={org.id} />)}
-                                </SingleSelect>   
-                             </Field>}
-                         </Box>
-                     </div>}
+                         
                     </Box>
                 </ModalContent>
                 <ModalActions>
