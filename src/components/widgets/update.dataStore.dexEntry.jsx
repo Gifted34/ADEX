@@ -19,22 +19,18 @@ export default function UpdateDataInitialization(props) {
     url: "",
   });
   const [selected,setSelected] = useState()
+  const [request,setRequest] = useState()
   const update = (e) => {
-    props?.updateGeneralInputValues({ data: props?.data, values: data });
+    //props?.updateGeneralInputValues({ data: props?.data, values: data });
+    console.log(request)
+    console.log({...data,request: request})
   };
 
   useEffect(() => {
-    setSelected(props?.data?.value?.request?.idScheme)
-    console.log(props?.data?.value?.request?.idScheme)
-    setData({
-      ...data,
-      dexname: props?.data?.value?.dexname,
-      url: props?.data?.value?.url,
-      request : {
-        idScheme : props?.data?.value?.request?.idScheme
-      }
-    });
-
+    setSelected(props?.data)
+    setData(props?.data.value);
+    setSelected(data?.request?.idScheme)
+    setRequest(data?.request)
   }, [props]);
 
   return (
@@ -71,9 +67,9 @@ export default function UpdateDataInitialization(props) {
                       className="select"
                       placeholder="Select request id scheme"
                       onChange={(e) => {
-                        console.log(e.selected)
+                        console.log(e)
                         setSelected(e.selected)
-                        props?.setRequestScheme(e.selected);
+                        setRequest({ ...request,idScheme: e.selected});
                       }}
                       selected={selected}
                     >
@@ -120,7 +116,7 @@ export default function UpdateDataInitialization(props) {
                   Cancel
                 </Button>
                 <Button onClick={update} primary>
-                  Save to Initialization
+                  Update Initialization
                 </Button>
               </ButtonStrip>
             </ModalActions>
