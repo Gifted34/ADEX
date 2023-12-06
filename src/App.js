@@ -83,6 +83,7 @@ const MyApp = () => {
   const [updateFormInputValues, setUpdateFormInputValues] = useState({
     dexname: "",
     url: "",
+    
   });
   const [authValues, setAuthValues] = useState({
     username: "",
@@ -92,6 +93,7 @@ const MyApp = () => {
 
   // updateFormInputValues
   const [type, setType] = useState("EXTERNAL");
+  const [idScheme, setRequestScheme] = useState('UID')
   const [open, setOpen] = useState(false);
   const [openDeleteIntegrations, setOpenDeleteIntegrations] = useState(false);
 
@@ -143,6 +145,9 @@ const MyApp = () => {
           dexname: formInputValues?.dexname,
           url: formInputValues?.url,
           type: type,
+          request : {
+            idScheme : idScheme
+          }
         },
       };
       engine
@@ -236,7 +241,6 @@ const MyApp = () => {
     let existingDEX = aggregateDataExchanges?.filter(
       (allDEX) => allDEX?.name === dataToIntegrate?.value?.dexname
     );
-    // console.log(dataToIntegrate, existingDEX, aggregateDataExchanges);
     if (formData?.type == type?.EXTERNAL) {
       if (dataToIntegrate?.value?.url == "") {
         setMessage("Please enter target DHIS2 instance url");
@@ -247,12 +251,12 @@ const MyApp = () => {
           setHidden(false);
         } else {
           if (checkIfTokenOrBasiAuth(authType)) {
+            console.log(dataToIntegrate)
             if (dataToIntegrate?.value?.source?.requests?.length > 0) {
               let holder = [];
               dataToIntegrate?.value?.source?.requests?.map((dd) => {
                 holder.push({
                   name: dd?.name,
-                  // visualization: dd?.visualizations,
                   dx: dd?.dx,
                   pe: dd?.pe,
                   ou: dd?.ou,
@@ -275,6 +279,8 @@ const MyApp = () => {
               } else {
                 if (existingDEX?.length == 1) {
                   setUpdate(true);
+                  console.log(1)
+                  console.log(dataToIntegrate?.value?.request?.idScheme)
                   let payload = {
                     resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
                     type: "update",
@@ -290,6 +296,9 @@ const MyApp = () => {
                           username: authValues?.username,
                           password: authValues?.password,
                         },
+                        request : {
+                          idScheme : dataToIntegrate?.value?.request?.idScheme
+                        }
                       },
                     },
                   };
@@ -310,6 +319,9 @@ const MyApp = () => {
                           username: authValues?.username,
                           password: authValues?.password,
                         },
+                        request : {
+                          idScheme : dataToIntegrate.value?.request?.idScheme
+                        }
                       },
                     },
                   };
@@ -347,6 +359,8 @@ const MyApp = () => {
                 setHidden(false);
               } else {
                 if (existingDEX?.length == 1) {
+                  console.log(2)
+                  console.log(dataToIntegrate?.value?.request?.idScheme)
                   let payload = {
                     resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
                     type: "update",
@@ -361,11 +375,16 @@ const MyApp = () => {
                           url: dataToIntegrate?.value?.url,
                           accessToken: authValues?.token,
                         },
+                        request : {
+                          idScheme : dataToIntegrate?.value?.request?.idScheme
+                        }
                       },
                     },
                   };
                   mutation(payload);
                 } else {
+                  console.log(3)
+                  console.log(dataToIntegrate?.value?.request?.idScheme)
                   let payload = {
                     resource: `aggregateDataExchanges/`,
                     type: "create",
@@ -380,6 +399,9 @@ const MyApp = () => {
                           url: dataToIntegrate?.value?.url,
                           accessToken: authValues?.token,
                         },
+                        request : {
+                          idScheme : dataToIntegrate?.value?.request?.idScheme
+                        }
                       },
                     },
                   };
@@ -395,6 +417,8 @@ const MyApp = () => {
       }
     } else {
       if (existingDEX?.length == 1) {
+        console.log(4)
+        console.log(dataToIntegrate?.value?.request?.idScheme)
         let payload = {
           resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
           type: "update",
@@ -407,6 +431,9 @@ const MyApp = () => {
                 url: dataToIntegrate?.value?.url,
                 accessToken: authValues?.token,
               },
+              request : {
+                idScheme : dataToIntegrate?.value?.request?.idScheme
+              }
             },
           },
         };
@@ -424,6 +451,9 @@ const MyApp = () => {
                 url: dataToIntegrate?.value?.url,
                 accessToken: authValues?.token,
               },
+              request : {
+                idScheme : dataToIntegrate.value?.request?.idScheme
+              }
             },
           },
         };
@@ -471,10 +501,14 @@ const MyApp = () => {
               dexname: values?.dexname,
               type: type,
               url: values?.url,
+              request:{
+                idScheme : idScheme,
+              }
             }),
           })
           .then((res) => {
             if (res.httpStatusCode == 200) {
+              setKey(Math.random());
               setOpenUpdate(!openUpdate);
               setSuccessMessage(true);
               setHidden(false);
@@ -500,11 +534,15 @@ const MyApp = () => {
               source: dataToUpdate?.value?.source,
               type: type,
               url: values?.url,
+              request:{
+                "idScheme" : idScheme,
+              }
             }),
           })
           .then((res) => {
             if (res.httpStatusCode == 200) {
               setOpenUpdate(!openUpdate);
+              setKey(Math.random());
               setSuccessMessage(true);
               setHidden(false);
               setMessage("Data saved in the datastore successfully.");
@@ -693,6 +731,8 @@ const MyApp = () => {
         open={open}
         setOpen={setOpen}
         styles={classes}
+        idScheme={idScheme}
+        setRequestScheme={setRequestScheme}
         setType={setType}
         formInputValues={formInputValues}
         type={type}
@@ -703,7 +743,9 @@ const MyApp = () => {
         setType={setType}
         styles={classes}
         type={type}
+        setRequestScheme={setRequestScheme}
         setOpenUpdate={setOpenUpdate}
+        idScheme={idScheme}
         openUpdate={openUpdate}
         setUpdateFormInputValues={setUpdateFormInputValues}
         updateFormInputValues={updateFormInputValues}
