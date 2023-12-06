@@ -18,16 +18,23 @@ export default function UpdateDataInitialization(props) {
     dexname: "",
     url: "",
   });
+  const [selected,setSelected] = useState()
   const update = (e) => {
     props?.updateGeneralInputValues({ data: props?.data, values: data });
   };
 
   useEffect(() => {
+    setSelected(props?.data?.value?.request?.idScheme)
+    console.log(props?.data?.value?.request?.idScheme)
     setData({
       ...data,
       dexname: props?.data?.value?.dexname,
       url: props?.data?.value?.url,
+      request : {
+        idScheme : props?.data?.value?.request?.idScheme
+      }
     });
+
   }, [props]);
 
   return (
@@ -56,10 +63,24 @@ export default function UpdateDataInitialization(props) {
                       onChange={(e) => {
                         setData({ ...data, dexname: e.value });
                       }}
-                      // placeholder={props?.data?.value?.dexname}
                       className={props?.styles?.marginBottom}
                       value={data?.dexname}
                     />
+                    <Box className={props?.styles?.marginBottom}>
+                    <SingleSelect
+                      className="select"
+                      placeholder="Select request id scheme"
+                      onChange={(e) => {
+                        console.log(e.selected)
+                        setSelected(e.selected)
+                        props?.setRequestScheme(e.selected);
+                      }}
+                      selected={selected}
+                    >
+                      <SingleSelectOption label="UID" value="UID" />
+                      <SingleSelectOption label="Code" value="code" />
+                    </SingleSelect>
+                  </Box>
                     <Box className={props?.styles?.marginBottom}>
                       <SingleSelect
                         className="select"
