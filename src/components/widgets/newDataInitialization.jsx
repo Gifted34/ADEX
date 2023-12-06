@@ -6,11 +6,12 @@ import {
   ModalContent,
   ModalTitle,
 } from "@dhis2/ui";
-import React from "react";
+import React,{useEffect} from "react";
 import GeneralInputs from "../forms/general.inputs";
 
 export default function NewDataInitialization(props) {
   // var val = Math.floor(1000 + Math.random() * 9000);
+
   return (
     <div
       style={{
@@ -24,6 +25,7 @@ export default function NewDataInitialization(props) {
             <ModalContent>
               <GeneralInputs
                 styles={props?.styles}
+                attributes={props?.data?.attribute?.attributes}
                 formInputValues={props?.formInputValues}
                 formData={props?.formData}
                 setRequestScheme={props?.setRequestScheme}
