@@ -11,13 +11,16 @@ import React, { useState, useEffect } from "react";
 export default function GeneralInputs(props) {
   const [orgUnitIdScheme,setorgUnitIdScheme] = useState()
   const [dataElementIdScheme,setdataElementIdScheme] = useState()
+  const [idScheme,setIdScheme] = useState()
+
+  const [orgAttributes,setOrgAttributes] = useState()
+  const [dxAttributes,setdxAttributes] = useState()
   const inputsHandler = (e) => {
     props?.setFormInputValues({
       ...props?.formInputValues,
       [e?.name]: e?.value,
     });
   };
-
 
 
   return (
@@ -38,9 +41,10 @@ export default function GeneralInputs(props) {
               className="select"
               placeholder="Select request id scheme"
               onChange={(e) => {
-                props?.setRequestScheme(e.selected);
+                setIdScheme(e.selected);
+                inputsHandler({name :'idScheme',value : e.selected})
               }}
-              selected={props?.idScheme}
+              selected={idScheme}
             >
               <SingleSelectOption label="UID" value="UID" />
               <SingleSelectOption label="Code" value="code" />
@@ -75,7 +79,6 @@ export default function GeneralInputs(props) {
               onChange={(e) => {
                 setdataElementIdScheme(e.selected)
                 if(e.selected !== 'attribute'){
-                  console.log(e)
                   inputsHandler({name :'dataElementIdScheme',value : e.selected})
                 }
               }}
@@ -86,6 +89,18 @@ export default function GeneralInputs(props) {
               <SingleSelectOption label="Attribute" value="attribute" />
             </SingleSelect>
           </Box>
+          {dataElementIdScheme === 'attribute' &&
+          <Box className={props?.styles?.marginBottom}>
+            <SingleSelect
+            className="select"
+            placeholder="select request dataElementIdScheme attribute"
+            onChange={(e)=>{
+              setdxAttributes(e.selected)
+              inputsHandler({name :'dataElementIdScheme',value : `attribute:${e.selected}`})
+            }}
+              selected={dxAttributes}>
+              {props?.attributes?.filter(att => att?.objectTypes.includes('DATA_ELEMENT') ||att?.objectTypes.includes('INDICATOR'))
+              .map(att=> <SingleSelectOption label={att.displayName} value={att.id} />)}</SingleSelect></Box>}
           <Box className={props?.styles?.marginBottom}>
             <SingleSelect
               className="select"
@@ -103,6 +118,18 @@ export default function GeneralInputs(props) {
               <SingleSelectOption label="Attribute" value="attribute" />
             </SingleSelect>
           </Box>
+          {orgUnitIdScheme === 'attribute' &&
+          <Box className={props?.styles?.marginBottom}>
+            <SingleSelect
+            className="select"
+            placeholder="select request orgUnitIdScheme attribute"
+            onChange={(e)=>{
+              setOrgAttributes(e.selected)
+              inputsHandler({name :'orgUnitIdScheme',value : `attribute:${e.selected}`})}
+            }
+              selected={orgAttributes}>
+              {props?.attributes?.filter(att => att?.objectTypes.includes('ORGANISATION_UNIT'))
+              .map(att=> <SingleSelectOption label={att.displayName} value={att.id} />)}</SingleSelect></Box>}
         </div>
       </Field>
     </div>
