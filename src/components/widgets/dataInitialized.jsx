@@ -134,6 +134,7 @@ export default function DataInitialized(props) {
                                 props?.setOpenIntegration(
                                   !props?.openIntegration
                                 );
+                                console.log(aggregateDataExchange)
                                 integrateEntry(aggregateDataExchange);
                               }}
                             >
