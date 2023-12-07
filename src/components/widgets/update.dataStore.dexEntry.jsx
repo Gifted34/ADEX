@@ -111,7 +111,7 @@ export default function UpdateDataInitialization(props) {
                       placeholder="Select request id scheme"
                       onChange={(e) => {
                         setSelected(e.selected)
-                        request.idScheme = e.selected
+                        setRequest({ ...request,idScheme: e.selected})
                       }}
                       selected={selected}
                     >
