@@ -481,6 +481,7 @@ const MyApp = () => {
 
   // update the initialized entry in the datastore
   const updateGeneralInputValues = ({ data, values }) => {
+    console.log(values)
     if (
       values?.dexname == "" ||
       values?.dexname == null ||
@@ -490,42 +491,47 @@ const MyApp = () => {
       values?.url == undefined
     ) {
     } else {
+
       if (
         dataToUpdate?.value?.source == undefined ||
         dataToUpdate?.value?.source == null
       ) {
-        engine
-          .mutate({
-            resource: `dataStore/DEX_initializer_values/${data?.key}`,
-            type: "update",
-            data: ({}) => ({
-              createdAt: dataToUpdate?.value?.createdAt,
-              updatedAt: new Date().toLocaleDateString(),
-              dexname: values?.dexname,
-              type: type,
-              url: values?.url,
-              request:{
-                idScheme : idScheme,
+        console.log(dataToUpdate)
+          engine
+            .mutate({
+              resource: `dataStore/DEX_initializer_values/${data?.key}`,
+              type: "update",
+              data: ({}) => ({
+                createdAt: dataToUpdate?.value?.createdAt,
+                updatedAt: new Date().toLocaleDateString(),
+                dexname: values?.dexname,
+                type: type,
+                url: values?.url,
+                request:{
+                  idScheme : dataToUpdate?.value?.request?.idScheme,
+                  orgUnitIdScheme : dataToUpdate?.value?.request?.orgUnitIdScheme,
+                  dataElementIdScheme : dataToUpdate?.value?.request?.dataElementIdScheme                
+                }
+              }),
+            })
+            .then((res) => {
+              if (res.httpStatusCode == 200) {
+                setKey(Math.random());
+                setOpenUpdate(!openUpdate);
+                setSuccessMessage(true);
+                setHidden(false);
+                setMessage("Data saved in the datastore successfully.");
               }
-            }),
-          })
-          .then((res) => {
-            if (res.httpStatusCode == 200) {
-              setKey(Math.random());
-              setOpenUpdate(!openUpdate);
-              setSuccessMessage(true);
+            })
+            .catch((e) => {
+              setSuccessMessage(false);
               setHidden(false);
-              setMessage("Data saved in the datastore successfully.");
-            }
-          })
-          .catch((e) => {
-            setSuccessMessage(false);
-            setHidden(false);
-            setMessage(
-              "Error occured. Either server or the inputs causes this error."
-            );
-          });
+              setMessage(
+                "Error occured. Either server or the inputs causes this error."
+              );
+            });
       } else {
+        console.log(dataToUpdate)
         engine
           .mutate({
             resource: `dataStore/DEX_initializer_values/${data?.key}`,
@@ -538,7 +544,9 @@ const MyApp = () => {
               type: type,
               url: values?.url,
               request:{
-                "idScheme" : idScheme,
+                idScheme : dataToUpdate?.value?.request?.idScheme,
+                orgUnitIdScheme : dataToUpdate?.value?.request?.orgUnitIdScheme,
+                dataElementIdScheme : dataToUpdate?.value?.request?.dataElementIdScheme
               }
             }),
           })
