@@ -191,6 +191,11 @@ export default function AddNewRequests(props) {
           dexname: dataStore.dexname,
           type: dataStore.type,
           url: dataStore.url,
+          request : {
+            idScheme : dataStore?.request?.idScheme,
+            dataElementIdScheme : dataStore?.request?.dataElementIdScheme,
+            orgUnitIdScheme : dataStore?.request?.orgUnitIdScheme
+          },
           source: {
             requests: [
               {
@@ -231,6 +236,11 @@ export default function AddNewRequests(props) {
           dexname: dataStore.dexname,
           type: dataStore.type,
           url: dataStore.url,
+          request : {
+            idScheme : dataStore?.request?.idScheme,
+            dataElementIdScheme : dataStore?.request?.dataElementIdScheme,
+            orgUnitIdScheme : dataStore?.request?.orgUnitIdScheme
+          },
           source: { requests: arr },
         });
       }
