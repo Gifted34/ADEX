@@ -282,8 +282,7 @@ const MyApp = () => {
               } else {
                 if (existingDEX?.length == 1) {
                   setUpdate(true);
-                  console.log(1)
-                  console.log(dataToIntegrate?.value?.request?.idScheme)
+                  console.log(dataToIntegrate)
                   let payload = {
                     resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
                     type: "update",
@@ -300,13 +299,16 @@ const MyApp = () => {
                           password: authValues?.password,
                         },
                         request : {
-                          idScheme : dataToIntegrate?.value?.request?.idScheme
+                          idScheme : dataToIntegrate?.value?.request?.idScheme,
+                          orgUnitIdScheme : dataToIntegrate?.value?.request?.orgUnitIdScheme,
+                          dataElementIdScheme : dataToIntegrate?.value?.request?.dataElementIdScheme
                         }
                       },
                     },
                   };
                   mutation(payload);
                 } else {
+                  console.log(dataToIntegrate)
                   let payload = {
                     resource: "aggregateDataExchanges",
                     type: "create",
@@ -323,7 +325,9 @@ const MyApp = () => {
                           password: authValues?.password,
                         },
                         request : {
-                          idScheme : dataToIntegrate.value?.request?.idScheme
+                          idScheme : dataToIntegrate?.value?.request?.idScheme,
+                          orgUnitIdScheme : dataToIntegrate?.value?.request?.orgUnitIdScheme,
+                          dataElementIdScheme : dataToIntegrate?.value?.request?.dataElementIdScheme
                         }
                       },
                     },
@@ -363,7 +367,7 @@ const MyApp = () => {
               } else {
                 if (existingDEX?.length == 1) {
                   console.log(2)
-                  console.log(dataToIntegrate?.value?.request?.idScheme)
+                  console.log(dataToIntegrate)
                   let payload = {
                     resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
                     type: "update",
@@ -379,7 +383,9 @@ const MyApp = () => {
                           accessToken: authValues?.token,
                         },
                         request : {
-                          idScheme : dataToIntegrate?.value?.request?.idScheme
+                          idScheme : dataToIntegrate?.value?.request?.idScheme,
+                          orgUnitIdScheme : dataToIntegrate?.value?.request?.orgUnitIdScheme,
+                          dataElementIdScheme : dataToIntegrate?.value?.request?.dataElementIdScheme
                         }
                       },
                     },
@@ -403,7 +409,9 @@ const MyApp = () => {
                           accessToken: authValues?.token,
                         },
                         request : {
-                          idScheme : dataToIntegrate?.value?.request?.idScheme
+                          idScheme : dataToIntegrate?.value?.request?.idScheme,
+                          orgUnitIdScheme : dataToIntegrate?.value?.request?.orgUnitIdScheme,
+                          dataElementIdScheme : dataToIntegrate?.value?.request?.dataElementIdScheme
                         }
                       },
                     },
@@ -421,7 +429,7 @@ const MyApp = () => {
     } else {
       if (existingDEX?.length == 1) {
         console.log(4)
-        console.log(dataToIntegrate?.value?.request?.idScheme)
+        console.log(dataToIntegrate)
         let payload = {
           resource: `aggregateDataExchanges/${existingDEX[0]?.id}`,
           type: "update",
@@ -435,13 +443,16 @@ const MyApp = () => {
                 accessToken: authValues?.token,
               },
               request : {
-                idScheme : dataToIntegrate?.value?.request?.idScheme
+                idScheme : dataToIntegrate?.value?.request?.idScheme,
+                orgUnitIdScheme : dataToIntegrate?.value?.request?.orgUnitIdScheme,
+                dataElementIdScheme : dataToIntegrate?.value?.request?.dataElementIdScheme
               }
             },
           },
         };
         mutation(payload);
       } else {
+        console.log(dataToIntegrate)
         let payload = {
           resource: "aggregateDataExchanges",
           type: "create",
@@ -455,7 +466,9 @@ const MyApp = () => {
                 accessToken: authValues?.token,
               },
               request : {
-                idScheme : dataToIntegrate.value?.request?.idScheme
+                idScheme : dataToIntegrate?.value?.request?.idScheme,
+                orgUnitIdScheme : dataToIntegrate?.value?.request?.orgUnitIdScheme,
+                dataElementIdScheme : dataToIntegrate?.value?.request?.dataElementIdScheme
               }
             },
           },
@@ -481,7 +494,7 @@ const MyApp = () => {
 
   // update the initialized entry in the datastore
   const updateGeneralInputValues = ({ data, values }) => {
-    console.log(values)
+    setDataToUpdate(values)
     if (
       values?.dexname == "" ||
       values?.dexname == null ||
@@ -532,21 +545,22 @@ const MyApp = () => {
             });
       } else {
         console.log(dataToUpdate)
+        console.log(values)
         engine
           .mutate({
             resource: `dataStore/DEX_initializer_values/${data?.key}`,
             type: "update",
             data: ({}) => ({
-              createdAt: dataToUpdate?.value?.createdAt,
+              createdAt: values?.createdAt,
               updatedAt: new Date().toLocaleDateString(),
               dexname: values?.dexname,
-              source: dataToUpdate?.value?.source,
-              type: type,
+              source: values?.source,
+              type: values?.type,
               url: values?.url,
               request:{
-                idScheme : dataToUpdate?.value?.request?.idScheme,
-                orgUnitIdScheme : dataToUpdate?.value?.request?.orgUnitIdScheme,
-                dataElementIdScheme : dataToUpdate?.value?.request?.dataElementIdScheme
+                idScheme : values?.request?.idScheme,
+                orgUnitIdScheme : values?.request?.orgUnitIdScheme,
+                dataElementIdScheme : values?.request?.dataElementIdScheme
               }
             }),
           })
