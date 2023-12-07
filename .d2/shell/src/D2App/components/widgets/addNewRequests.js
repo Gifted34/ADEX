@@ -7,7 +7,7 @@ import OrgUnits from "../forms/orgUnits";
 import { useDataEngine, useDataMutation } from "@dhis2/app-runtime";
 import CustomScheme from "./customScheme";
 export default function AddNewRequests(props) {
-  var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$data5, _props$data5$attribut, _props$request, _props$request2, _props$request3, _props$request4, _props$request5, _props$request6, _props$style, _props$style2, _props$style3, _props$request7, _props$style4, _props$style5, _props$style6, _props$style7, _props$style8, _props$request8, _props$style9, _props$request9, _props$request10, _props$style10;
+  var _props$data, _props$data$organisat, _props$data2, _props$data2$visualiz, _props$data3, _props$data3$dataElem, _props$data4, _props$data4$indicato, _props$data5, _props$data5$attribut, _props$request, _props$request2, _props$request3, _props$request4, _props$request5, _props$request6, _props$request7, _props$style, _props$style2, _props$style3, _props$style4, _props$style5, _props$style6, _props$request13, _props$request14, _props$request15, _props$request16, _props$style7, _props$style8, _props$request17, _props$style9, _props$request18, _props$style10;
   const engine = useDataEngine();
   const orgUnits = props === null || props === void 0 ? void 0 : (_props$data = props.data) === null || _props$data === void 0 ? void 0 : (_props$data$organisat = _props$data.organisationUnits) === null || _props$data$organisat === void 0 ? void 0 : _props$data$organisat.organisationUnits;
   const Visualizations = props === null || props === void 0 ? void 0 : (_props$data2 = props.data) === null || _props$data2 === void 0 ? void 0 : (_props$data2$visualiz = _props$data2.visualizations) === null || _props$data2$visualiz === void 0 ? void 0 : _props$data2$visualiz.visualizations;
@@ -24,17 +24,25 @@ export default function AddNewRequests(props) {
   const [hide, setHidden] = useState(true);
   const [errorHidden, setErrorHidden] = useState(true);
   const [errorMessage, setMessage] = useState();
+  const [dxattributes, setAttributes] = useState();
   const [dataStore, setDataStore] = useState();
   const [loading, setLoading] = useState(false);
   const [Dx, setdx] = useState(props === null || props === void 0 ? void 0 : (_props$request6 = props.request) === null || _props$request6 === void 0 ? void 0 : _props$request6.dx);
-  const [inputIDScheme, setInputIDScheme] = useState();
+  const [selectedAttr, setSelected] = useState();
+  const [inputIDScheme, setInputIDScheme] = useState(props === null || props === void 0 ? void 0 : (_props$request7 = props.request) === null || _props$request7 === void 0 ? void 0 : _props$request7.inputIdScheme);
   const [outputIDScheme, setOutputIDScheme] = useState();
-  const [orgInputScheme, setOrgInputSchema] = useState();
-  const [dxInputScheme, setDxInput] = useState();
-  const [orgOutputScheme, setOrgOutputScheme] = useState();
-  const [dxOutputScheme, setDxOutputScheme] = useState();
+  const [orgInputScheme, setOrgInputSchema] = useState(props === null || props === void 0 ? void 0 : props.orgUnitIdScheme);
+  const [dxInputScheme, setDxInput] = useState(props === null || props === void 0 ? void 0 : props.dataElementIdScheme);
+  const [orgOutputScheme, setOrgOutputScheme] = useState(props === null || props === void 0 ? void 0 : props.outputOrgUnitIdScheme);
+  const [dxOutputScheme, setDxOutputScheme] = useState(props === null || props === void 0 ? void 0 : props.outputDataElementIdScheme);
   const setData = selected => {
     setdx(selected);
+  };
+  const orgPath = () => {
+    const path = [];
+    const orgss = orgUnits === null || orgUnits === void 0 ? void 0 : orgUnits.filter(org => (orgS === null || orgS === void 0 ? void 0 : orgS.includes(org.id)) || (orgS === null || orgS === void 0 ? void 0 : orgS.includes(org.code)));
+    orgss.map(or => path.push(or.path));
+    return path;
   };
   const setOrgUnits = orgs => {
     let array = [];
@@ -69,6 +77,18 @@ export default function AddNewRequests(props) {
     } else {
       return orgS;
     }
+  };
+
+  //get dx from codes or ids for editing
+  const getDX = () => {
+    const dx = [...dataElements, ...indicators];
+    const sele = dx === null || dx === void 0 ? void 0 : dx.filter(dx => {
+      var _props$request8, _props$request8$dx, _props$request9, _props$request9$dx;
+      return (props === null || props === void 0 ? void 0 : (_props$request8 = props.request) === null || _props$request8 === void 0 ? void 0 : (_props$request8$dx = _props$request8.dx) === null || _props$request8$dx === void 0 ? void 0 : _props$request8$dx.includes(dx.id)) || (props === null || props === void 0 ? void 0 : (_props$request9 = props.request) === null || _props$request9 === void 0 ? void 0 : (_props$request9$dx = _props$request9.dx) === null || _props$request9$dx === void 0 ? void 0 : _props$request9$dx.includes(dx.code));
+    });
+    const arr = [];
+    sele.map(sel => arr.push(sel.id));
+    return arr;
   };
 
   // //fetchig data store values using the datastore key passed in the locations path
@@ -144,11 +164,18 @@ export default function AddNewRequests(props) {
       } else {
         var _dataStore$source;
         if ((dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source = dataStore.source) === null || _dataStore$source === void 0 ? void 0 : _dataStore$source.requests) === undefined) {
+          var _dataStore$request, _dataStore$request2, _dataStore$request3;
+          let outp = selectedAttr !== undefined ? `${outputIDScheme}:${selectedAttr}` : outputIDScheme;
           var dStore = {
             createdAt: dataStore.createdAt,
             dexname: dataStore.dexname,
             type: dataStore.type,
             url: dataStore.url,
+            request: {
+              idScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request = dataStore.request) === null || _dataStore$request === void 0 ? void 0 : _dataStore$request.idScheme,
+              dataElementIdScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request2 = dataStore.request) === null || _dataStore$request2 === void 0 ? void 0 : _dataStore$request2.dataElementIdScheme,
+              orgUnitIdScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request3 = dataStore.request) === null || _dataStore$request3 === void 0 ? void 0 : _dataStore$request3.orgUnitIdScheme
+            },
             source: {
               requests: [{
                 name: name,
@@ -156,7 +183,7 @@ export default function AddNewRequests(props) {
                 pe: periods,
                 ou: Orgs(),
                 inputIdScheme: inputIDScheme,
-                outputIdScheme: outputIDScheme,
+                outputIdScheme: outp,
                 orgUnitIdScheme: orgInputScheme,
                 dataElementIdScheme: dxInputScheme,
                 outputDataElementIdScheme: dxOutputScheme,
@@ -166,7 +193,8 @@ export default function AddNewRequests(props) {
           };
           send(dStore);
         } else {
-          var _dataStore$source2, _dataStore$source2$re;
+          var _dataStore$source2, _dataStore$source2$re, _dataStore$request4, _dataStore$request5, _dataStore$request6;
+          let outp = selectedAttr !== undefined ? `${outputIDScheme}:${selectedAttr}` : outputIDScheme;
           let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : (_dataStore$source2$re = _dataStore$source2.requests) === null || _dataStore$source2$re === void 0 ? void 0 : _dataStore$source2$re.filter(req => req.name !== name);
           arr.push({
             name: name,
@@ -174,7 +202,7 @@ export default function AddNewRequests(props) {
             pe: periods,
             ou: Orgs(),
             inputIdScheme: inputIDScheme,
-            outputIdScheme: outputIDScheme,
+            outputIdScheme: outp,
             orgUnitIdScheme: orgInputScheme,
             dataElementIdScheme: dxInputScheme,
             outputDataElementIdScheme: dxOutputScheme,
@@ -185,6 +213,11 @@ export default function AddNewRequests(props) {
             dexname: dataStore.dexname,
             type: dataStore.type,
             url: dataStore.url,
+            request: {
+              idScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request4 = dataStore.request) === null || _dataStore$request4 === void 0 ? void 0 : _dataStore$request4.idScheme,
+              dataElementIdScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request5 = dataStore.request) === null || _dataStore$request5 === void 0 ? void 0 : _dataStore$request5.dataElementIdScheme,
+              orgUnitIdScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request6 = dataStore.request) === null || _dataStore$request6 === void 0 ? void 0 : _dataStore$request6.orgUnitIdScheme
+            },
             source: {
               requests: arr
             }
@@ -194,7 +227,21 @@ export default function AddNewRequests(props) {
     }
   };
   useEffect(() => {
+    var _props$request10, _props$request10$outp;
     fetchData();
+    setAttributes(attributes === null || attributes === void 0 ? void 0 : attributes.filter(attr => {
+      var _attr$objectTypes, _attr$objectTypes2;
+      return (attr === null || attr === void 0 ? void 0 : (_attr$objectTypes = attr.objectTypes) === null || _attr$objectTypes === void 0 ? void 0 : _attr$objectTypes.includes('DATA_ELEMENT')) || (attr === null || attr === void 0 ? void 0 : (_attr$objectTypes2 = attr.objectTypes) === null || _attr$objectTypes2 === void 0 ? void 0 : _attr$objectTypes2.includes('INDICATOR'));
+    }));
+    if (props !== null && props !== void 0 && (_props$request10 = props.request) !== null && _props$request10 !== void 0 && (_props$request10$outp = _props$request10.outputIdScheme) !== null && _props$request10$outp !== void 0 && _props$request10$outp.includes('attribute')) {
+      var _props$request11, _props$request11$outp;
+      const strings = props === null || props === void 0 ? void 0 : (_props$request11 = props.request) === null || _props$request11 === void 0 ? void 0 : (_props$request11$outp = _props$request11.outputIdScheme) === null || _props$request11$outp === void 0 ? void 0 : _props$request11$outp.split(':');
+      setOutputIDScheme(strings[0]);
+      setSelected(strings[1]);
+    } else {
+      var _props$request12;
+      setOutputIDScheme(props === null || props === void 0 ? void 0 : (_props$request12 = props.request) === null || _props$request12 === void 0 ? void 0 : _props$request12.outputIdScheme);
+    }
   }, []);
   return /*#__PURE__*/React.createElement("div", {
     className: props === null || props === void 0 ? void 0 : (_props$style = props.style) === null || _props$style === void 0 ? void 0 : _props$style.padding
@@ -209,7 +256,7 @@ export default function AddNewRequests(props) {
   }, /*#__PURE__*/React.createElement(OrgUnits, {
     orgUnits: orgUnits,
     setOrg: setOrgUnits,
-    selected: props === null || props === void 0 ? void 0 : (_props$request7 = props.request) === null || _props$request7 === void 0 ? void 0 : _props$request7.ou
+    selected: orgPath()
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Box, {
     className: `${props === null || props === void 0 ? void 0 : (_props$style4 = props.style) === null || _props$style4 === void 0 ? void 0 : _props$style4.width} ${props === null || props === void 0 ? void 0 : (_props$style5 = props.style) === null || _props$style5 === void 0 ? void 0 : _props$style5.padding}`
   }, /*#__PURE__*/React.createElement(Field, {
@@ -236,7 +283,7 @@ export default function AddNewRequests(props) {
   })), /*#__PURE__*/React.createElement("br", null)), /*#__PURE__*/React.createElement(Field, {
     label: "Output IDScheme"
   }, /*#__PURE__*/React.createElement(SingleSelect, {
-    selected: outputIDScheme,
+    selected: outputIDScheme === 'attribute' ? outputIDScheme.split(':')[0] : outputIDScheme,
     className: "select",
     onChange: e => setOutputIDScheme(e.selected),
     placeholder: "Select output Id scheme"
@@ -246,11 +293,30 @@ export default function AddNewRequests(props) {
   }), /*#__PURE__*/React.createElement(SingleSelectOption, {
     label: "CODE",
     value: "CODE"
-  }))), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement(SingleSelectOption, {
+    label: "attribute",
+    value: "attribute"
+  }))), /*#__PURE__*/React.createElement("br", null), (outputIDScheme === null || outputIDScheme === void 0 ? void 0 : outputIDScheme.includes('attribute')) && /*#__PURE__*/React.createElement(Field, {
+    label: "Output IDScheme"
+  }, /*#__PURE__*/React.createElement(SingleSelect, {
+    selected: selectedAttr,
+    className: "select",
+    onChange: e => {
+      setSelected(e.selected);
+    },
+    placeholder: "Select output Id scheme"
+  }, dxattributes === null || dxattributes === void 0 ? void 0 : dxattributes.map(attr => /*#__PURE__*/React.createElement(SingleSelectOption, {
+    label: attr.displayName,
+    value: attr.id
+  })))), /*#__PURE__*/React.createElement("div", {
     className: `${props === null || props === void 0 ? void 0 : (_props$style6 = props.style) === null || _props$style6 === void 0 ? void 0 : _props$style6.padding}`
   }, /*#__PURE__*/React.createElement(CustomScheme, {
     style: props === null || props === void 0 ? void 0 : props.style,
     attributes: attributes,
+    dataElementIdScheme: props === null || props === void 0 ? void 0 : (_props$request13 = props.request) === null || _props$request13 === void 0 ? void 0 : _props$request13.dataElementIdScheme,
+    orgUnitIdScheme: props === null || props === void 0 ? void 0 : (_props$request14 = props.request) === null || _props$request14 === void 0 ? void 0 : _props$request14.orgUnitIdScheme,
+    outputDataElementIdScheme: props === null || props === void 0 ? void 0 : (_props$request15 = props.request) === null || _props$request15 === void 0 ? void 0 : _props$request15.outputDataElementIdScheme,
+    outputOrgUnitIdScheme: props === null || props === void 0 ? void 0 : (_props$request16 = props.request) === null || _props$request16 === void 0 ? void 0 : _props$request16.outputOrgUnitIdScheme,
     setOrgInputSchema: setOrgInputSchema,
     setDxInput: setDxInput,
     setOrgOutputScheme: setOrgOutputScheme,
@@ -261,13 +327,13 @@ export default function AddNewRequests(props) {
     className: props === null || props === void 0 ? void 0 : (_props$style8 = props.style) === null || _props$style8 === void 0 ? void 0 : _props$style8.padding
   }, /*#__PURE__*/React.createElement(PeriodsWidget, {
     setPeriods: setPeriods,
-    selected: props === null || props === void 0 ? void 0 : (_props$request8 = props.request) === null || _props$request8 === void 0 ? void 0 : _props$request8.pe
+    selected: props === null || props === void 0 ? void 0 : (_props$request17 = props.request) === null || _props$request17 === void 0 ? void 0 : _props$request17.pe
   })), /*#__PURE__*/React.createElement(Box, {
     className: props === null || props === void 0 ? void 0 : (_props$style9 = props.style) === null || _props$style9 === void 0 ? void 0 : _props$style9.padding
   }, /*#__PURE__*/React.createElement(DataDimensionsCodes, {
     setData: setData,
-    selectedDx: props === null || props === void 0 ? void 0 : (_props$request9 = props.request) === null || _props$request9 === void 0 ? void 0 : _props$request9.dx,
-    selectedVis: props === null || props === void 0 ? void 0 : (_props$request10 = props.request) === null || _props$request10 === void 0 ? void 0 : _props$request10.visualization,
+    selectedDx: getDX(),
+    selectedVis: props === null || props === void 0 ? void 0 : (_props$request18 = props.request) === null || _props$request18 === void 0 ? void 0 : _props$request18.visualization,
     dataElements: dataElements,
     indicators: indicators
     // visualizations={Visualizations}

@@ -66,7 +66,7 @@ const query = {
 
 // const validater = new UrlValidator();
 const MyApp = () => {
-  var _data$aggregateDataEx2, _data$aggregateDataEx3;
+  var _data$aggregateDataEx2, _data$attribute, _data$aggregateDataEx3;
   const [formInputValues, setFormInputValues] = useState({
     dexname: "",
     url: ""
@@ -83,6 +83,7 @@ const MyApp = () => {
 
   // updateFormInputValues
   const [type, setType] = useState("EXTERNAL");
+  const [idScheme, setRequestScheme] = useState('UID');
   const [open, setOpen] = useState(false);
   const [openDeleteIntegrations, setOpenDeleteIntegrations] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -125,9 +126,15 @@ const MyApp = () => {
           createdAt: new Date().toLocaleString(),
           dexname: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dexname,
           url: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.url,
-          type: type
+          type: type,
+          request: {
+            idScheme: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.idScheme,
+            orgUnitIdScheme: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.orgUnitIdScheme,
+            dataElementIdScheme: formInputValues === null || formInputValues === void 0 ? void 0 : formInputValues.dataElementIdScheme
+          }
         }
       };
+      console.log(payload);
       engine.mutate(payload).then(res => {
         if (res.httpStatusCode == 201) {
           setKey(Math.random());
@@ -205,7 +212,6 @@ const MyApp = () => {
       var _dataToIntegrate$valu6;
       return (allDEX === null || allDEX === void 0 ? void 0 : allDEX.name) === (dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu6 = dataToIntegrate.value) === null || _dataToIntegrate$valu6 === void 0 ? void 0 : _dataToIntegrate$valu6.dexname);
     });
-    // console.log(dataToIntegrate, existingDEX, aggregateDataExchanges);
     if ((formData === null || formData === void 0 ? void 0 : formData.type) == (type === null || type === void 0 ? void 0 : type.EXTERNAL)) {
       var _dataToIntegrate$valu7;
       if ((dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu7 = dataToIntegrate.value) === null || _dataToIntegrate$valu7 === void 0 ? void 0 : _dataToIntegrate$valu7.url) == "") {
@@ -219,13 +225,13 @@ const MyApp = () => {
         } else {
           if (checkIfTokenOrBasiAuth(authType)) {
             var _dataToIntegrate$valu9, _dataToIntegrate$valu10, _dataToIntegrate$valu11;
+            console.log(dataToIntegrate);
             if ((dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu9 = dataToIntegrate.value) === null || _dataToIntegrate$valu9 === void 0 ? void 0 : (_dataToIntegrate$valu10 = _dataToIntegrate$valu9.source) === null || _dataToIntegrate$valu10 === void 0 ? void 0 : (_dataToIntegrate$valu11 = _dataToIntegrate$valu10.requests) === null || _dataToIntegrate$valu11 === void 0 ? void 0 : _dataToIntegrate$valu11.length) > 0) {
               var _dataToIntegrate$valu12, _dataToIntegrate$valu13, _dataToIntegrate$valu14;
               let holder = [];
               dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu12 = dataToIntegrate.value) === null || _dataToIntegrate$valu12 === void 0 ? void 0 : (_dataToIntegrate$valu13 = _dataToIntegrate$valu12.source) === null || _dataToIntegrate$valu13 === void 0 ? void 0 : (_dataToIntegrate$valu14 = _dataToIntegrate$valu13.requests) === null || _dataToIntegrate$valu14 === void 0 ? void 0 : _dataToIntegrate$valu14.map(dd => {
                 holder.push({
                   name: dd === null || dd === void 0 ? void 0 : dd.name,
-                  // visualization: dd?.visualizations,
                   dx: dd === null || dd === void 0 ? void 0 : dd.dx,
                   pe: dd === null || dd === void 0 ? void 0 : dd.pe,
                   ou: dd === null || dd === void 0 ? void 0 : dd.ou,
@@ -242,8 +248,9 @@ const MyApp = () => {
                 setHidden(false);
               } else {
                 if ((existingDEX === null || existingDEX === void 0 ? void 0 : existingDEX.length) == 1) {
-                  var _existingDEX$, _dataToIntegrate$valu15, _dataToIntegrate$valu16, _dataToIntegrate$valu17;
+                  var _existingDEX$, _dataToIntegrate$valu15, _dataToIntegrate$valu16, _dataToIntegrate$valu17, _dataToIntegrate$valu18, _dataToIntegrate$valu19, _dataToIntegrate$valu20, _dataToIntegrate$valu21, _dataToIntegrate$valu22, _dataToIntegrate$valu23;
                   setUpdate(true);
+                  console.log(dataToIntegrate);
                   let payload = {
                     resource: `aggregateDataExchanges/${(_existingDEX$ = existingDEX[0]) === null || _existingDEX$ === void 0 ? void 0 : _existingDEX$.id}`,
                     type: "update",
@@ -260,31 +267,36 @@ const MyApp = () => {
                           password: authValues === null || authValues === void 0 ? void 0 : authValues.password
                         },
                         request: {
-                          idScheme: "code"
+                          idScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu18 = dataToIntegrate.value) === null || _dataToIntegrate$valu18 === void 0 ? void 0 : (_dataToIntegrate$valu19 = _dataToIntegrate$valu18.request) === null || _dataToIntegrate$valu19 === void 0 ? void 0 : _dataToIntegrate$valu19.idScheme,
+                          orgUnitIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu20 = dataToIntegrate.value) === null || _dataToIntegrate$valu20 === void 0 ? void 0 : (_dataToIntegrate$valu21 = _dataToIntegrate$valu20.request) === null || _dataToIntegrate$valu21 === void 0 ? void 0 : _dataToIntegrate$valu21.orgUnitIdScheme,
+                          dataElementIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu22 = dataToIntegrate.value) === null || _dataToIntegrate$valu22 === void 0 ? void 0 : (_dataToIntegrate$valu23 = _dataToIntegrate$valu22.request) === null || _dataToIntegrate$valu23 === void 0 ? void 0 : _dataToIntegrate$valu23.dataElementIdScheme
                         }
                       }
                     }
                   };
                   mutation(payload);
                 } else {
-                  var _dataToIntegrate$valu18, _dataToIntegrate$valu19, _dataToIntegrate$valu20;
+                  var _dataToIntegrate$valu24, _dataToIntegrate$valu25, _dataToIntegrate$valu26, _dataToIntegrate$valu27, _dataToIntegrate$valu28, _dataToIntegrate$valu29, _dataToIntegrate$valu30, _dataToIntegrate$valu31, _dataToIntegrate$valu32;
+                  console.log(dataToIntegrate);
                   let payload = {
                     resource: "aggregateDataExchanges",
                     type: "create",
                     data: {
-                      name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu18 = dataToIntegrate.value) === null || _dataToIntegrate$valu18 === void 0 ? void 0 : _dataToIntegrate$valu18.dexname,
+                      name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu24 = dataToIntegrate.value) === null || _dataToIntegrate$valu24 === void 0 ? void 0 : _dataToIntegrate$valu24.dexname,
                       source: {
                         requests: holder
                       },
                       target: {
-                        type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu19 = dataToIntegrate.value) === null || _dataToIntegrate$valu19 === void 0 ? void 0 : _dataToIntegrate$valu19.type,
+                        type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu25 = dataToIntegrate.value) === null || _dataToIntegrate$valu25 === void 0 ? void 0 : _dataToIntegrate$valu25.type,
                         api: {
-                          url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu20 = dataToIntegrate.value) === null || _dataToIntegrate$valu20 === void 0 ? void 0 : _dataToIntegrate$valu20.url,
+                          url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu26 = dataToIntegrate.value) === null || _dataToIntegrate$valu26 === void 0 ? void 0 : _dataToIntegrate$valu26.url,
                           username: authValues === null || authValues === void 0 ? void 0 : authValues.username,
                           password: authValues === null || authValues === void 0 ? void 0 : authValues.password
                         },
                         request: {
-                          idScheme: "code"
+                          idScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu27 = dataToIntegrate.value) === null || _dataToIntegrate$valu27 === void 0 ? void 0 : (_dataToIntegrate$valu28 = _dataToIntegrate$valu27.request) === null || _dataToIntegrate$valu28 === void 0 ? void 0 : _dataToIntegrate$valu28.idScheme,
+                          orgUnitIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu29 = dataToIntegrate.value) === null || _dataToIntegrate$valu29 === void 0 ? void 0 : (_dataToIntegrate$valu30 = _dataToIntegrate$valu29.request) === null || _dataToIntegrate$valu30 === void 0 ? void 0 : _dataToIntegrate$valu30.orgUnitIdScheme,
+                          dataElementIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu31 = dataToIntegrate.value) === null || _dataToIntegrate$valu31 === void 0 ? void 0 : (_dataToIntegrate$valu32 = _dataToIntegrate$valu31.request) === null || _dataToIntegrate$valu32 === void 0 ? void 0 : _dataToIntegrate$valu32.dataElementIdScheme
                         }
                       }
                     }
@@ -297,11 +309,11 @@ const MyApp = () => {
               setHidden(false);
             }
           } else {
-            var _dataToIntegrate$valu21, _dataToIntegrate$valu22, _dataToIntegrate$valu23;
-            if ((dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu21 = dataToIntegrate.value) === null || _dataToIntegrate$valu21 === void 0 ? void 0 : (_dataToIntegrate$valu22 = _dataToIntegrate$valu21.source) === null || _dataToIntegrate$valu22 === void 0 ? void 0 : (_dataToIntegrate$valu23 = _dataToIntegrate$valu22.requests) === null || _dataToIntegrate$valu23 === void 0 ? void 0 : _dataToIntegrate$valu23.length) > 0) {
-              var _dataToIntegrate$valu24, _dataToIntegrate$valu25, _dataToIntegrate$valu26;
+            var _dataToIntegrate$valu33, _dataToIntegrate$valu34, _dataToIntegrate$valu35;
+            if ((dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu33 = dataToIntegrate.value) === null || _dataToIntegrate$valu33 === void 0 ? void 0 : (_dataToIntegrate$valu34 = _dataToIntegrate$valu33.source) === null || _dataToIntegrate$valu34 === void 0 ? void 0 : (_dataToIntegrate$valu35 = _dataToIntegrate$valu34.requests) === null || _dataToIntegrate$valu35 === void 0 ? void 0 : _dataToIntegrate$valu35.length) > 0) {
+              var _dataToIntegrate$valu36, _dataToIntegrate$valu37, _dataToIntegrate$valu38;
               let holder = [];
-              dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu24 = dataToIntegrate.value) === null || _dataToIntegrate$valu24 === void 0 ? void 0 : (_dataToIntegrate$valu25 = _dataToIntegrate$valu24.source) === null || _dataToIntegrate$valu25 === void 0 ? void 0 : (_dataToIntegrate$valu26 = _dataToIntegrate$valu25.requests) === null || _dataToIntegrate$valu26 === void 0 ? void 0 : _dataToIntegrate$valu26.map(dd => {
+              dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu36 = dataToIntegrate.value) === null || _dataToIntegrate$valu36 === void 0 ? void 0 : (_dataToIntegrate$valu37 = _dataToIntegrate$valu36.source) === null || _dataToIntegrate$valu37 === void 0 ? void 0 : (_dataToIntegrate$valu38 = _dataToIntegrate$valu37.requests) === null || _dataToIntegrate$valu38 === void 0 ? void 0 : _dataToIntegrate$valu38.map(dd => {
                 holder.push({
                   name: dd === null || dd === void 0 ? void 0 : dd.name,
                   // visualization: dd?.visualizations,
@@ -321,46 +333,54 @@ const MyApp = () => {
                 setHidden(false);
               } else {
                 if ((existingDEX === null || existingDEX === void 0 ? void 0 : existingDEX.length) == 1) {
-                  var _existingDEX$2, _dataToIntegrate$valu27, _dataToIntegrate$valu28, _dataToIntegrate$valu29;
+                  var _existingDEX$2, _dataToIntegrate$valu39, _dataToIntegrate$valu40, _dataToIntegrate$valu41, _dataToIntegrate$valu42, _dataToIntegrate$valu43, _dataToIntegrate$valu44, _dataToIntegrate$valu45, _dataToIntegrate$valu46, _dataToIntegrate$valu47;
+                  console.log(2);
+                  console.log(dataToIntegrate);
                   let payload = {
                     resource: `aggregateDataExchanges/${(_existingDEX$2 = existingDEX[0]) === null || _existingDEX$2 === void 0 ? void 0 : _existingDEX$2.id}`,
                     type: "update",
                     data: {
-                      name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu27 = dataToIntegrate.value) === null || _dataToIntegrate$valu27 === void 0 ? void 0 : _dataToIntegrate$valu27.dexname,
+                      name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu39 = dataToIntegrate.value) === null || _dataToIntegrate$valu39 === void 0 ? void 0 : _dataToIntegrate$valu39.dexname,
                       source: {
                         requests: holder
                       },
                       target: {
-                        type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu28 = dataToIntegrate.value) === null || _dataToIntegrate$valu28 === void 0 ? void 0 : _dataToIntegrate$valu28.type,
+                        type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu40 = dataToIntegrate.value) === null || _dataToIntegrate$valu40 === void 0 ? void 0 : _dataToIntegrate$valu40.type,
                         api: {
-                          url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu29 = dataToIntegrate.value) === null || _dataToIntegrate$valu29 === void 0 ? void 0 : _dataToIntegrate$valu29.url,
+                          url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu41 = dataToIntegrate.value) === null || _dataToIntegrate$valu41 === void 0 ? void 0 : _dataToIntegrate$valu41.url,
                           accessToken: authValues === null || authValues === void 0 ? void 0 : authValues.token
                         },
                         request: {
-                          idScheme: "code"
+                          idScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu42 = dataToIntegrate.value) === null || _dataToIntegrate$valu42 === void 0 ? void 0 : (_dataToIntegrate$valu43 = _dataToIntegrate$valu42.request) === null || _dataToIntegrate$valu43 === void 0 ? void 0 : _dataToIntegrate$valu43.idScheme,
+                          orgUnitIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu44 = dataToIntegrate.value) === null || _dataToIntegrate$valu44 === void 0 ? void 0 : (_dataToIntegrate$valu45 = _dataToIntegrate$valu44.request) === null || _dataToIntegrate$valu45 === void 0 ? void 0 : _dataToIntegrate$valu45.orgUnitIdScheme,
+                          dataElementIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu46 = dataToIntegrate.value) === null || _dataToIntegrate$valu46 === void 0 ? void 0 : (_dataToIntegrate$valu47 = _dataToIntegrate$valu46.request) === null || _dataToIntegrate$valu47 === void 0 ? void 0 : _dataToIntegrate$valu47.dataElementIdScheme
                         }
                       }
                     }
                   };
                   mutation(payload);
                 } else {
-                  var _dataToIntegrate$valu30, _dataToIntegrate$valu31, _dataToIntegrate$valu32;
+                  var _dataToIntegrate$valu48, _dataToIntegrate$valu49, _dataToIntegrate$valu50, _dataToIntegrate$valu51, _dataToIntegrate$valu52, _dataToIntegrate$valu53, _dataToIntegrate$valu54, _dataToIntegrate$valu55, _dataToIntegrate$valu56, _dataToIntegrate$valu57, _dataToIntegrate$valu58;
+                  console.log(3);
+                  console.log(dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu48 = dataToIntegrate.value) === null || _dataToIntegrate$valu48 === void 0 ? void 0 : (_dataToIntegrate$valu49 = _dataToIntegrate$valu48.request) === null || _dataToIntegrate$valu49 === void 0 ? void 0 : _dataToIntegrate$valu49.idScheme);
                   let payload = {
                     resource: `aggregateDataExchanges/`,
                     type: "create",
                     data: {
-                      name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu30 = dataToIntegrate.value) === null || _dataToIntegrate$valu30 === void 0 ? void 0 : _dataToIntegrate$valu30.dexname,
+                      name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu50 = dataToIntegrate.value) === null || _dataToIntegrate$valu50 === void 0 ? void 0 : _dataToIntegrate$valu50.dexname,
                       source: {
                         requests: holder
                       },
                       target: {
-                        type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu31 = dataToIntegrate.value) === null || _dataToIntegrate$valu31 === void 0 ? void 0 : _dataToIntegrate$valu31.type,
+                        type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu51 = dataToIntegrate.value) === null || _dataToIntegrate$valu51 === void 0 ? void 0 : _dataToIntegrate$valu51.type,
                         api: {
-                          url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu32 = dataToIntegrate.value) === null || _dataToIntegrate$valu32 === void 0 ? void 0 : _dataToIntegrate$valu32.url,
+                          url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu52 = dataToIntegrate.value) === null || _dataToIntegrate$valu52 === void 0 ? void 0 : _dataToIntegrate$valu52.url,
                           accessToken: authValues === null || authValues === void 0 ? void 0 : authValues.token
                         },
                         request: {
-                          idScheme: "code"
+                          idScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu53 = dataToIntegrate.value) === null || _dataToIntegrate$valu53 === void 0 ? void 0 : (_dataToIntegrate$valu54 = _dataToIntegrate$valu53.request) === null || _dataToIntegrate$valu54 === void 0 ? void 0 : _dataToIntegrate$valu54.idScheme,
+                          orgUnitIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu55 = dataToIntegrate.value) === null || _dataToIntegrate$valu55 === void 0 ? void 0 : (_dataToIntegrate$valu56 = _dataToIntegrate$valu55.request) === null || _dataToIntegrate$valu56 === void 0 ? void 0 : _dataToIntegrate$valu56.orgUnitIdScheme,
+                          dataElementIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu57 = dataToIntegrate.value) === null || _dataToIntegrate$valu57 === void 0 ? void 0 : (_dataToIntegrate$valu58 = _dataToIntegrate$valu57.request) === null || _dataToIntegrate$valu58 === void 0 ? void 0 : _dataToIntegrate$valu58.dataElementIdScheme
                         }
                       }
                     }
@@ -377,46 +397,53 @@ const MyApp = () => {
       }
     } else {
       if ((existingDEX === null || existingDEX === void 0 ? void 0 : existingDEX.length) == 1) {
-        var _existingDEX$3, _dataToIntegrate$valu33, _dataToIntegrate$valu34, _dataToIntegrate$valu35, _dataToIntegrate$valu36, _dataToIntegrate$valu37;
+        var _existingDEX$3, _dataToIntegrate$valu59, _dataToIntegrate$valu60, _dataToIntegrate$valu61, _dataToIntegrate$valu62, _dataToIntegrate$valu63, _dataToIntegrate$valu64, _dataToIntegrate$valu65, _dataToIntegrate$valu66, _dataToIntegrate$valu67, _dataToIntegrate$valu68, _dataToIntegrate$valu69;
+        console.log(4);
+        console.log(dataToIntegrate);
         let payload = {
           resource: `aggregateDataExchanges/${(_existingDEX$3 = existingDEX[0]) === null || _existingDEX$3 === void 0 ? void 0 : _existingDEX$3.id}`,
           type: "update",
           data: {
-            name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu33 = dataToIntegrate.value) === null || _dataToIntegrate$valu33 === void 0 ? void 0 : _dataToIntegrate$valu33.dexname,
+            name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu59 = dataToIntegrate.value) === null || _dataToIntegrate$valu59 === void 0 ? void 0 : _dataToIntegrate$valu59.dexname,
             source: {
-              requests: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu34 = dataToIntegrate.value) === null || _dataToIntegrate$valu34 === void 0 ? void 0 : (_dataToIntegrate$valu35 = _dataToIntegrate$valu34.source) === null || _dataToIntegrate$valu35 === void 0 ? void 0 : _dataToIntegrate$valu35.request
+              requests: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu60 = dataToIntegrate.value) === null || _dataToIntegrate$valu60 === void 0 ? void 0 : (_dataToIntegrate$valu61 = _dataToIntegrate$valu60.source) === null || _dataToIntegrate$valu61 === void 0 ? void 0 : _dataToIntegrate$valu61.request
             },
             target: {
-              type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu36 = dataToIntegrate.value) === null || _dataToIntegrate$valu36 === void 0 ? void 0 : _dataToIntegrate$valu36.type,
+              type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu62 = dataToIntegrate.value) === null || _dataToIntegrate$valu62 === void 0 ? void 0 : _dataToIntegrate$valu62.type,
               api: {
-                url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu37 = dataToIntegrate.value) === null || _dataToIntegrate$valu37 === void 0 ? void 0 : _dataToIntegrate$valu37.url,
+                url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu63 = dataToIntegrate.value) === null || _dataToIntegrate$valu63 === void 0 ? void 0 : _dataToIntegrate$valu63.url,
                 accessToken: authValues === null || authValues === void 0 ? void 0 : authValues.token
               },
               request: {
-                idScheme: "code"
+                idScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu64 = dataToIntegrate.value) === null || _dataToIntegrate$valu64 === void 0 ? void 0 : (_dataToIntegrate$valu65 = _dataToIntegrate$valu64.request) === null || _dataToIntegrate$valu65 === void 0 ? void 0 : _dataToIntegrate$valu65.idScheme,
+                orgUnitIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu66 = dataToIntegrate.value) === null || _dataToIntegrate$valu66 === void 0 ? void 0 : (_dataToIntegrate$valu67 = _dataToIntegrate$valu66.request) === null || _dataToIntegrate$valu67 === void 0 ? void 0 : _dataToIntegrate$valu67.orgUnitIdScheme,
+                dataElementIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu68 = dataToIntegrate.value) === null || _dataToIntegrate$valu68 === void 0 ? void 0 : (_dataToIntegrate$valu69 = _dataToIntegrate$valu68.request) === null || _dataToIntegrate$valu69 === void 0 ? void 0 : _dataToIntegrate$valu69.dataElementIdScheme
               }
             }
           }
         };
         mutation(payload);
       } else {
-        var _dataToIntegrate$valu38, _dataToIntegrate$valu39, _dataToIntegrate$valu40, _dataToIntegrate$valu41, _dataToIntegrate$valu42;
+        var _dataToIntegrate$valu70, _dataToIntegrate$valu71, _dataToIntegrate$valu72, _dataToIntegrate$valu73, _dataToIntegrate$valu74, _dataToIntegrate$valu75, _dataToIntegrate$valu76, _dataToIntegrate$valu77, _dataToIntegrate$valu78, _dataToIntegrate$valu79, _dataToIntegrate$valu80;
+        console.log(dataToIntegrate);
         let payload = {
           resource: "aggregateDataExchanges",
           type: "create",
           data: {
-            name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu38 = dataToIntegrate.value) === null || _dataToIntegrate$valu38 === void 0 ? void 0 : _dataToIntegrate$valu38.dexname,
+            name: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu70 = dataToIntegrate.value) === null || _dataToIntegrate$valu70 === void 0 ? void 0 : _dataToIntegrate$valu70.dexname,
             source: {
-              requests: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu39 = dataToIntegrate.value) === null || _dataToIntegrate$valu39 === void 0 ? void 0 : (_dataToIntegrate$valu40 = _dataToIntegrate$valu39.source) === null || _dataToIntegrate$valu40 === void 0 ? void 0 : _dataToIntegrate$valu40.request
+              requests: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu71 = dataToIntegrate.value) === null || _dataToIntegrate$valu71 === void 0 ? void 0 : (_dataToIntegrate$valu72 = _dataToIntegrate$valu71.source) === null || _dataToIntegrate$valu72 === void 0 ? void 0 : _dataToIntegrate$valu72.request
             },
             target: {
-              type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu41 = dataToIntegrate.value) === null || _dataToIntegrate$valu41 === void 0 ? void 0 : _dataToIntegrate$valu41.type,
+              type: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu73 = dataToIntegrate.value) === null || _dataToIntegrate$valu73 === void 0 ? void 0 : _dataToIntegrate$valu73.type,
               api: {
-                url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu42 = dataToIntegrate.value) === null || _dataToIntegrate$valu42 === void 0 ? void 0 : _dataToIntegrate$valu42.url,
+                url: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu74 = dataToIntegrate.value) === null || _dataToIntegrate$valu74 === void 0 ? void 0 : _dataToIntegrate$valu74.url,
                 accessToken: authValues === null || authValues === void 0 ? void 0 : authValues.token
               },
               request: {
-                idScheme: "code"
+                idScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu75 = dataToIntegrate.value) === null || _dataToIntegrate$valu75 === void 0 ? void 0 : (_dataToIntegrate$valu76 = _dataToIntegrate$valu75.request) === null || _dataToIntegrate$valu76 === void 0 ? void 0 : _dataToIntegrate$valu76.idScheme,
+                orgUnitIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu77 = dataToIntegrate.value) === null || _dataToIntegrate$valu77 === void 0 ? void 0 : (_dataToIntegrate$valu78 = _dataToIntegrate$valu77.request) === null || _dataToIntegrate$valu78 === void 0 ? void 0 : _dataToIntegrate$valu78.orgUnitIdScheme,
+                dataElementIdScheme: dataToIntegrate === null || dataToIntegrate === void 0 ? void 0 : (_dataToIntegrate$valu79 = dataToIntegrate.value) === null || _dataToIntegrate$valu79 === void 0 ? void 0 : (_dataToIntegrate$valu80 = _dataToIntegrate$valu79.request) === null || _dataToIntegrate$valu80 === void 0 ? void 0 : _dataToIntegrate$valu80.dataElementIdScheme
               }
             }
           }
@@ -443,25 +470,33 @@ const MyApp = () => {
       data,
       values
     } = _ref2;
+    setDataToUpdate(values);
     if ((values === null || values === void 0 ? void 0 : values.dexname) == "" || (values === null || values === void 0 ? void 0 : values.dexname) == null || (values === null || values === void 0 ? void 0 : values.dexname) == undefined || (values === null || values === void 0 ? void 0 : values.url) == "" || (values === null || values === void 0 ? void 0 : values.url) == null || (values === null || values === void 0 ? void 0 : values.url) == undefined) {} else {
       var _dataToUpdate$value, _dataToUpdate$value2;
       if ((dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value = dataToUpdate.value) === null || _dataToUpdate$value === void 0 ? void 0 : _dataToUpdate$value.source) == undefined || (dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value2 = dataToUpdate.value) === null || _dataToUpdate$value2 === void 0 ? void 0 : _dataToUpdate$value2.source) == null) {
+        console.log(dataToUpdate);
         engine.mutate({
           resource: `dataStore/DEX_initializer_values/${data === null || data === void 0 ? void 0 : data.key}`,
           type: "update",
           data: _ref3 => {
-            var _dataToUpdate$value3;
+            var _dataToUpdate$value3, _dataToUpdate$value4, _dataToUpdate$value4$, _dataToUpdate$value5, _dataToUpdate$value5$, _dataToUpdate$value6, _dataToUpdate$value6$;
             let {} = _ref3;
             return {
               createdAt: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value3 = dataToUpdate.value) === null || _dataToUpdate$value3 === void 0 ? void 0 : _dataToUpdate$value3.createdAt,
               updatedAt: new Date().toLocaleDateString(),
               dexname: values === null || values === void 0 ? void 0 : values.dexname,
               type: type,
-              url: values === null || values === void 0 ? void 0 : values.url
+              url: values === null || values === void 0 ? void 0 : values.url,
+              request: {
+                idScheme: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value4 = dataToUpdate.value) === null || _dataToUpdate$value4 === void 0 ? void 0 : (_dataToUpdate$value4$ = _dataToUpdate$value4.request) === null || _dataToUpdate$value4$ === void 0 ? void 0 : _dataToUpdate$value4$.idScheme,
+                orgUnitIdScheme: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value5 = dataToUpdate.value) === null || _dataToUpdate$value5 === void 0 ? void 0 : (_dataToUpdate$value5$ = _dataToUpdate$value5.request) === null || _dataToUpdate$value5$ === void 0 ? void 0 : _dataToUpdate$value5$.orgUnitIdScheme,
+                dataElementIdScheme: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value6 = dataToUpdate.value) === null || _dataToUpdate$value6 === void 0 ? void 0 : (_dataToUpdate$value6$ = _dataToUpdate$value6.request) === null || _dataToUpdate$value6$ === void 0 ? void 0 : _dataToUpdate$value6$.dataElementIdScheme
+              }
             };
           }
         }).then(res => {
           if (res.httpStatusCode == 200) {
+            setKey(Math.random());
             setOpenUpdate(!openUpdate);
             setSuccessMessage(true);
             setHidden(false);
@@ -473,24 +508,32 @@ const MyApp = () => {
           setMessage("Error occured. Either server or the inputs causes this error.");
         });
       } else {
+        console.log(dataToUpdate);
+        console.log(values);
         engine.mutate({
           resource: `dataStore/DEX_initializer_values/${data === null || data === void 0 ? void 0 : data.key}`,
           type: "update",
           data: _ref4 => {
-            var _dataToUpdate$value4, _dataToUpdate$value5;
+            var _values$request, _values$request2, _values$request3;
             let {} = _ref4;
             return {
-              createdAt: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value4 = dataToUpdate.value) === null || _dataToUpdate$value4 === void 0 ? void 0 : _dataToUpdate$value4.createdAt,
+              createdAt: values === null || values === void 0 ? void 0 : values.createdAt,
               updatedAt: new Date().toLocaleDateString(),
               dexname: values === null || values === void 0 ? void 0 : values.dexname,
-              source: dataToUpdate === null || dataToUpdate === void 0 ? void 0 : (_dataToUpdate$value5 = dataToUpdate.value) === null || _dataToUpdate$value5 === void 0 ? void 0 : _dataToUpdate$value5.source,
-              type: type,
-              url: values === null || values === void 0 ? void 0 : values.url
+              source: values === null || values === void 0 ? void 0 : values.source,
+              type: values === null || values === void 0 ? void 0 : values.type,
+              url: values === null || values === void 0 ? void 0 : values.url,
+              request: {
+                idScheme: values === null || values === void 0 ? void 0 : (_values$request = values.request) === null || _values$request === void 0 ? void 0 : _values$request.idScheme,
+                orgUnitIdScheme: values === null || values === void 0 ? void 0 : (_values$request2 = values.request) === null || _values$request2 === void 0 ? void 0 : _values$request2.orgUnitIdScheme,
+                dataElementIdScheme: values === null || values === void 0 ? void 0 : (_values$request3 = values.request) === null || _values$request3 === void 0 ? void 0 : _values$request3.dataElementIdScheme
+              }
             };
           }
         }).then(res => {
           if (res.httpStatusCode == 200) {
             setOpenUpdate(!openUpdate);
+            setKey(Math.random());
             setSuccessMessage(true);
             setHidden(false);
             setMessage("Data saved in the datastore successfully.");
@@ -619,8 +662,11 @@ const MyApp = () => {
     }
   }, message))))), /*#__PURE__*/React.createElement(NewDataInitialization, {
     open: open,
+    data: data,
     setOpen: setOpen,
     styles: classes,
+    idScheme: idScheme,
+    setRequestScheme: setRequestScheme,
     setType: setType,
     formInputValues: formInputValues,
     type: type,
@@ -630,12 +676,15 @@ const MyApp = () => {
     setType: setType,
     styles: classes,
     type: type,
+    setRequestScheme: setRequestScheme,
     setOpenUpdate: setOpenUpdate,
+    idScheme: idScheme,
     openUpdate: openUpdate,
     setUpdateFormInputValues: setUpdateFormInputValues,
     updateFormInputValues: updateFormInputValues,
     updateGeneralInputValues: updateGeneralInputValues,
-    data: dataToUpdate
+    data: dataToUpdate,
+    attributes: data === null || data === void 0 ? void 0 : (_data$attribute = data.attribute) === null || _data$attribute === void 0 ? void 0 : _data$attribute.attributes
   }), /*#__PURE__*/React.createElement(IntegrateDataStoreInitializationToDEX, {
     setAuthType: setAuthType,
     styles: classes,
