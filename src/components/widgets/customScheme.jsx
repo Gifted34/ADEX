@@ -118,7 +118,7 @@ export default function CustomScheme(props) {
                  <ModalContent>
                     <Box>
                     <TabBar>
-                        <Tab onClick={()=> setTab(2)} selected={tabSelected === 2}>
+                        <Tab onClick={()=> setTab(1)} selected={tabSelected === 1}>
                             Output Scheme
                         </Tab>
                     </TabBar>    
