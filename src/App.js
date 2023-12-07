@@ -521,9 +521,9 @@ const MyApp = () => {
                 type: type,
                 url: values?.url,
                 request:{
-                  idScheme : dataToUpdate?.value?.request?.idScheme,
-                  orgUnitIdScheme : dataToUpdate?.value?.request?.orgUnitIdScheme,
-                  dataElementIdScheme : dataToUpdate?.value?.request?.dataElementIdScheme                
+                  idScheme : values?.request?.idScheme,
+                  orgUnitIdScheme : values?.request?.orgUnitIdScheme,
+                  dataElementIdScheme : values?.request?.dataElementIdScheme                
                 }
               }),
             })
@@ -544,8 +544,6 @@ const MyApp = () => {
               );
             });
       } else {
-        console.log(dataToUpdate)
-        console.log(values)
         engine
           .mutate({
             resource: `dataStore/DEX_initializer_values/${data?.key}`,
