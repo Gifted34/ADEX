@@ -33,14 +33,6 @@ export default function HomePage(props) {
         <Button primary onClick={() => props?.setOpen(!props?.open)}>
           Create new
         </Button>
-        <Button
-          destructive
-          onClick={() =>
-            props?.setOpenDeleteIntegrations(!props?.openDeleteIntegrations)
-          }
-        >
-          Delete Initialisation
-        </Button>
       </ButtonStrip>
       <Divider />
       <div className="" style={{ marginTop: "10px" }}>
