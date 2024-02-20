@@ -26,7 +26,6 @@ export default function GeneralForm(props) {
   };
   useEffect(() => {
     props?.formInputs({ type, authType, formInputs });
-    console.clear();
   }, [formInputs]);
 
   return (
