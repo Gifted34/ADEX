@@ -31,7 +31,6 @@ export default function UpdateDataInitialization(props) {
   const [message,setMessage] = useState()
   const [open,setOpen] = useState(false)
   const update = (e) => {
-    setData({...data,request: request})
     if(orgUnitIdScheme === 'attribute' && orgAttributes === undefined){
       setMessage('Please select the organisation input attribute')
       setOpen(true)
@@ -39,7 +38,7 @@ export default function UpdateDataInitialization(props) {
       setMessage('Please select the data input attribute')
       setOpen(true)
     }else{
-    props?.updateGeneralInputValues({ data: props?.data, values: {...data,request: request} });
+      props?.updateGeneralInputValues({ data: props?.data, values: {...data,request: request} });
     }
   };
 
@@ -51,7 +50,9 @@ export default function UpdateDataInitialization(props) {
       setdxAttributes(strings[1])
       } 
     }else{
-      setdataElementIdScheme(request?.dataElementIdScheme)
+      if(request?.dataElementIdScheme !== undefined){
+        setdataElementIdScheme(request?.dataElementIdScheme)
+      }      
     }
     if(request?.orgUnitIdScheme !== 'UID' || request?.orgUnitIdScheme !== 'code'){
       const strings = request?.orgUnitIdScheme?.split(':')
@@ -60,20 +61,20 @@ export default function UpdateDataInitialization(props) {
       setOrgAttributes (strings[1])
       } 
     }else{
+      if(request?.orgUnitIdScheme !== undefined){
       setorgUnitIdScheme (request?.orgUnitIdScheme)
     }
+    }
   }
-
   useEffect(() => {
     setRequest(props?.data?.value?.request)
     setData(props?.data?.value)
     setSelected(props?.data?.value?.request?.idScheme)
     initialisingState()
   }, [props]);
-
+  
   useEffect(()=>{
     initialisingState()
-    console.log(request)
   },[request])
 
   return (
@@ -151,8 +152,8 @@ export default function UpdateDataInitialization(props) {
               placeholder="Select request dataElementIdScheme"
               onChange={(e) => {
                 setdataElementIdScheme(e.selected)
-                if(e.selected !== 'attribute'){
-                  request.dataElementIdScheme = e.selected
+                if(e.selected){
+                  setRequest({ ...request,dataElementIdScheme:e.selected})
                 }
               }}
               selected={dataElementIdScheme}
@@ -169,7 +170,7 @@ export default function UpdateDataInitialization(props) {
             placeholder="select request dataElementIdScheme attribute"
             onChange={(e)=>{
               setdxAttributes(e.selected)
-              request.dataElementIdScheme = `attribute:${e.selected}`
+              setRequest({ ...request,dataElementIdScheme:`attribute:${e.selected}`})
               }}
               selected={dxAttributes}>
               {props?.attributes?.filter(att => att?.objectTypes.includes('DATA_ELEMENT') ||att?.objectTypes.includes('INDICATOR'))
@@ -181,8 +182,8 @@ export default function UpdateDataInitialization(props) {
               onChange={(e) => {
                 setorgUnitIdScheme(e.selected)
                 if(e.selected !== 'attribute'){
-                  request.orgUnitIdScheme =  e.selected
-                }
+                  setRequest({ ...request,orgUnitIdScheme:e.selected})
+                }                
               }}
               selected={orgUnitIdScheme}
             >
@@ -198,8 +199,8 @@ export default function UpdateDataInitialization(props) {
             placeholder="select request orgUnitIdScheme attribute"
             onChange={(e)=>{
               setOrgAttributes(e.selected)
-              request.orgUnitIdScheme = `attribute:${e.selected}`
-            }
+              setRequest({ ...request,orgUnitIdScheme:`attribute:${e.selected}`})
+              }
             }
               selected={orgAttributes}>
               {props?.attributes?.filter(att => att?.objectTypes.includes('ORGANISATION_UNIT'))
