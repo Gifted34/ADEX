@@ -22,6 +22,12 @@ export default function GeneralInputs(props) {
     });
   };
 
+  useEffect(()=>{
+
+    console.log('general')
+    console.log(props)
+  },[])
+
 
   return (
     <div
@@ -29,6 +35,7 @@ export default function GeneralInputs(props) {
     >
       <Field label="General Details">
         <div style={{ width: "100%" }}>
+          <Field label = 'Data exchange name'>
           <Input
             name="dexname"
             type="text"
@@ -36,7 +43,9 @@ export default function GeneralInputs(props) {
             placeholder="Name of aggregate data exchange. Unique."
             className={props?.styles?.marginBottom}
           />
+          </Field>
           <Box className={props?.styles?.marginBottom}>
+          <Field label = 'Data exchange id scheme'>
             <SingleSelect
               className="select"
               placeholder="Select request id scheme"
@@ -49,8 +58,10 @@ export default function GeneralInputs(props) {
               <SingleSelectOption label="UID" value="UID" />
               <SingleSelectOption label="Code" value="code" />
             </SingleSelect>
+            </Field>
           </Box>
           <Box className={props?.styles?.marginBottom}>
+          <Field label = 'Exchange type'>
             <SingleSelect
               className="select"
               onChange={(e) => {
@@ -61,8 +72,10 @@ export default function GeneralInputs(props) {
               <SingleSelectOption label="Internal" value="INTERNAL" />
               <SingleSelectOption label="External" value="EXTERNAL" />
             </SingleSelect>
+            </Field>
           </Box>          
           {props?.type == "EXTERNAL" && (
+            <Field label = 'Destination URL'>
             <Input
               name="url"
               type="text"
@@ -70,8 +83,10 @@ export default function GeneralInputs(props) {
               className={props?.styles?.marginBottom}
               placeholder="Base URL of target DHIS 2 instance, do not include the /api part."
             />
+            </Field>
           )}
           <Box className={props?.styles?.marginBottom}>
+          <Field label = 'Data element id scheme'>
             <SingleSelect
               className="select"
               name='dataElementIdScheme'
@@ -88,9 +103,11 @@ export default function GeneralInputs(props) {
               <SingleSelectOption label="Code" value="code" />
               <SingleSelectOption label="Attribute" value="attribute" />
             </SingleSelect>
+            </Field>
           </Box>
           {dataElementIdScheme === 'attribute' &&
           <Box className={props?.styles?.marginBottom}>
+            <Field label = 'Data element id scheme attribute'>
             <SingleSelect
             className="select"
             placeholder="select request dataElementIdScheme attribute"
@@ -100,8 +117,10 @@ export default function GeneralInputs(props) {
             }}
               selected={dxAttributes}>
               {props?.attributes?.filter(att => att?.objectTypes.includes('DATA_ELEMENT') ||att?.objectTypes.includes('INDICATOR'))
-              .map(att=> <SingleSelectOption label={att.displayName} value={att.id} />)}</SingleSelect></Box>}
+              .map(att=> <SingleSelectOption label={att.displayName} value={att.id} />)}</SingleSelect>
+              </Field></Box>}
           <Box className={props?.styles?.marginBottom}>
+          <Field label = 'Organisation unit id scheme'>
             <SingleSelect
               className="select"
               placeholder="Select request orgUnitIdScheme"
@@ -117,9 +136,11 @@ export default function GeneralInputs(props) {
               <SingleSelectOption label="Code" value="code" />
               <SingleSelectOption label="Attribute" value="attribute" />
             </SingleSelect>
+            </Field>
           </Box>
           {orgUnitIdScheme === 'attribute' &&
           <Box className={props?.styles?.marginBottom}>
+            <Field label = 'Organisation unit id scheme attribute'>
             <SingleSelect
             className="select"
             placeholder="select request orgUnitIdScheme attribute"
@@ -129,7 +150,8 @@ export default function GeneralInputs(props) {
             }
               selected={orgAttributes}>
               {props?.attributes?.filter(att => att?.objectTypes.includes('ORGANISATION_UNIT'))
-              .map(att=> <SingleSelectOption label={att.displayName} value={att.id} />)}</SingleSelect></Box>}
+              .map(att=> <SingleSelectOption label={att.displayName} value={att.id} />)}</SingleSelect>
+              </Field></Box>}
         </div>
       </Field>
     </div>
