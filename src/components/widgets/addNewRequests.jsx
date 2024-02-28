@@ -135,7 +135,6 @@ export default function AddNewRequests(props) {
       type: "update",
       data: data,
     };
-    setLoading(false);
     await engine
       .mutate(myMutation)
       .then((res) => {
@@ -175,7 +174,6 @@ export default function AddNewRequests(props) {
       setMessage("No periods selected");
       setErrorHidden(false);
     } else {
-      console.log(Orgs().length)
       if(returnDx().length === 0){
         setLoading(false);
         setMessage("Selected data elements and indicators do not have codes");
@@ -185,7 +183,6 @@ export default function AddNewRequests(props) {
         setMessage("Selected Organization units do not have codes");
         setErrorHidden(false);
       }else{
-        console.log(dataStore)
       if (dataStore?.source?.requests === undefined) {
         let outp = selectedAttr !== undefined ? `${outputIDScheme}:${selectedAttr}` : outputIDScheme
         var dStore = {...dataStore,
@@ -206,8 +203,7 @@ export default function AddNewRequests(props) {
             ],
           },
         };
-        console.log(dStore)
-        //send(dStore);
+        send(dStore);
       } else {
         let outp = selectedAttr !== undefined ? `${outputIDScheme}:${selectedAttr}` : outputIDScheme
         let arr = dataStore?.source?.requests?.filter(
