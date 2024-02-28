@@ -122,6 +122,7 @@ export default function AddNewRequests(props) {
     try {
       try {
         const res = await engine.query(query);
+        console.log(res)
         setDataStore(res.dataStore);
       } catch (e) {}
     } catch (e) {}
@@ -184,18 +185,10 @@ export default function AddNewRequests(props) {
         setMessage("Selected Organization units do not have codes");
         setErrorHidden(false);
       }else{
+        console.log(dataStore)
       if (dataStore?.source?.requests === undefined) {
         let outp = selectedAttr !== undefined ? `${outputIDScheme}:${selectedAttr}` : outputIDScheme
-        var dStore = {
-          createdAt: dataStore.createdAt,
-          dexname: dataStore.dexname,
-          type: dataStore.type,
-          url: dataStore.url,
-          request : {
-            idScheme : dataStore?.request?.idScheme,
-            dataElementIdScheme : dataStore?.request?.dataElementIdScheme,
-            orgUnitIdScheme : dataStore?.request?.orgUnitIdScheme
-          },
+        var dStore = {...dataStore,
           source: {
             requests: [
               {
@@ -213,7 +206,8 @@ export default function AddNewRequests(props) {
             ],
           },
         };
-        send(dStore);
+        console.log(dStore)
+        //send(dStore);
       } else {
         let outp = selectedAttr !== undefined ? `${outputIDScheme}:${selectedAttr}` : outputIDScheme
         let arr = dataStore?.source?.requests?.filter(
@@ -231,17 +225,7 @@ export default function AddNewRequests(props) {
           outputDataElementIdScheme : dxOutputScheme,
           outputOrgUnitIdScheme : orgOutputScheme
         });
-        send({
-          createdAt: dataStore.createdAt,
-          dexname: dataStore.dexname,
-          type: dataStore.type,
-          url: dataStore.url,
-          request : {
-            idScheme : dataStore?.request?.idScheme,
-            dataElementIdScheme : dataStore?.request?.dataElementIdScheme,
-            orgUnitIdScheme : dataStore?.request?.orgUnitIdScheme
-          },
-          source: { requests: arr },
+        send({...dataStore,source: { requests: arr },
         });
       }
     }
