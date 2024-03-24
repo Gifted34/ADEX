@@ -127,8 +127,13 @@ const MyApp = () => {
   const { loading, error, data, refetch } = useDataQuery(query);
 
   // this function checks if the user has the F_AGGREGATE_DATA_EXCHANGE_PUBLIC_ADD athourity
-  const checkADEXAuth = (userAuthorities) =>{
-    console.log(userAuthorities)
+  const checkADEXAuth = (userRole) =>{
+    userRole?.map(role => {
+      if(role?.authorities?.includes('F_AGGREGATE_DATA_EXCHANGE_PUBLIC_ADD')){
+        console.log(true)
+        return false;
+      }
+    })
     return true;
   }
 
