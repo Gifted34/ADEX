@@ -131,10 +131,12 @@ const MyApp = () => {
   const checkADEXAuth = (userRole) =>{
     userRole?.map(role => {
       if(role?.authorities?.includes('F_AGGREGATE_DATA_EXCHANGE_PUBLIC_ADD')){
-        setNotAuth(false);
+        console.log(false)
+        return false;
       }
     })
-    setNotAuth(true);
+    console.log("true")
+    return true;
   }
 
   // save to datastore
@@ -666,9 +668,6 @@ const MyApp = () => {
     }
   };
   
-  useEffect(()=>{
-    checkADEXAuth(data?.me?.userRoles)
-  },[data])
   
   return (
     <div>
@@ -679,7 +678,7 @@ const MyApp = () => {
           {path === "Home" ? (
             <HomePage
               key={ke}
-              notAuth={notAuth}
+              notAuth={checkADEXAuth(data?.me?.userRoles)}
               data={data}
               setPath={setPath}
               setID={setID}
