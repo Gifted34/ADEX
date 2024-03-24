@@ -131,11 +131,11 @@ const MyApp = () => {
   const checkADEXAuth = (userRole) =>{
     userRole?.map(role => {
       if(role?.authorities?.includes('F_AGGREGATE_DATA_EXCHANGE_PUBLIC_ADD')){
-        console.log(true)
-        return false;
+        
+        setNotAuth(false);
       }
     })
-    return true;
+    setNotAuth(true);
   }
 
   // save to datastore
