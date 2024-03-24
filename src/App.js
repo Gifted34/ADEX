@@ -112,6 +112,7 @@ const MyApp = () => {
   const [ke, setKey] = useState(Math.random());
   const engine = useDataEngine();
   const [path, setPath] = useState("Home");
+  const [notAuth, setNotAuth] = useState(true)
   const [formData, setFormData] = useState();
   const [id, setID] = useState();
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
@@ -665,10 +666,13 @@ const MyApp = () => {
         });
     }
   };
+  useEffect(()=>{
+    checkADEXAuth(data?.me?.userRoles)
+  },[data])
   return (
     <div>
       <div>
-        {checkADEXAuth(data?.me?.userRoles) && <Layer translucent>
+        {notAuth  && <Layer translucent>
             <Center>
               <NoticeBox title="Unauthorised Access" warning >
                 You do not have metadata access(Create) for Aggregate data exchange: Please contact your admin 
