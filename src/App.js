@@ -131,7 +131,6 @@ const MyApp = () => {
   const checkADEXAuth = (userRole) =>{
     userRole?.map(role => {
       if(role?.authorities?.includes('F_AGGREGATE_DATA_EXCHANGE_PUBLIC_ADD')){
-        
         setNotAuth(false);
       }
     })
@@ -666,25 +665,21 @@ const MyApp = () => {
         });
     }
   };
+  
   useEffect(()=>{
     checkADEXAuth(data?.me?.userRoles)
   },[data])
+  
   return (
     <div>
       <div>
-        {notAuth  && <Layer translucent>
-            <Center>
-              <NoticeBox title="Unauthorised Access" warning >
-                You do not have metadata access(Create) for Aggregate data exchange: Please contact your admin 
-              </NoticeBox>
-            </Center>
-          </Layer>}
         <HeaderComponent />
         <br />
         <div style={{ padding: "20px" }}>
           {path === "Home" ? (
             <HomePage
               key={ke}
+              notAuth={notAuth}
               data={data}
               setPath={setPath}
               setID={setID}
