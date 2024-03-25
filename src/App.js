@@ -152,7 +152,6 @@ const MyApp = () => {
           }
         },
       };
-      console.log(payload)
       engine
         .mutate(payload)
         .then((res) => {
@@ -254,7 +253,7 @@ const MyApp = () => {
           setHidden(false);
         } else {
           if (checkIfTokenOrBasiAuth(authType)) {
-            console.log(dataToIntegrate)
+            
             if (dataToIntegrate?.value?.source?.requests?.length > 0) {
               let holder = [];
               dataToIntegrate?.value?.source?.requests?.map((dd) => {

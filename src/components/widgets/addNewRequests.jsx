@@ -122,7 +122,6 @@ export default function AddNewRequests(props) {
     try {
       try {
         const res = await engine.query(query);
-        console.log(res)
         setDataStore(res.dataStore);
       } catch (e) {}
     } catch (e) {}

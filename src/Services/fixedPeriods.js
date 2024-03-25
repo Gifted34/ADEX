@@ -155,28 +155,28 @@ const getFirstDateOfWeek = (weekNumber, year) => {
         {
           type: "Bi-months",
           label: `January-February ${year}`,
-          value: `${year}"01B"`,
+          value: `${year}01B`,
         },
         {
           type: "Bi-months",
           label: `March-April ${year}`,
-          value: `${year}"02B"`,
+          value: `${year}02B`,
         },
-        { type: "Bi-months", label: `May-June ${year}`, value: `${year}"03B"` },
+        { type: "Bi-months", label: `May-June ${year}`, value: `${year}03B` },
         {
           type: "Bi-months",
           label: `July-August ${year}`,
-          value: `${year}"04B"`,
+          value: `${year}04B`,
         },
         {
           type: "Bi-months",
           label: `September-October ${year}`,
-          value: `${year}"05B"`,
+          value: `${year}05B`,
         },
         {
           type: "Bi-months",
           label: `November-December ${year}`,
-          value: `${year}"06B"`,
+          value: `${year}06B`,
         },
       ];
       return months;
@@ -186,18 +186,18 @@ const getFirstDateOfWeek = (weekNumber, year) => {
         {
           type: "Quarters",
           label: `January-March ${year}`,
-          value: `${year}"Q1"`,
+          value: `${year}Q1`,
         },
-        { type: "Quarters", label: `April-June ${year}`, value: `${year}"Q2"` },
+        { type: "Quarters", label: `April-June ${year}`, value: `${year}Q2` },
         {
           type: "Quarters",
           label: `July-September ${year}`,
-          value: `${year}"Q3"`,
+          value: `${year}Q3`,
         },
         {
           type: "Quarters",
           label: `October-December ${year}`,
-          value: `${year}"Q4"`,
+          value: `${year}Q4`,
         },
       ];
       return quarterly;
@@ -215,7 +215,7 @@ const getFirstDateOfWeek = (weekNumber, year) => {
       return sixMonthly;
     },
     GetSixMonthlyApril: (year) => {
-      const sixMonthly = [
+      const sixMonthlyApril = [
         { label: `April-September ${year}`, value: `${year}AprilS1` },
         { label: `October-March ${year + 1}`, value: `${year}AprilS2` },
       ];

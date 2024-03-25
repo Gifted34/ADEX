@@ -116,7 +116,6 @@ export default function AddNewRequests(props) {
       type: "update",
       data: data
     };
-    setLoading(false);
     await engine.mutate(myMutation).then(res => {
       if (res.httpStatusCode == 200) {
         setLoading(false);
@@ -152,7 +151,6 @@ export default function AddNewRequests(props) {
       setMessage("No periods selected");
       setErrorHidden(false);
     } else {
-      console.log(Orgs().length);
       if (returnDx().length === 0) {
         setLoading(false);
         setMessage("Selected data elements and indicators do not have codes");
@@ -164,18 +162,9 @@ export default function AddNewRequests(props) {
       } else {
         var _dataStore$source;
         if ((dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source = dataStore.source) === null || _dataStore$source === void 0 ? void 0 : _dataStore$source.requests) === undefined) {
-          var _dataStore$request, _dataStore$request2, _dataStore$request3;
           let outp = selectedAttr !== undefined ? `${outputIDScheme}:${selectedAttr}` : outputIDScheme;
           var dStore = {
-            createdAt: dataStore.createdAt,
-            dexname: dataStore.dexname,
-            type: dataStore.type,
-            url: dataStore.url,
-            request: {
-              idScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request = dataStore.request) === null || _dataStore$request === void 0 ? void 0 : _dataStore$request.idScheme,
-              dataElementIdScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request2 = dataStore.request) === null || _dataStore$request2 === void 0 ? void 0 : _dataStore$request2.dataElementIdScheme,
-              orgUnitIdScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request3 = dataStore.request) === null || _dataStore$request3 === void 0 ? void 0 : _dataStore$request3.orgUnitIdScheme
-            },
+            ...dataStore,
             source: {
               requests: [{
                 name: name,
@@ -193,7 +182,7 @@ export default function AddNewRequests(props) {
           };
           send(dStore);
         } else {
-          var _dataStore$source2, _dataStore$source2$re, _dataStore$request4, _dataStore$request5, _dataStore$request6;
+          var _dataStore$source2, _dataStore$source2$re;
           let outp = selectedAttr !== undefined ? `${outputIDScheme}:${selectedAttr}` : outputIDScheme;
           let arr = dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$source2 = dataStore.source) === null || _dataStore$source2 === void 0 ? void 0 : (_dataStore$source2$re = _dataStore$source2.requests) === null || _dataStore$source2$re === void 0 ? void 0 : _dataStore$source2$re.filter(req => req.name !== name);
           arr.push({
@@ -209,15 +198,7 @@ export default function AddNewRequests(props) {
             outputOrgUnitIdScheme: orgOutputScheme
           });
           send({
-            createdAt: dataStore.createdAt,
-            dexname: dataStore.dexname,
-            type: dataStore.type,
-            url: dataStore.url,
-            request: {
-              idScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request4 = dataStore.request) === null || _dataStore$request4 === void 0 ? void 0 : _dataStore$request4.idScheme,
-              dataElementIdScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request5 = dataStore.request) === null || _dataStore$request5 === void 0 ? void 0 : _dataStore$request5.dataElementIdScheme,
-              orgUnitIdScheme: dataStore === null || dataStore === void 0 ? void 0 : (_dataStore$request6 = dataStore.request) === null || _dataStore$request6 === void 0 ? void 0 : _dataStore$request6.orgUnitIdScheme
-            },
+            ...dataStore,
             source: {
               requests: arr
             }
