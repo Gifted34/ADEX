@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DataQuery, useDataEngine, useDataQuery } from "@dhis2/app-runtime";
 import classes from "./App.module.css";
 import HeaderComponent from "./components/widgets/headerComponent";
-import { AlertBar, Box, Center, CircularLoader, Layer } from "@dhis2/ui";
+import { AlertBar, Box, Center, CircularLoader, Layer, NoticeBox } from "@dhis2/ui";
 import HomePage from "./components/widgets/homePage";
 import NewDataInitialization from "./components/widgets/newDataInitialization";
 import NoPageFound from "./components/widgets/noPageFound";
@@ -15,6 +15,12 @@ import UrlValidator from "./services/urlValidator";
 import DeleteIntegration from "./components/forms/deleteEntryIntegrations";
 
 const query = {
+  me: {
+    resource : 'me',
+    params : {
+      fields : ['id','username','userRoles(name,authorities)']
+    }
+  },
   organisationUnits: {
     resource: "organisationUnits",
     params: {
@@ -106,6 +112,7 @@ const MyApp = () => {
   const [ke, setKey] = useState(Math.random());
   const engine = useDataEngine();
   const [path, setPath] = useState("Home");
+  const [notAuth, setNotAuth] = useState(true)
   const [formData, setFormData] = useState();
   const [id, setID] = useState();
   const [selecteOrgUnit, setSelecteOrgUnit] = useState([]);
@@ -119,6 +126,18 @@ const MyApp = () => {
   const [authType, setAuthType] = useState("");
   const [request, setRequest] = useState();
   const { loading, error, data, refetch } = useDataQuery(query);
+
+  // this function checks if the user has the F_AGGREGATE_DATA_EXCHANGE_PUBLIC_ADD athourity
+  const checkADEXAuth = (userRole) =>{
+    userRole?.map(role => {
+      if(role?.authorities?.includes('F_AGGREGATE_DATA_EXCHANGE_PUBLIC_ADD')){
+        console.log(false)
+        return false;
+      }
+    })
+    console.log("true")
+    return true;
+  }
 
   // save to datastore
   const saveGeneralInputValues = () => {
@@ -647,6 +666,8 @@ const MyApp = () => {
         });
     }
   };
+  
+  
   return (
     <div>
       <div>
@@ -656,6 +677,7 @@ const MyApp = () => {
           {path === "Home" ? (
             <HomePage
               key={ke}
+              notAuth={checkADEXAuth(data?.me?.userRoles)}
               data={data}
               setPath={setPath}
               setID={setID}
@@ -720,7 +742,7 @@ const MyApp = () => {
               }}
             >
               <Box>
-                {isSuccessMessage == true ? (
+                {isSuccessMessage ? (
                   <AlertBar
                     hidden={hide}
                     success

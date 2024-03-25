@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@dhis2/cli-app-scripts": "^10.3.9",
-    "react-router-dom": "^6.17.0"
+    "react-router-dom": "^6.22.3"
   },
   "dependencies": {
     "@dhis2/app-runtime": "^3.9.4",

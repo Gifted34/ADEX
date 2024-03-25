@@ -117,7 +117,7 @@ export default function IntegrateDataStoreInitializationToDEX(props) {
                   }}
                   primary
                 >
-                  Save to Initialization
+                  Save Initialization
                 </Button>
               </ButtonStrip>
             </ModalActions>
